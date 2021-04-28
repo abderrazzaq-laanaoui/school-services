@@ -1,4 +1,4 @@
-# Material Design - Angular
+# Frontend - Angular
 
 
 ## Development server
