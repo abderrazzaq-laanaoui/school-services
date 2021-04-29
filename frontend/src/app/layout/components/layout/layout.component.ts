@@ -11,7 +11,7 @@ import {FuseConfigService} from '../../../../@fuse/services/config.service';
     styleUrls    : ['./layout.component.scss'],
     encapsulation: ViewEncapsulation.None
 })
-export class VerticalLayout1Component implements OnInit, OnDestroy
+export class VerticalLayoutComponent implements OnInit, OnDestroy
 {
     fuseConfig: any;
     navigation: any;

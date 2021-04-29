@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 
 
-import {VerticalLayout1Component} from './layout.component';
+import {VerticalLayoutComponent} from './layout.component';
 import {FuseSharedModule} from '../../../../@fuse/shared.module';
 import {NavbarModule} from '../navbar/navbar.module';
 import {ToolbarModule} from '../toolbar/toolbar.module';
@@ -13,7 +13,7 @@ import {FuseSidebarModule} from '../../../../@fuse/components';
 
 @NgModule({
     declarations: [
-        VerticalLayout1Component
+        VerticalLayoutComponent
     ],
     imports     : [
         RouterModule,
@@ -25,9 +25,9 @@ import {FuseSidebarModule} from '../../../../@fuse/components';
         ToolbarModule
     ],
     exports     : [
-        VerticalLayout1Component
+        VerticalLayoutComponent
     ]
 })
-export class VerticalLayout1Module
+export class VerticalLayoutModule
 {
 }

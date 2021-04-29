@@ -4,19 +4,19 @@ export const navigation: FuseNavigation[] = [
     {
         id       : 'applications',
         title    : 'Applications',
-        translate: 'NAV.APPLICATIONS',
+        translate: 'NAV.MENU',
         type     : 'group',
         children : [
             {
                 id       : 'home',
                 title    : 'Home',
-                translate: 'NAV.SAMPLE.TITLE',
+                translate: 'NAV.HOME.TITLE',
                 type     : 'item',
                 icon     : 'email',
                 url      : '/sample',
                 badge    : {
                     title    : '25',
-                    translate: 'NAV.SAMPLE.BADGE',
+                    translate: 'NAV.HOME.BADGE',
                     bg       : '#F44336',
                     fg       : '#FFFFFF'
                 }

@@ -8,7 +8,10 @@ import { FuseConfigService } from '@fuse/services/config.service';
 import { FuseSidebarService } from '@fuse/components/sidebar/sidebar.service';
 
 import { navigation } from 'app/navigation/navigation';
+import {FuseTranslationLoaderService} from '@fuse/services/translation-loader.service';
 
+import { locale as fr} from './i18n/fr' ;
+import { locale as en} from './i18n/en' ;
 @Component({
     selector     : 'toolbar',
     templateUrl  : './toolbar.component.html',
@@ -34,11 +37,13 @@ export class ToolbarComponent implements OnInit, OnDestroy
      *
      * @param {FuseConfigService} _fuseConfigService
      * @param {FuseSidebarService} _fuseSidebarService
+     * @param _fuseTranslationLoaderService
      * @param {TranslateService} _translateService
      */
     constructor(
         private _fuseConfigService: FuseConfigService,
         private _fuseSidebarService: FuseSidebarService,
+        private _fuseTranslationLoaderService: FuseTranslationLoaderService,
         private _translateService: TranslateService
     )
     {
@@ -88,6 +93,7 @@ export class ToolbarComponent implements OnInit, OnDestroy
 
         // Set the private defaults
         this._unsubscribeAll = new Subject();
+
     }
 
     // -----------------------------------------------------------------------------------------------------
@@ -110,6 +116,8 @@ export class ToolbarComponent implements OnInit, OnDestroy
 
         // Set the selected language from default languages
         this.selectedLanguage = _.find(this.languages, {id: this._translateService.currentLang});
+        this._fuseTranslationLoaderService.loadTranslations(en, fr);
+
     }
 
     /**
@@ -136,16 +144,7 @@ export class ToolbarComponent implements OnInit, OnDestroy
         this._fuseSidebarService.getSidebar(key).toggleOpen();
     }
 
-    /**
-     * Search
-     *
-     * @param value
-     */
-    search(value): void
-    {
-        // Do your search here...
-        console.log(value);
-    }
+
 
     /**
      * Set the language

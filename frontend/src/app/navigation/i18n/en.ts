@@ -2,8 +2,8 @@ export const locale = {
     lang: 'en',
     data: {
         'NAV': {
-            'APPLICATIONS': 'MENU',
-            'SAMPLE'        : {
+            'MENU': 'MENU',
+            'HOME'        : {
                 'TITLE': 'HOME',
                 'BADGE': '25'
             }

@@ -6,17 +6,19 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { FuseSharedModule } from '@fuse/shared.module';
 
 import { QuickPanelComponent } from 'app/layout/components/quick-panel/quick-panel.component';
+import {TranslateModule} from '@ngx-translate/core';
 
 @NgModule({
     declarations: [
         QuickPanelComponent
     ],
-    imports     : [
+    imports: [
         MatDividerModule,
         MatListModule,
         MatSlideToggleModule,
 
         FuseSharedModule,
+        TranslateModule,
     ],
     exports: [
         QuickPanelComponent

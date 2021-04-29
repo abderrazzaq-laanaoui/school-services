@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 import { FuseConfigService } from '@fuse/services/config.service';
 import { fuseAnimations } from '@fuse/animations';
+import {ActivatedRoute, Router} from '@angular/router';
 
 @Component({
     selector     : 'login',
@@ -18,10 +19,13 @@ export class LoginComponent implements OnInit
     /**
      * Constructor
      *
+     * @param router
+     * @param route
      * @param {FuseConfigService} _fuseConfigService
      * @param {FormBuilder} _formBuilder
      */
     constructor(
+        private router: Router,
         private _fuseConfigService: FuseConfigService,
         private _formBuilder: FormBuilder
     )
@@ -56,7 +60,11 @@ export class LoginComponent implements OnInit
     {
         this.loginForm = this._formBuilder.group({
             email   : ['', [Validators.required, Validators.email]],
-            password: ['', Validators.required]
+            password: ['', [Validators.required,Validators.minLength(8),Validators.maxLength(30)]]
         });
+    }
+
+    login() {
+        this.router.navigate([`sample`]);
     }
 }

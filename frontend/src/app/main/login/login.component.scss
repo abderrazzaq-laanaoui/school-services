@@ -16,8 +16,9 @@ login {
             }
 
             .logo {
-                width: 128px;
-                margin-bottom: 32px;
+                width: 250px;
+                margin-bottom: 25px;
+                margin-left: -87px;
             }
 
             .title {
@@ -64,11 +65,14 @@ login {
                 }
 
                 .logo {
-                    width: 128px;
-                    margin: 32px auto;
+                    width: 175px;
+                    margin: 10px auto;margin-bottom: 32px;
+                    transform: translate(-30px,0px);
+
                 }
 
                 .title {
+
                     font-size: 21px;
                 }
 

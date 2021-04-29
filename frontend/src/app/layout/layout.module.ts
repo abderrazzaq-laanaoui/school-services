@@ -1,16 +1,14 @@
 import { NgModule } from '@angular/core';
 
-import { VerticalLayout1Module } from 'app/layout/components/layout/layout.module';
+import { VerticalLayoutModule } from 'app/layout/components/layout/layout.module';
 
 
 @NgModule({
     imports: [
-        VerticalLayout1Module,
-
+        VerticalLayoutModule,
     ],
     exports: [
-        VerticalLayout1Module,
-
+        VerticalLayoutModule,
     ]
 })
 export class LayoutModule

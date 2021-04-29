@@ -9,12 +9,14 @@ import { FuseSearchBarModule, FuseShortcutsModule } from '@fuse/components';
 import { FuseSharedModule } from '@fuse/shared.module';
 
 import { ToolbarComponent } from 'app/layout/components/toolbar/toolbar.component';
+import {MatDividerModule} from '@angular/material/divider';
+import {TranslateModule} from '@ngx-translate/core';
 
 @NgModule({
     declarations: [
         ToolbarComponent
     ],
-    imports     : [
+    imports: [
         RouterModule,
         MatButtonModule,
         MatIconModule,
@@ -23,7 +25,9 @@ import { ToolbarComponent } from 'app/layout/components/toolbar/toolbar.componen
 
         FuseSharedModule,
         FuseSearchBarModule,
-        FuseShortcutsModule
+        FuseShortcutsModule,
+        MatDividerModule,
+        TranslateModule
     ],
     exports     : [
         ToolbarComponent

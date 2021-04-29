@@ -3,11 +3,11 @@
     <div id="login-intro" fxFlex fxHide fxShow.gt-xs>
 
         <div class="logo" [@animate]="{value:'*',params:{scale:'0.2'}}">
-            <img src="assets/images/logos/fuse.svg">
+            <img src="assets/images/logos/esi2a.png">
         </div>
 
         <div class="title" [@animate]="{value:'*',params:{delay:'50ms',y:'25px'}}">
-            Welcome to the FUSE!
+            Welcome to the ESI2A!
         </div>
 
         <div class="description" [@animate]="{value:'*',params:{delay:'100ms',y:'25px'}}">
@@ -23,12 +23,12 @@
         <div id="login-form">
 
             <div class="logo" fxHide.gt-xs>
-                <img src="assets/images/logos/fuse.svg">
+                <img src="assets/images/logos/esi2a.png">
             </div>
 
             <div class="title">LOGIN TO YOUR ACCOUNT</div>
 
-            <form name="loginForm" [formGroup]="loginForm" novalidate>
+            <form name="loginForm" [formGroup]="loginForm" (ngSubmit)="login()" novalidate>
 
                 <mat-form-field appearance="outline">
                     <mat-label>Email</mat-label>
@@ -63,9 +63,8 @@
                         Forgot Password?
                     </a>
                 </div>
-
                 <button mat-raised-button color="accent" class="submit-button" aria-label="LOGIN"
-                        [disabled]="loginForm.invalid">
+                        [disabled]="loginForm.invalid" >
                     LOGIN
                 </button>
 
