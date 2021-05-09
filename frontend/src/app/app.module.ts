@@ -17,12 +17,15 @@ import { fuseConfig } from 'app/fuse-config';
 import { AppComponent } from 'app/app.component';
 import { LayoutModule } from 'app/layout/layout.module';
 import { SampleModule } from 'app/main/sample/sample.module';
+import { CalendarModule } from 'app/main/calendar/calendar.module';
 import {LoginModule} from './main/login/login.module';
+import { HomeModule } from "./main/home/home.module";
+import { DocumentsModule } from "./main/documents/documents.module";
 
 const appRoutes: Routes = [
     {
         path      : '**',
-        redirectTo: 'login'
+        redirectTo: 'home'
     }
 ];
 
@@ -55,8 +58,12 @@ const appRoutes: Routes = [
         // App modules
         LayoutModule,
         SampleModule,
+        CalendarModule,
+        HomeModule,
+        DocumentsModule,
         LoginModule
     ],
+
     bootstrap   : [
         AppComponent
     ]

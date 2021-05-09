@@ -3,10 +3,9 @@ export const locale = {
     data: {
         'NAV': {
             'MENU': 'MENU',
-            'HOME'        : {
-                'TITLE': 'HOME',
-                'BADGE': '25'
+            'HOME' :'HOME',
+            'PLANNING':'PLANNING'
             }
-        }
+            
     }
 };
