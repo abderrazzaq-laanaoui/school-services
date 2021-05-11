@@ -9,7 +9,7 @@ import { DocumentsService } from './documents.service';
 import { FuseSidebarService } from '../../../@fuse/components/sidebar/sidebar.service';
 
 @Component({
-    selector     : 'project-dashboard',
+    selector     : 'documents-page',
     templateUrl  : './documents.component.html',
     styleUrls    : ['./documents.component.scss'],
     encapsulation: ViewEncapsulation.None,
@@ -18,7 +18,6 @@ import { FuseSidebarService } from '../../../@fuse/components/sidebar/sidebar.se
 export class DocumentsComponent implements OnInit
 {
     projects: any[];
-    selectedProject: any;
 
     widgets: any;
     widget11: any = {};
@@ -28,19 +27,10 @@ export class DocumentsComponent implements OnInit
     /**
      * Constructor
      *
-     * @param {FuseSidebarService} _fuseSidebarService
      * @param {DocumentsService} _projectDashboardService
      */
-    constructor(
-        private _fuseSidebarService: FuseSidebarService,
-        private _projectDashboardService: DocumentsService
-    )
+    constructor(private _projectDashboardService: DocumentsService)
     {
-       
-        
-    
-
-
     }
 
     // -----------------------------------------------------------------------------------------------------
@@ -52,7 +42,6 @@ export class DocumentsComponent implements OnInit
      */
     ngOnInit(): void
     {
-        this.projects = this._projectDashboardService.projects;
         this.widgets = this._projectDashboardService.widgets;
 
         /**
