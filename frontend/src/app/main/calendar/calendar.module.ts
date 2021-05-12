@@ -5,8 +5,7 @@ import {
     RecurrenceEditorModule,
     DayService,
     WeekService,
-    MonthService,
-    AgendaService,
+    MonthService
 } from "@syncfusion/ej2-angular-schedule";
 
 import { CalendarComponent } from "./calendar.component";
@@ -26,6 +25,6 @@ const routes: Routes = [
         ScheduleModule,
         RecurrenceEditorModule,
     ],
-    providers: [DayService, WeekService, MonthService, AgendaService],
+    providers: [DayService, WeekService, MonthService],
 })
 export class CalendarModule {}

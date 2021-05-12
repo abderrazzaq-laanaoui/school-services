@@ -3,7 +3,7 @@ import { interval, Subject } from 'rxjs';
 import { map, takeUntil } from 'rxjs/operators';
 import * as moment from 'moment';
 
-@Component({
+@Component({ 
     selector   : 'fuse-countdown',
     templateUrl: './countdown.component.html',
     styleUrls    : ['./countdown.component.scss'],

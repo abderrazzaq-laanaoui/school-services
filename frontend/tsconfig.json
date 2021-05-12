@@ -6,6 +6,8 @@
 */
 {
     "files": [],
+    "compilerOptions": {
+         "resolveJsonModule": true, "esModuleInterop": true },
     "references": [
         {
             "path": "./tsconfig.app.json"
