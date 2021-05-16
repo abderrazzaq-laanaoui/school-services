@@ -1,13 +1,10 @@
 import { Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import { DataSource } from '@angular/cdk/collections';
 import { BehaviorSubject, Observable } from 'rxjs';
-import * as shape from 'd3-shape';
-import { fuseAnimations } from '../../../@fuse/animations';
-import { MatTableModule } from '@angular/material/table'  
-
+ import { fuseAnimations } from '@fuse/animations';
 import { DocumentsService } from './documents.service';
-import { FuseSidebarService } from '../../../@fuse/components/sidebar/sidebar.service';
-
+import { MatDialog,MatDialogConfig } from "@angular/material/dialog";
+import { FileAttacherComponent } from 'app/dialog/file-attacher/file-attacher.component';
 @Component({
     selector     : 'documents-page',
     templateUrl  : './documents.component.html',
@@ -28,8 +25,9 @@ export class DocumentsComponent implements OnInit
      * Constructor
      *
      * @param {DocumentsService} _projectDashboardService
+     * @param {MatDialog} dialog
      */
-    constructor(private _projectDashboardService: DocumentsService)
+    constructor(private _docService: DocumentsService, private dialog:MatDialog)
     {
     }
 
@@ -42,7 +40,7 @@ export class DocumentsComponent implements OnInit
      */
     ngOnInit(): void
     {
-        this.widgets = this._projectDashboardService.widgets;
+        this.widgets = this._docService.widgets;
 
         /**
          * Widget 11
@@ -55,6 +53,11 @@ export class DocumentsComponent implements OnInit
     // -----------------------------------------------------------------------------------------------------
     // @ Public methods
     // -----------------------------------------------------------------------------------------------------
+
+    attachFile(contact){
+        this._docService.populateDialog(contact);
+        this.dialog.open(FileAttacherComponent);
+    }
 
   
 }

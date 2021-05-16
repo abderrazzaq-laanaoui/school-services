@@ -21,7 +21,6 @@ const routes: Routes = [
     declarations: [CalendarComponent],
     imports: [
         RouterModule.forChild(routes),
-
         ScheduleModule,
         RecurrenceEditorModule,
     ],

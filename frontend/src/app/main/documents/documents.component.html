@@ -57,7 +57,7 @@
                             fxHide
                             fxShow.gt-sm>
                                 <p class="text-truncate font-weight-600">
-                                    {{ contact.name }} {{ contact.lastName }}
+                                    {{ contact.fname }} {{ contact.lname }}
                                 </p>
                             </mat-cell>
                         </ng-container>
@@ -133,15 +133,14 @@
                             <mat-cell
                                 *matCellDef="let contact"
                             >
-                                <button
-                                style="margin-right: 15
-                                px;margin-left: 5px;"
+                                <button class="action-btn"
                                     mat-mini-fab
-                                    (click)="showUplad(contact.cne)"
+                                   (click)="attachFile(contact)"
                                 >
                                     <mat-icon>attachment</mat-icon>
                                 </button>
-                                <button (click)="confirmDelete(contact.cne)" mat-mini-fab class="mat-warn">
+                                <button (click)="1==1"
+                                 mat-mini-fab class="action-btn delete-btn mat-warn">
                                     <mat-icon>delete</mat-icon>
                                 </button>
                             </mat-cell>

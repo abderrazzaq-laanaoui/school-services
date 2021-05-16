@@ -1,7 +1,7 @@
 {
-  "name": "fuse",
-  "version": "10.0.0",
-  "license": "https://themeforest.net/licenses/terms/regular",
+  "name": "ESI2A",
+  "version": "1.0.0",
+  "license": "",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
@@ -53,6 +53,7 @@
     "ngrx-store-freeze": "0.2.4",
     "ngx-color-picker": "9.1.0",
     "ngx-cookie-service": "3.1.2",
+    "ngx-material-file-input": "2.1.1",
     "perfect-scrollbar": "1.5.0",
     "prismjs": "1.20.0",
     "rxjs": "6.6.0",

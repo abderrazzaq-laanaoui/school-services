@@ -1,6 +1,5 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { EventSettingsModel, View } from '@syncfusion/ej2-schedule';
-import { CalendarService} from './calendar.service';
 import { DataManager, WebApiAdaptor } from "@syncfusion/ej2-data";
 @Component({
     selector     : 'calendar',
@@ -27,7 +26,8 @@ export class CalendarComponent implements OnInit
 
     /**
      * isReadOnly
-     */*
+     */
+
     public isReadOnly():boolean{
         return false;
     }
