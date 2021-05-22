@@ -17,6 +17,7 @@ import {  DocumentsComponent } from './documents.component';
 import { DocumentsService } from './documents.service';
 import {MatDialogModule} from '@angular/material/dialog';
 import { FileAttacherComponent} from 'app/dialog/file-attacher/file-attacher.component'
+import { ConfirmDialogComponent } from 'app/dialog/confirm-dialog/confirm-dialog.component';
 
 const routes: Routes = [
     {
@@ -30,7 +31,8 @@ const routes: Routes = [
 
 @NgModule({
     declarations: [
-        DocumentsComponent
+        DocumentsComponent,
+       // ConfirmDialogComponent
     ],
     imports     : [
         RouterModule.forChild(routes),

@@ -7,7 +7,7 @@
     <div class="center" fusePerfectScrollbar>
         <!-- CONTENT -->
         <div class="content">
-            <!-- WIDGET 11 -->
+            <!-- WIDGET  -->
             <fuse-widget
                 [@animate]="{ value: '*', params: { y: '100%' } }"
                 class="widget"
@@ -21,26 +21,26 @@
                         fxLayout="row"
                         fxLayoutAlign="space-between center"
                     >
-                        <div class="h2">{{ widgets.widget11.title }}</div>
+                        <div class="h2">{{ widget.title }}</div>
                         <div class="text-boxed accent m-0">
-                            {{ widgets.widget11.table.rows.length }}
-                            members
+                            {{ widget.table.rows.length }}
+                            Requests
                         </div>
                     </div>
 
-                    <mat-table #table [dataSource]="widget11.dataSource">
+                    <mat-table #table [dataSource]="widget.dataSource">
                         <!-- Avatar Column -->
                         <ng-container matColumnDef="avatar">
                             <mat-header-cell
                                 fxFlex="96px"
                                 *matHeaderCellDef
                             ></mat-header-cell>
-                            <mat-cell fxFlex="96px" *matCellDef="let contact">
+                            <mat-cell fxFlex="96px" *matCellDef="let request">
                                 <img
                                     class="avatar"
-                                    *ngIf="contact.avatar"
-                                    [alt]="contact.name"
-                                    [src]="contact.avatar"
+                                    *ngIf="request.user.avatar"
+                                    [alt]="request.user.name"
+                                    [src]="request.user.avatar"
                                 />
                             </mat-cell>
                         </ng-container>
@@ -53,22 +53,20 @@
                                 >Name</mat-header-cell
                             >
                             <mat-cell 
-                            *matCellDef="let contact"
+                            *matCellDef="let request"
                             fxHide
                             fxShow.gt-sm>
                                 <p class="text-truncate font-weight-600">
-                                    {{ contact.fname }} {{ contact.lname }}
+                                    {{ request.user.fname }} {{ request.user.lname }}
                                 </p>
                             </mat-cell>
                         </ng-container>
                         <!-- Name Column -->
                         <ng-container matColumnDef="cne">
-                            <mat-header-cell *matHeaderCellDef 
-                                >CNE</mat-header-cell
-                            >
-                            <mat-cell *matCellDef="let contact">
+                            <mat-header-cell *matHeaderCellDef >CNE</mat-header-cell>
+                            <mat-cell *matCellDef="let request">
                                 <p class="cne font-weight-600">
-                                    {{ contact.cne }} 
+                                    {{ request.user.cne }} 
                                 </p>
                             </mat-cell>
                         </ng-container>
@@ -82,12 +80,12 @@
                                 >Email
                             </mat-header-cell>
                             <mat-cell
-                                *matCellDef="let contact"
+                                *matCellDef="let request"
                                 fxHide
                                 fxShow.gt-sm
                             >
                                 <p class="position text-truncate">
-                                    {{ contact.email }}
+                                    {{ request.user.email }}
                                 </p>
                             </mat-cell>
                         </ng-container>
@@ -101,12 +99,12 @@
                                 >Date
                             </mat-header-cell>
                             <mat-cell
-                                *matCellDef="let contact"
+                                *matCellDef="let request"
                                 fxHide
                                 fxShow.gt-md
                             >
                                 <p class="office text-truncate">
-                                    {{ contact.date }}
+                                    {{ request.date }}
                                 </p>
                             </mat-cell>
                         </ng-container>
@@ -117,10 +115,10 @@
                                 >Document
                             </mat-header-cell>
                             <mat-cell
-                                *matCellDef="let contact"
+                                *matCellDef="let request"
                             >
                                 <p class="document text-truncate">
-                                    {{ contact.document }}
+                                    {{ request.type }}
                                 </p>
                             </mat-cell>
                         </ng-container>
@@ -131,15 +129,15 @@
                                 >Action
                             </mat-header-cell>
                             <mat-cell
-                                *matCellDef="let contact"
+                                *matCellDef="let request"
                             >
                                 <button class="action-btn"
                                     mat-mini-fab
-                                   (click)="attachFile(contact)"
+                                   (click)="attachFile(request)"
                                 >
                                     <mat-icon>attachment</mat-icon>
                                 </button>
-                                <button (click)="1==1"
+                                <button (click)="confirmDialog()"
                                  mat-mini-fab class="action-btn delete-btn mat-warn">
                                     <mat-icon>delete</mat-icon>
                                 </button>
@@ -147,12 +145,12 @@
                         </ng-container>
 
                         <mat-header-row
-                            *matHeaderRowDef="widgets.widget11.table.columns"
+                            *matHeaderRowDef="widget.table.columns"
                         ></mat-header-row>
                         <mat-row
                             *matRowDef="
-                                let contact;
-                                columns: widgets.widget11.table.columns
+                                let request;
+                                columns: widget.table.columns
                             "
                         >
                         </mat-row>
@@ -160,7 +158,7 @@
                 </div>
                 <!-- / Front -->
             </fuse-widget>
-            <!-- / WIDGET 11 -->
+            <!-- / WIDGET  -->
         </div>
         <!-- / CONTENT -->
     </div>

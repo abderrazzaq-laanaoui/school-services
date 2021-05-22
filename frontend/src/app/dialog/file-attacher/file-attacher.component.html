@@ -5,6 +5,7 @@
     fxFlex="1 0 auto"
     name="form"
     [formGroup]="form"
+    (ngSubmit)="onSubmit()"
 >
 
     <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
@@ -38,20 +39,13 @@
             <mat-icon matSuffix class="secondary-text">email</mat-icon>
             <mat-error>Email is required!</mat-error>
         </mat-form-field>
-
-        <mat-form-field appearance="outline" fxFlex="100">
-            <mat-label>Number</mat-label>
-            <input matInput formControlName="number" required readonly/>
-            <mat-icon matSuffix class="secondary-text">smartphone</mat-icon>
-            <mat-error>Phone number is required!</mat-error>
-        </mat-form-field>
     </div>
     <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
         <mat-form-field appearance="outline" fxFlex="50" class="pr-4">
             <mat-label>Date</mat-label>
             <input matInput formControlName="date" required readonly/>
             <mat-icon matSuffix class="secondary-text">insert_invitation</mat-icon>
-            <mat-error>First Name is required!</mat-error>
+            <mat-error>Date is required!</mat-error>
         </mat-form-field>
 
         <mat-form-field appearance="outline" fxFlex="50" class="pl-4">
@@ -79,7 +73,6 @@
     <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto" class="mb-2">
         <button
             mat-raised-button
-            (click)="(1 + 1)"
             type="submit"
             color="primary"
         >

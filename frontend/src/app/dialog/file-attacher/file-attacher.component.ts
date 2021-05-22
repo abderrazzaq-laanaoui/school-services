@@ -1,5 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormGroup } from '@angular/forms';
+import { MatDialogRef } from "@angular/material/dialog";
 import { DocumentsService } from 'app/main/documents/documents.service';
 import { Subject } from 'rxjs';
 
@@ -21,7 +22,8 @@ export class FileAttacherComponent implements OnInit,OnDestroy {
    * @param {FormBuilder} _formBuilder
    */
   constructor(
-      private docService: DocumentsService
+      private _docService: DocumentsService,
+      private _dialogRef: MatDialogRef<FileAttacherComponent>
   )
   {
       // Set the private defaults
@@ -38,7 +40,7 @@ export class FileAttacherComponent implements OnInit,OnDestroy {
   ngOnInit(): void
   {
       // Reactive Form
-      this.form = this.docService.contact;     
+      this.form = this._docService.contactForm;     
   }
 
   /**
@@ -54,6 +56,25 @@ export class FileAttacherComponent implements OnInit,OnDestroy {
   // -----------------------------------------------------------------------------------------------------
   // @ Public methods
   // -----------------------------------------------------------------------------------------------------
+
+  /**
+   * onSubmit
+   */
+  public onSubmit() {
+    if (this.form.valid) {
+      //this._docService.sendDoc(this.form.controls.cne)
+      this.onClose();       
+    }
+  }
+
+  /**
+   * onClose
+   */
+  public onClose() {
+    this.form.reset();
+    this._docService.resetFormGroup();
+    this._dialogRef.close();
+  }
 
 
 }

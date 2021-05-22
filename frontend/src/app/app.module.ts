@@ -63,7 +63,6 @@ const appRoutes: Routes = [
         DocumentsModule,
         LoginModule
     ],
-
     bootstrap   : [
         AppComponent
     ]

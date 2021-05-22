@@ -11,8 +11,22 @@ import { Observable } from "rxjs";
 @Injectable()
 export class DocumentsService implements Resolve<any> {
     projects: any[];
-    widgets: any[];
-    contact: FormGroup;
+    data =  {
+        title: 'Document Requests',
+        table: {
+          columns: [
+            'avatar',
+            'name',
+            'cne',
+            'email',
+            'date',
+            'document',
+            'action',
+          ],
+          rows: [],
+        },
+      };;
+    contactForm: FormGroup;
 
     /**
      * Constructor
@@ -45,9 +59,9 @@ export class DocumentsService implements Resolve<any> {
     getWidgets(): Promise<any> {
         return new Promise((resolve, reject) => {
             this._httpClient
-                .get("http://localhost:3300/widgets")
-                .subscribe((response: any) => {
-                    this.widgets = response;
+                .get("http://localhost:3000/documents")
+                .subscribe((response: any) => {                    
+                    this.data.table.rows = response;
                     resolve(response);
                 }, reject);
         });
@@ -57,17 +71,29 @@ export class DocumentsService implements Resolve<any> {
      * populateDialog
      */
     public populateDialog(contact):void {
-        this.contact =  this._formBuilder.group({
-            cne       : [contact.cne,Validators.required],
-            firstName : [ contact.fname, Validators.required],
-            lastName  : [ contact.lname, Validators.required],
-            email     : [ contact.email, Validators.required],
-            number    : [ contact.email, Validators.required],
-            date      : [ contact.date,  Validators.required],
-            document  : [ contact.document,Validators.required],
-            file      : [ undefined, Validators.required]
+        this.contactForm =  this._formBuilder.group({
+            cne       : [ contact.cne,      Validators.required],
+            firstName : [ contact.fname,    Validators.required],
+            lastName  : [ contact.lname,    Validators.required],
+            email     : [ contact.email,    Validators.required],
+            date      : [ contact.date,     Validators.required],
+            document  : [ contact.document, Validators.required],
+            file      : [ undefined,        Validators.required]
         });
-  
-        
+    }
+
+    /**
+     * resetFormGroup
+     */
+    public resetFormGroup() {
+        this.contactForm = this._formBuilder.group({
+            cne       : [ "",         Validators.required],
+            firstName : [ "",        Validators.required],
+            lastName  : [ "",        Validators.required],
+            email     : [ "",        Validators.required],
+            date      : [ "",        Validators.required],
+            document  : [ "",        Validators.required],
+            file      : [ undefined, Validators.required]
+        })
     }
 }

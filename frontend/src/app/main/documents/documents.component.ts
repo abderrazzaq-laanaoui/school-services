@@ -1,10 +1,11 @@
-import { Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { DataSource } from '@angular/cdk/collections';
 import { BehaviorSubject, Observable } from 'rxjs';
  import { fuseAnimations } from '@fuse/animations';
 import { DocumentsService } from './documents.service';
 import { MatDialog,MatDialogConfig } from "@angular/material/dialog";
 import { FileAttacherComponent } from 'app/dialog/file-attacher/file-attacher.component';
+import {  ConfirmDialogModel,ConfirmDialogComponent } from "app/dialog/confirm-dialog/confirm-dialog.component";
 @Component({
     selector     : 'documents-page',
     templateUrl  : './documents.component.html',
@@ -16,9 +17,9 @@ export class DocumentsComponent implements OnInit
 {
     projects: any[];
 
-    widgets: any;
-    widget11: any = {};
+    widget: any = {};
     dateNow = Date.now();
+    result: any;
 
 
     /**
@@ -39,15 +40,20 @@ export class DocumentsComponent implements OnInit
      * On init
      */
     ngOnInit(): void
-    {
-        this.widgets = this._docService.widgets;
+    {  
+       console.log(this._docService.data);
+        //this.widgets = this._docService.widgets;
 
         /**
          * Widget 11
-         */
-        this.widget11.onContactsChanged = new BehaviorSubject({});
-        this.widget11.onContactsChanged.next(this.widgets.widget11.table.rows);
-        this.widget11.dataSource = new FilesDataSource(this.widget11);
+        */
+       this.widget = this._docService.data;
+       
+        this.widget.onContactsChanged = new BehaviorSubject({});
+        this.widget.onContactsChanged.next(this.widget.table.rows);
+        this.widget.dataSource = new FilesDataSource(this.widget);
+        
+        
     }
 
     // -----------------------------------------------------------------------------------------------------
@@ -59,6 +65,23 @@ export class DocumentsComponent implements OnInit
         this.dialog.open(FileAttacherComponent);
     }
 
+    
+  confirmDialog(): void {
+    const message = `Are you sure you want to do this?`;
+
+    const dialogData = new ConfirmDialogModel("Confirm Action", message);
+
+    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+      maxWidth: "500px",
+      data: dialogData
+    });
+
+    dialogRef.afterClosed().subscribe(dialogResult => {
+      this.result = dialogResult;
+      console.log(this.result);
+      
+    });
+  }
   
 }
 
