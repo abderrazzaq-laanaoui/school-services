@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { User } from './user.entity';
+import { AddStudentDto, AddUserDto } from './dto/addUser.dto';
+import { Admin, Etudiant, Professeur, User } from './user.entity';
 import { UserRepository } from './user.repository';
 
 @Injectable()
@@ -10,7 +11,15 @@ export class UserService {
     private userRepository: UserRepository,
   ) {}
 
-  async getUsers(): Promise<User[]> {
-    return this.userRepository.find();
+  async addStudent(addStudentDto: AddStudentDto): Promise<Partial<Etudiant>> {
+    return this.userRepository.addStudent(addStudentDto);
+  }
+
+  addProfesseur(addProfesseurDto: AddUserDto): Promise<Partial<Professeur>> {
+    return this.userRepository.addProfesseur(addProfesseurDto);
+  }
+
+  addAdmin(addAdminDto: AddUserDto): Promise<Partial<Admin>>{
+    return this.userRepository.addAdmin(addAdminDto);
   }
 }
