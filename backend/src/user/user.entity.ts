@@ -1,4 +1,5 @@
 import { Absence } from 'src/absence/absence.entity';
+import * as bcrypt from 'bcrypt';
 import { Demande } from 'src/demande/demande.entity';
 import { LigneClasseSemstre } from 'src/ligne-classe-semestre/ligne-classe-semestre.entity';
 import { Matiere } from 'src/matiere/matiere.entity';
@@ -30,11 +31,19 @@ export abstract class User extends BaseEntity {
   @Column()
   prenom: string;
 
-  @Column()
+  @Column({unique:true})
   email: string;
 
   @Column()
   password: string;
+
+  @Column()
+  salt: string;
+
+  async validatePassword(password: string): Promise<boolean>{
+    const hash = await bcrypt.hash(password,this.salt);
+    return hash === this.password;
+  }
 }
 
 @ChildEntity()
