@@ -4,6 +4,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { FuseConfigService } from '@fuse/services/config.service';
 import { fuseAnimations } from '@fuse/animations';
 import {ActivatedRoute, Router} from '@angular/router';
+import { LoginService } from './login.service';
 
 @Component({
     selector     : 'login',
@@ -27,7 +28,8 @@ export class LoginComponent implements OnInit
     constructor(
         private router: Router,
         private _fuseConfigService: FuseConfigService,
-        private _formBuilder: FormBuilder
+        private _formBuilder: FormBuilder,
+        private loginSerive: LoginService
     )
     {
         // Configure the layout
@@ -65,6 +67,7 @@ export class LoginComponent implements OnInit
     }
 
     login() {
-        this.router.navigate([`home`]);
+        const {email,password} = this.loginForm.controls;        
+        this.loginSerive.signIn(email.value,password.value);
     }
 }

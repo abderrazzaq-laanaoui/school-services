@@ -6,7 +6,7 @@ import { UserService } from './user.service';
 import { JwtModule } from '@nestjs/jwt';
 import { PassportModule } from '@nestjs/passport';
 import { Admin, Etudiant, Professeur } from './user.entity';
-import { JwtStrategy } from './jwt.strategy';
+import { JwtStrategy } from './auth/jwt.strategy';
 @Module({
   imports: [
     PassportModule.register({

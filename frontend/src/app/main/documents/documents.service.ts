@@ -12,12 +12,12 @@ import { Observable } from "rxjs";
 export class DocumentsService implements Resolve<any> {
     projects: any[];
     data =  {
-        title: 'Document Requests',
+        title: 'Demandes des documents',
         table: {
           columns: [
             'avatar',
-            'name',
-            'cne',
+            'nom',
+            'cin',
             'email',
             'date',
             'document',
@@ -59,8 +59,8 @@ export class DocumentsService implements Resolve<any> {
     getWidgets(): Promise<any> {
         return new Promise((resolve, reject) => {
             this._httpClient
-                .get("http://localhost:3000/documents")
-                .subscribe((response: any) => {                    
+                .get("http://localhost:3000/demande")
+                .subscribe((response: any) => {                                        
                     this.data.table.rows = response;
                     resolve(response);
                 }, reject);
@@ -70,15 +70,17 @@ export class DocumentsService implements Resolve<any> {
     /**
      * populateDialog
      */
-    public populateDialog(contact):void {
+    public populateDialog(request):void {
         this.contactForm =  this._formBuilder.group({
-            cne       : [ contact.cne,      Validators.required],
-            firstName : [ contact.fname,    Validators.required],
-            lastName  : [ contact.lname,    Validators.required],
-            email     : [ contact.email,    Validators.required],
-            date      : [ contact.date,     Validators.required],
-            document  : [ contact.document, Validators.required],
-            file      : [ undefined,        Validators.required]
+            cne       : [ request.etudiant.cne || '-',   Validators.required],
+            cin       : [ request.etudiant.cin ,         Validators.required],
+            firstName : [ request.etudiant.prenom,       Validators.required],
+            lastName  : [ request.etudiant.nom,          Validators.required],
+            email     : [ request.etudiant.email,        Validators.required],
+            date      : [ request.date.slice(0,10),      Validators.required],
+            document  : [ request.type || request.autre, Validators.required],
+            motif     : [ request.motif|| '-',           Validators.required],
+            file      : [ undefined,                     Validators.required]
         });
     }
 

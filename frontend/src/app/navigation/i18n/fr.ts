@@ -3,8 +3,8 @@ export const locale = {
     data: {
         'NAV': {
             'MENU': 'MENU',
-            'HOME':  'ACCUEIL',
-            'PLANNING':'PLANIFICATION'
+            'HOME':  '',
+            'PLANNING':''
         }
     }
 };

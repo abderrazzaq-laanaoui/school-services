@@ -31,17 +31,17 @@ export abstract class User extends BaseEntity {
   @Column()
   prenom: string;
 
-  @Column({unique:true})
+  @Column({ unique: true })
   email: string;
 
-  @Column()
+  @Column({select: false})
   password: string;
 
-  @Column()
+  @Column({select: false})
   salt: string;
 
-  async validatePassword(password: string): Promise<boolean>{
-    const hash = await bcrypt.hash(password,this.salt);
+  async validatePassword(password: string): Promise<boolean> {
+    const hash = await bcrypt.hash(password, this.salt);
     return hash === this.password;
   }
 }
@@ -69,12 +69,12 @@ export class Etudiant extends User {
   @ManyToOne(() => LigneClasseSemstre, (lcs) => lcs.etudiants)
   ligneClasseSemestre: LigneClasseSemstre;
 
-  @OneToMany(() => Note, (note) => note.etudiant)
+  @OneToMany(() => Note, (note) => note.etudiant, { eager: false })
   notes: Note[];
 
-  @OneToMany(() => Absence, (absence) => absence.etudiant)
+  @OneToMany(() => Absence, (absence) => absence.etudiant, { eager: false })
   absences: Absence[];
 
-  @OneToMany(() => Demande, (demande) => demande.etudiant)
+  @OneToMany(() => Demande, (demande) => demande.etudiant, { eager: false })
   demandes: Demande[];
 }

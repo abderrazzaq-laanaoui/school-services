@@ -1,36 +1,36 @@
 import { Admin, Etudiant, Professeur } from 'src/user/user.entity';
 import { BaseEntity, Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
-import { DemandeType } from './demande-type.entity'
+import { DemandeType } from './demande-type.entity';
 
 @Entity()
-export class Demande  extends BaseEntity {
+export class Demande extends BaseEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
   @Column()
   date: Date;
 
-  @Column()
+  @Column({ default: null })
   dateLaivraison: Date;
 
-  @Column()
+  @Column({ default: false })
   isDelivred: boolean;
 
-  @Column()
+  @Column({ default: null })
   path: string;
 
   @Column()
   motif: string;
 
-  @Column()
+  @Column({ default: null })
   autre: string;
 
-  @ManyToOne(()=>DemandeType, (demandeType)=>demandeType.demandes)
+  @ManyToOne(() => DemandeType, (demandeType) => demandeType.demandes, { eager: true })
   type: DemandeType;
 
   @ManyToOne(() => Admin, (admin) => admin.livraisons)
   livreur: Admin;
 
-  @ManyToOne(() => Etudiant, (etudiant) => etudiant.demandes)
+  @ManyToOne(() => Etudiant, (etudiant) => etudiant.demandes, { eager: true })
   etudiant: Etudiant;
 }

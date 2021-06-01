@@ -5,6 +5,7 @@ import { ConflictException } from '@nestjs/common';
 import * as bcrypt from 'bcrypt';
 import * as _ from 'lodash';
 import { AuthCredentialDto } from './dto/auth-credential.dto';
+import { JwtPayload } from './auth/jwt-payload.interface';
 
 @EntityRepository(User)
 export class UserRepository extends Repository<User> {
@@ -45,31 +46,35 @@ export class UserRepository extends Repository<User> {
     admin.email = email;
     admin.salt = await bcrypt.genSalt();
     admin.password = await this.hashPassword(password, admin.salt);
-    return _.omit(await this.saveUser(admin), 'password',  'salt');
+    return _.omit(await this.saveUser(admin), 'password', 'salt');
   }
 
   private async saveUser<T extends User>(user: T): Promise<Partial<T>> {
-    
     try {
       return await user.save();
     } catch (e) {
-     if(e.code === "23505")// deplicate unique keys
-      throw new ConflictException(e.detail);
-      
+      if (e.code === '23505')
+        // deplicate unique keys
+        throw new ConflictException(e.detail);
     }
   }
 
-  async validateUserPassword(authCredntialDto: AuthCredentialDto): Promise<string>{
-    const {email, password} = authCredntialDto;
-    const user = await this.findOne({email});
+  async validateUserPassword(authCredntialDto: AuthCredentialDto): Promise<JwtPayload> {
+    const { email, password } = authCredntialDto;
+    const user = await this.createQueryBuilder('user')
+      .addSelect(['user.password', 'user.salt'])
+      .where('user.email = :email', { email })
+      .getOne();
 
-    if(user && await user.validatePassword(password))
-      return user.email;
-    
+    if (user && (await user.validatePassword(password))){
+      let role = user instanceof Admin ? '/Admin': user instanceof Etudiant ? '/Etudiant': '/Professeur'
+      return { email: user.email, nom: user.nom, prenom: user.prenom, role };
+    }
     return null;
   }
 
-  private async hashPassword(password: string, salt: string){
-    return bcrypt.hash(password,salt);
+  private async hashPassword(password: string, salt: string) {
+    return bcrypt.hash(password, salt);
   }
 }
+ 

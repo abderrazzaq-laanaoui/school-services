@@ -19,54 +19,26 @@
                     class="user-button">
                 <div fxLayout="row" fxLayoutAlign="center center">
                     <img class="avatar mr-0 mr-sm-16" src="assets/images/avatars/vincent.jpg">
-                    <span class="username mr-12" fxHide fxShow.gt-sm>Abderrazzaq Laanoui</span>
+                    <span class="username mr-12" >Abderrazzaq Laanoui</span>
                     <mat-icon class="s-16" fxHide.xs>keyboard_arrow_down</mat-icon>
                 </div>
             </button>
 
             <mat-menu #userMenu="matMenu" [overlapTrigger]="false">
 
-                <button mat-menu-item>
+                <button mat-menu-item  [routerLink]="'profile'">
                     <mat-icon>account_circle</mat-icon>
-                    <span>{{'TOOLBAR.USER.PROFILE' | translate}}</span>
+                    <span>Mon Profil</span>
                 </button>
                 <mat-divider style="max-width: 90%; margin: auto"></mat-divider>
 
                 <button mat-menu-item class="">
                     <mat-icon>exit_to_app</mat-icon>
-                    <span>{{'TOOLBAR.USER.OUT' | translate}}</span>
+                    <span>Déconnexion</span>
                 </button>
 
             </mat-menu>
-            <div class="toolbar-separator"></div>
-
-            <button mat-button
-                    class="language-button"
-                    [matMenuTriggerFor]="languageMenu">
-                <div fxLayout="row" fxLayoutAlign="center center">
-                    <img class="flag mr-8" [src]="'assets/icons/flags/'+selectedLanguage.flag+'.png'">
-                    <span class="iso text-uppercase">{{selectedLanguage.id}}</span>
-                </div>
-            </button>
-
-            <mat-menu #languageMenu="matMenu" [overlapTrigger]="false">
-                <button mat-menu-item *ngFor="let lang of languages" (click)="setLanguage(lang)">
-                    <span fxLayout="row" fxLayoutAlign="start center">
-                        <img class="flag mr-16" [src]="'assets/icons/flags/'+lang.flag+'.png'">
-                        <span class="iso">{{lang.title}}</span>
-                    </span>
-                </button>
-
-            </mat-menu>
-
-            <div class="toolbar-separator"  ></div>
-            <button mat-icon-button
-                    class="quick-panel-toggle-button"
-                    (click)="toggleSidebarOpen('quickPanel')"
-                    aria-label="Toggle quick panel">
-                <mat-icon class="secondary-text">format_list_bulleted</mat-icon>
-            </button>
-
+            <!-- <div class="toolbar-separator"></div> -->
         </div>
 
     </div>

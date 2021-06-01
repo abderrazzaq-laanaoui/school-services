@@ -3,14 +3,12 @@ import { FuseNavigation } from '@fuse/types';
 export const navigation: FuseNavigation[] = [
     {
         id       : 'student',
-        title    : 'Student',
-       // translate: 'NAV.MENU',
+        title    : 'Espace Etudiant',
         type     : 'group',
         children : [
             {
                 id       : 'home',
-                title    : 'Home',
-                translate: 'NAV.HOME',
+                title    : 'ACCUEIL',
                 type     : 'item',
                 icon     : 'home',
                 url      : '/home',
@@ -21,9 +19,8 @@ export const navigation: FuseNavigation[] = [
                 }
             },
             {
-                id       : 'planning',
-                title    : 'Planning',
-                translate: 'NAV.PLANNING',
+                id       : 'calendrier',
+                title    : 'Calendrier',
                 type     : 'item', 
                 icon     : 'today',
                 url      : '/planning',

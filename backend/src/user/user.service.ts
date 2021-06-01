@@ -3,7 +3,7 @@ import { JwtService } from '@nestjs/jwt';
 import { InjectRepository } from '@nestjs/typeorm';
 import { AddStudentDto, AddUserDto } from './dto/addUser.dto';
 import { AuthCredentialDto } from './dto/auth-credential.dto';
-import { JwtPayload } from './jwt-payload.interface';
+import { JwtPayload } from './auth/jwt-payload.interface';
 import { Admin, Etudiant, Professeur, User } from './user.entity';
 import { UserRepository } from './user.repository';
 
@@ -28,12 +28,13 @@ export class UserService {
   }
 
   async signIn(authCredntialDto: AuthCredentialDto): Promise<{ accessToken: string }> {
-    const email = await this.userRepository.validateUserPassword(authCredntialDto);
-    if (!email) throw new UnauthorizedException('Invalid Credentails');
-
-    const payload: JwtPayload = { email };
-    const accessToken = await this.jwtService.sign(payload);
-
-    return { accessToken };
+    try {
+      const payload: JwtPayload = await this.userRepository.validateUserPassword(authCredntialDto);
+      const accessToken = await this.jwtService.sign(payload);
+      return { accessToken };
+    } catch (e) {
+      throw new UnauthorizedException('Invalid Credentails');
+    }
   }
 }
+ 

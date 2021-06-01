@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Post, Req, UnauthorizedException, UseGuards, UsePipes, ValidationPipe } from '@nestjs/common';
+import { Body, Controller, Post,  ValidationPipe } from '@nestjs/common';
 import { AddStudentDto, AddUserDto } from './dto/addUser.dto';
 import { AuthCredentialDto } from './dto/auth-credential.dto';
 import { Admin, Etudiant, Professeur } from './user.entity';
@@ -8,7 +8,7 @@ import { UserService } from './user.service';
 export class UserController {
   constructor(private userService: UserService) {}
 
-  @Post('/student')
+  @Post('/etudiant')
   addEtudiant(@Body(ValidationPipe) addStudentDto: AddStudentDto): Promise<Partial<Etudiant>> {
     return this.userService.signUpStudent(addStudentDto);
   }

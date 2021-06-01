@@ -6,7 +6,6 @@ import {VerticalLayoutComponent} from './layout.component';
 import {FuseSharedModule} from '../../../../@fuse/shared.module';
 import {NavbarModule} from '../navbar/navbar.module';
 import {ToolbarModule} from '../toolbar/toolbar.module';
-import {QuickPanelModule} from '../quick-panel/quick-panel.module';
 import {ContentModule} from '../content/content.module';
 import {FuseSidebarModule} from '../../../../@fuse/components';
 
@@ -21,7 +20,6 @@ import {FuseSidebarModule} from '../../../../@fuse/components';
         FuseSidebarModule,
         ContentModule,
         NavbarModule,
-        QuickPanelModule,
         ToolbarModule
     ],
     exports     : [

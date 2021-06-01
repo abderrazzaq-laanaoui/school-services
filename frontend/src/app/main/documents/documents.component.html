@@ -24,7 +24,7 @@
                         <div class="h2">{{ widget.title }}</div>
                         <div class="text-boxed accent m-0">
                             {{ widget.table.rows.length }}
-                            Requests
+                            Demande(s)
                         </div>
                     </div>
 
@@ -36,37 +36,39 @@
                                 *matHeaderCellDef
                             ></mat-header-cell>
                             <mat-cell fxFlex="96px" *matCellDef="let request">
+                               <!-- *ngIf="request.etudiant.avatar" -->
+                               <!-- -->
+
                                 <img
                                     class="avatar"
-                                    *ngIf="request.user.avatar"
-                                    [alt]="request.user.name"
-                                    [src]="request.user.avatar"
+                                    [alt]="request.etudiant.nom"
+                                    [src]="'assets/images/avatars/'+request.etudiant.id +'.jpg'"
                                 />
                             </mat-cell>
                         </ng-container>
 
                         <!-- Name Column -->
-                        <ng-container matColumnDef="name">
+                        <ng-container matColumnDef="nom">
                             <mat-header-cell *matHeaderCellDef 
                             fxHide
                             fxShow.gt-sm
-                                >Name</mat-header-cell
+                                >Nom</mat-header-cell
                             >
                             <mat-cell 
                             *matCellDef="let request"
                             fxHide
                             fxShow.gt-sm>
                                 <p class="text-truncate font-weight-600">
-                                    {{ request.user.fname }} {{ request.user.lname }}
+                                    {{ request.etudiant.nom }} {{ request.etudiant.prenom }}
                                 </p>
                             </mat-cell>
                         </ng-container>
                         <!-- Name Column -->
-                        <ng-container matColumnDef="cne">
-                            <mat-header-cell *matHeaderCellDef >CNE</mat-header-cell>
+                        <ng-container matColumnDef="cin">
+                            <mat-header-cell *matHeaderCellDef >CIN</mat-header-cell>
                             <mat-cell *matCellDef="let request">
-                                <p class="cne font-weight-600">
-                                    {{ request.user.cne }} 
+                                <p class="cin font-weight-600">
+                                    {{ request.etudiant.cin }} 
                                 </p>
                             </mat-cell>
                         </ng-container>
@@ -85,7 +87,7 @@
                                 fxShow.gt-sm
                             >
                                 <p class="position text-truncate">
-                                    {{ request.user.email }}
+                                    {{ request.etudiant.email }}
                                 </p>
                             </mat-cell>
                         </ng-container>
@@ -104,7 +106,7 @@
                                 fxShow.gt-md
                             >
                                 <p class="office text-truncate">
-                                    {{ request.date }}
+                                    {{ request.date.slice(0,10) }}
                                 </p>
                             </mat-cell>
                         </ng-container>
@@ -118,7 +120,7 @@
                                 *matCellDef="let request"
                             >
                                 <p class="document text-truncate">
-                                    {{ request.type }}
+                                    {{ request.type || request.autre }}
                                 </p>
                             </mat-cell>
                         </ng-container>

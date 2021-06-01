@@ -1,0 +1,4 @@
+{
+  "appService.defaultWebAppToDeploy": "/subscriptions/3ce1e9ce-68fa-4f82-9b71-d93829899495/resourceGroups/esi2a/providers/Microsoft.Web/sites/esi2a-backend",
+  "appService.deploySubpath": "."
+}

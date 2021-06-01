@@ -41,8 +41,6 @@ export class DocumentsComponent implements OnInit
      */
     ngOnInit(): void
     {  
-       console.log(this._docService.data);
-        //this.widgets = this._docService.widgets;
 
         /**
          * Widget 11
@@ -60,6 +58,10 @@ export class DocumentsComponent implements OnInit
     // @ Public methods
     // -----------------------------------------------------------------------------------------------------
 
+    formatDate(date:string): Date{      
+      return  new Date(JSON.parse(date));
+    }
+    
     attachFile(contact){
         this._docService.populateDialog(contact);
         this.dialog.open(FileAttacherComponent);
@@ -77,13 +79,12 @@ export class DocumentsComponent implements OnInit
     });
 
     dialogRef.afterClosed().subscribe(dialogResult => {
-      this.result = dialogResult;
-      console.log(this.result);
-      
+      this.result = dialogResult;      
     });
   }
   
 }
+
 
 export class FilesDataSource extends DataSource<any>
 {

@@ -1,17 +1,14 @@
 import { Component, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
-import { TranslateService } from '@ngx-translate/core';
 import * as _ from 'lodash';
 
 import { FuseConfigService } from '@fuse/services/config.service';
 import { FuseSidebarService } from '@fuse/components/sidebar/sidebar.service';
 
 import { navigation } from 'app/navigation/navigation';
-import {FuseTranslationLoaderService} from '@fuse/services/translation-loader.service';
+import { FuseSplashScreenService } from '@fuse/services/splash-screen.service';
 
-import { locale as fr} from './i18n/fr' ;
-import { locale as en} from './i18n/en' ;
 @Component({
     selector     : 'toolbar',
     templateUrl  : './toolbar.component.html',
@@ -37,14 +34,12 @@ export class ToolbarComponent implements OnInit, OnDestroy
      *
      * @param {FuseConfigService} _fuseConfigService
      * @param {FuseSidebarService} _fuseSidebarService
-     * @param _fuseTranslationLoaderService
-     * @param {TranslateService} _translateService
      */
     constructor(
         private _fuseConfigService: FuseConfigService,
         private _fuseSidebarService: FuseSidebarService,
-        private _fuseTranslationLoaderService: FuseTranslationLoaderService,
-        private _translateService: TranslateService
+        private _fuseSplashScreenService: FuseSplashScreenService,
+
     )
     {
         // Set the defaults
@@ -76,19 +71,7 @@ export class ToolbarComponent implements OnInit, OnDestroy
             }
         ];
 
-        this.languages = [
-            {
-                id   : 'en',
-                title: 'English',
-                flag : 'us'
-            },
-            {
-                id   : 'fr',
-                title: 'Français',
-                flag : 'fr'
-            }
-        ];
-
+   
         this.navigation = navigation;
 
         // Set the private defaults
@@ -114,9 +97,7 @@ export class ToolbarComponent implements OnInit, OnDestroy
                 this.hiddenNavbar = settings.layout.navbar.hidden === true;
             });
 
-        // Set the selected language from default languages
-        this.selectedLanguage = _.find(this.languages, {id: this._translateService.currentLang});
-        this._fuseTranslationLoaderService.loadTranslations(en, fr);
+      
 
     }
 
@@ -146,17 +127,5 @@ export class ToolbarComponent implements OnInit, OnDestroy
 
 
 
-    /**
-     * Set the language
-     *
-     * @param lang
-     */
-    setLanguage(lang): void
-    {
-        // Set the selected language for the toolbar
-        this.selectedLanguage = lang;
 
-        // Use the selected language for translations
-        this._translateService.use(lang.id);
-    }
 }

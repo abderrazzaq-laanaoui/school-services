@@ -18,17 +18,28 @@ import { DocumentsService } from './documents.service';
 import {MatDialogModule} from '@angular/material/dialog';
 import { FileAttacherComponent} from 'app/dialog/file-attacher/file-attacher.component'
 import { ConfirmDialogComponent } from 'app/dialog/confirm-dialog/confirm-dialog.component';
+import{ RoleGuardService as RoleGuard} from 'app/auth/role-guard.service'
+import { JwtHelperService, JwtModule } from '@auth0/angular-jwt';
 
 const routes: Routes = [
     {
         path     : 'documents',
         component: DocumentsComponent,
+        canActivate: [RoleGuard],
+        data: {
+            expectedRole: ["/Admin"],
+        },
         resolve  : {
             data: DocumentsService
         }
     }
 ];
-
+export function tokenGetter() {
+    try{
+    return localStorage.getItem("data");
+    }catch(e){        
+    }
+  }
 @NgModule({
     declarations: [
         DocumentsComponent,
@@ -36,6 +47,11 @@ const routes: Routes = [
     ],
     imports     : [
         RouterModule.forChild(routes),
+        JwtModule.forRoot({
+            config: {
+              tokenGetter: tokenGetter,
+            },
+          }),
         MatButtonModule,
         MatDividerModule,
         MatFormFieldModule,
@@ -48,10 +64,12 @@ const routes: Routes = [
         MatInputModule,
         MatStepperModule,
         FuseSharedModule,
-        FuseWidgetModule,MaterialFileInputModule
+        FuseWidgetModule,MaterialFileInputModule,
+
     ],
     providers   : [
-        DocumentsService
+        DocumentsService,
+        JwtHelperService
     ],
     exports:[
         MatButtonModule,

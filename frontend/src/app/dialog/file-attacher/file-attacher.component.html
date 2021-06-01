@@ -7,35 +7,41 @@
     [formGroup]="form"
     (ngSubmit)="onSubmit()"
 >
-
     <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
-        <mat-form-field appearance="outline" fxFlex="100">
+        <mat-form-field appearance="outline" fxFlex="50" class="pr-4">
+            <mat-label>CIN</mat-label>
+            <input matInput formControlName="cin" required readonly />
+            <mat-icon matSuffix class="secondary-text">vpn_key</mat-icon>
+            <mat-error>Le cin est obligatoire!</mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" fxFlex="50" class="pl-4">
             <mat-label>CNE</mat-label>
-            <input matInput formControlName="cne" required readonly />
+            <input matInput formControlName="cne"  readonly />
             <mat-icon matSuffix class="secondary-text">vpn_key</mat-icon>
         </mat-form-field>
     </div>
 
     <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
         <mat-form-field appearance="outline" fxFlex="50" class="pr-4">
-            <mat-label>First name</mat-label>
-            <input  matInput formControlName="firstName" required readonly/>
+            <mat-label>Prenom</mat-label>
+            <input matInput formControlName="firstName" required readonly />
             <mat-icon matSuffix class="secondary-text">account_circle</mat-icon>
-            <mat-error>First Name is required!</mat-error>
+            <mat-error>Le prenom est obligatoire!</mat-error>
         </mat-form-field>
 
         <mat-form-field appearance="outline" fxFlex="50" class="pl-4">
-            <mat-label>Last name</mat-label>
-            <input matInput formControlName="lastName" required readonly/>
+            <mat-label>Nom</mat-label>
+            <input matInput formControlName="lastName" required readonly />
             <mat-icon matSuffix class="secondary-text">account_circle</mat-icon>
-            <mat-error>Last Name is required!</mat-error>
+            <mat-error>Le nom est obligatoire!</mat-error>
         </mat-form-field>
     </div>
 
     <div fxLayout="row wrap" fxLayoutAlign="start center" fxFlex="1 0 auto">
         <mat-form-field appearance="outline" fxFlex="100">
             <mat-label>Email</mat-label>
-            <input matInput formControlName="email" required readonly/>
+            <input matInput formControlName="email" required readonly />
             <mat-icon matSuffix class="secondary-text">email</mat-icon>
             <mat-error>Email is required!</mat-error>
         </mat-form-field>
@@ -43,41 +49,50 @@
     <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
         <mat-form-field appearance="outline" fxFlex="50" class="pr-4">
             <mat-label>Date</mat-label>
-            <input matInput formControlName="date" required readonly/>
-            <mat-icon matSuffix class="secondary-text">insert_invitation</mat-icon>
+            <input matInput formControlName="date" required readonly />
+            <mat-icon matSuffix class="secondary-text"
+                >insert_invitation</mat-icon
+            >
             <mat-error>Date is required!</mat-error>
         </mat-form-field>
 
         <mat-form-field appearance="outline" fxFlex="50" class="pl-4">
             <mat-label>Document</mat-label>
-            <input matInput formControlName="document" required readonly/>
-            <mat-icon matSuffix class="secondary-text">insert_drive_file</mat-icon>
+            <input matInput formControlName="document" required readonly />
+            <mat-icon matSuffix class="secondary-text"
+                >insert_drive_file</mat-icon
+            >
             <mat-error>Last Name is required!</mat-error>
+        </mat-form-field>
+    </div>
+    
+    <div fxLayout="row wrap" fxLayoutAlign="start center" fxFlex="1 0 auto">
+        <mat-form-field appearance="outline" fxFlex="100">
+            <mat-label>Motif</mat-label>
+            <input matInput formControlName="motif"  readonly />
+            <mat-icon matSuffix class="secondary-text">info</mat-icon>
         </mat-form-field>
     </div>
 
     <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
         <mat-form-field appearance="outline" fxFlex="100">
-            <mat-label>click here to insert a file</mat-label>
+            <mat-label>Clicker ici pour ajouter un fichier</mat-label>
             <ngx-mat-file-input
                 formControlName="file"
                 placeholder="click here to add a file"
                 [accept]="'.pdf'"
-                required 
+                required
             ></ngx-mat-file-input>
             <mat-icon matSuffix>folder</mat-icon>
-            <mat-error>A PDF file  is required!</mat-error>
-
+            <mat-error>Un fichier PDF est obligatoire!</mat-error>
         </mat-form-field>
     </div>
-    <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto" class="mb-2">
-        <button
-            mat-raised-button
-            type="submit"
-            color="primary"
-        >
-            SEND
-        </button>            
-
+    <div
+        fxLayout="row"
+        fxLayoutAlign="start center"
+        fxFlex="1 0 auto"
+        class="mb-2"
+    >
+        <button mat-raised-button type="submit" color="primary">SEND</button>
     </div>
 </form>
