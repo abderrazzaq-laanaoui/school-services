@@ -1,7 +1,7 @@
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Router } from "@angular/router";
-import { setupMaster } from "cluster";
+import { ToastrService } from 'ngx-toastr';
 import decode from "jwt-decode";
 @Injectable({
     providedIn: "root",
@@ -10,7 +10,7 @@ export class LoginService {
     private url: string;
     user: {id:string; nom: string; prenom: string; email: string };
 
-    constructor(private httpClient: HttpClient, private router: Router) {
+    constructor(private httpClient: HttpClient, private router: Router, private toastr: ToastrService) {
         this.url = "http://localhost:3000/user/SignIn";
         this.setUser();
 
@@ -23,7 +23,9 @@ export class LoginService {
                 this.setUser();
                 this.router.navigateByUrl("/home");
             },
-            (err) => {}
+            (res) => {                
+                this.toastr.error(res.error.message,'Erreur');
+            }
         );
     }
     logOut(){

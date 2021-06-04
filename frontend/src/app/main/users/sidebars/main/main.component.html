@@ -1,0 +1,64 @@
+<div class="sidebar-content">
+    <div class="card">
+        <!-- SIDEBAR HEADER -->
+        <div class="header p-24" fxLayout="row" fxLayoutAlign="start center">
+            <span class="h5">Listes</span>
+        </div>
+        <!-- / SIDEBAR HEADER -->
+
+        <!-- SIDEBAR CONTENT -->
+        <div class="content py-16" fusePerfectScrollbar>
+            <div class="nav material2">
+                <div class="nav-item" aria-label="inbox">
+                    <a
+                        class="nav-link"
+                        matRipple
+                        (click)="changeFilter('all')"
+                        [ngClass]="{ 'active accent': filterBy === 'all' }"
+                    >
+                        <span class="title">Toutes</span>
+                    </a>
+                </div>
+
+                <div
+                    class="nav-item"
+                    aria-label="frequently contacted"
+                    (click)="changeFilter('etudiants')"
+                >
+                    <a
+                        class="nav-link"
+                        matRipple
+                        [ngClass]="{'active accent': filterBy === 'etudiants'}">
+                        <div class="title">Etudiants</div>
+                    </a>
+                </div>
+                <div
+                    class="nav-item"
+                    aria-label="frequently contacted"
+                    (click)="changeFilter('professeurs')" >
+                    <a
+                        class="nav-link"
+                        matRipple
+                        [ngClass]="{ 'active accent': filterBy === 'professeurs' }" >
+                        <div class="title">Professeurs</div>
+                    </a>
+                </div>
+
+                <div
+                    class="nav-item"
+                    aria-label="starred"
+                    (click)="changeFilter('admins')"
+                >
+                    <a
+                        class="nav-link"
+                        matRipple
+                        [ngClass]="{ 'active accent': filterBy === 'admins' }"
+                    >
+                        <div class="title">Admins</div>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- / SIDEBAR CONTENT -->

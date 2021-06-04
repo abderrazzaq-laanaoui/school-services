@@ -27,7 +27,7 @@ const routes: Routes = [
         component: DocumentsComponent,
         canActivate: [RoleGuard],
         data: {
-            expectedRole: ["/Admin"],
+            expectedRole: ["Admin"],
         },
         resolve  : {
             data: DocumentsService

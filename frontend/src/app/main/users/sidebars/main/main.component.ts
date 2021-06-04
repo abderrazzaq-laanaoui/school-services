@@ -2,7 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
-import { ContactsService } from '../../contacts.service';
+import {  UsersService } from '../../users.service';
 
 @Component({
     selector   : 'contacts-main-sidebar',
@@ -20,10 +20,10 @@ export class ContactsMainSidebarComponent implements OnInit, OnDestroy
     /**
      * Constructor
      *
-     * @param {ContactsService} _contactsService
+     * @param {UsersService} _contactsService
      */
     constructor(
-        private _contactsService: ContactsService
+        private _contactsService: UsersService
     )
     {
         // Set the private defaults

@@ -29,7 +29,8 @@
             ],
             "styles": [
               "src/styles.scss",
-              "./node_modules/@syncfusion/ej2-material-theme/styles/material.css"
+              "./node_modules/@syncfusion/ej2-material-theme/styles/material.css",
+              "./node_modules/ngx-toastr/toastr.css"
             ],
             "scripts": [],
             "showCircularDependencies": false,

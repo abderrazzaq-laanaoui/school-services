@@ -9,6 +9,19 @@ import { UserRepository } from './user.repository';
 
 @Injectable()
 export class UserService {
+  async deleteUser(id: number, user: Etudiant | Admin | Professeur) {
+    throw new Error('Method not implemented.');
+  }
+  async getUsers(user: Etudiant | Admin | Professeur) {
+    if (user instanceof Admin) {
+      const res = await this.userRepository.find();
+      console.log(res);
+
+      return res;
+    }
+    if (user instanceof Professeur) return 'list edtudiant';
+    throw new UnauthorizedException("Vous avez pas les droit d'access à ce resource");
+  }
   constructor(
     @InjectRepository(UserRepository)
     private userRepository: UserRepository,

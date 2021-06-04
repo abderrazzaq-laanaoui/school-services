@@ -5,7 +5,7 @@ import { takeUntil } from 'rxjs/operators';
 
 import { FuseConfirmDialogComponent } from '@fuse/components/confirm-dialog/confirm-dialog.component';
 
-import { ContactsService } from '../contacts.service';
+import { UsersService } from '../users.service';
 
 @Component({
     selector   : 'selected-bar',
@@ -25,16 +25,16 @@ export class ContactsSelectedBarComponent implements OnInit, OnDestroy
     /**
      * Constructor
      *
-     * @param {ContactsService} _contactsService
+     * @param {UsersService} _contactsService
      * @param {MatDialog} _matDialog
      */
     constructor(
-        private _contactsService: ContactsService,
+        private _contactsService: UsersService,
         public _matDialog: MatDialog
     )
     {
         // Set the private defaults
-        this._unsubscribeAll = new Subject();
+        this._unsubscribeAll = new Subject(); 
     }
 
     // -----------------------------------------------------------------------------------------------------
@@ -46,7 +46,7 @@ export class ContactsSelectedBarComponent implements OnInit, OnDestroy
      */
     ngOnInit(): void
     {
-        this._contactsService.onSelectedContactsChanged
+        this._contactsService.onSelectedUsersChanged
             .pipe(takeUntil(this._unsubscribeAll))
             .subscribe(selectedContacts => {
                 this.selectedContacts = selectedContacts;
@@ -76,7 +76,7 @@ export class ContactsSelectedBarComponent implements OnInit, OnDestroy
      */
     selectAll(): void
     {
-        this._contactsService.selectContacts();
+        this._contactsService.selectUsers();
     }
 
     /**

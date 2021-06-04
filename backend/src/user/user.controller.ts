@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Param, ParseIntPipe, Post, UseGuards, ValidationPipe } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, ParseIntPipe, Patch, Post, UseGuards, ValidationPipe } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 import { AddStudentDto, AddUserDto } from './dto/addUser.dto';
 import { AuthCredentialDto } from './dto/auth-credential.dto';
@@ -10,6 +10,14 @@ import { UserService } from './user.service';
 export class UserController {
   constructor(private userService: UserService) {}
 
+ 
+  @UseGuards(AuthGuard())
+  @Get('/list')
+  getUsers(@GetUser() user: Etudiant | Admin | Professeur) {
+    return this.userService.getUsers(user);
+  }
+  
+  
   @UseGuards(AuthGuard())
   @Get(':id')
   getUser(@Param('id', ParseIntPipe) id: number, @GetUser() user: Etudiant | Admin | Professeur) {
@@ -22,11 +30,13 @@ export class UserController {
     return this.userService.signUpStudent(addStudentDto);
   }
 
+  @UseGuards(AuthGuard())
   @Post('/professeur')
   addProfesseur(@Body(ValidationPipe) addProfesseurDto: AddUserDto): Promise<Partial<Professeur>> {
     return this.userService.signUpProfesseur(addProfesseurDto);
   }
 
+  @UseGuards(AuthGuard())
   @Post('/admin')
   addAdmin(@Body(ValidationPipe) addAdminDto: AddUserDto): Promise<Partial<Admin>> {
     return this.userService.signUpAdmin(addAdminDto);
@@ -35,5 +45,19 @@ export class UserController {
   @Post('/signIn')
   signIn(@Body(ValidationPipe) authCredentialDto: AuthCredentialDto): Promise<{ accessToken: string }> {
     return this.userService.signIn(authCredentialDto);
+  }
+
+  @UseGuards(AuthGuard())
+  @Patch(':id')
+  updateUser(@Param('id', ParseIntPipe) id: number,@Body() userData, @GetUser() user: Etudiant | Admin | Professeur){
+    console.log(id,'=>',userData);
+    //TODO
+  }
+  @UseGuards(AuthGuard())
+  @Delete(':id')
+  deleteUser(@Param('id', ParseIntPipe) id: number,@GetUser() user: Etudiant | Admin | Professeur){
+    //TODO
+    return this.userService.deleteUser(id,user);
+    
   }
 }

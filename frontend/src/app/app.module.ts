@@ -7,9 +7,11 @@ import { RouterModule, Routes } from "@angular/router";
 import { MatMomentDateModule } from "@angular/material-moment-adapter";
 import { MatButtonModule } from "@angular/material/button";
 import { MatIconModule } from "@angular/material/icon";
-import { ContactsModule } from './main/contacts/contacts.module'
+import { ContactsModule } from './main/users/users.module'
 import { FuseModule } from "@fuse/fuse.module";
 import { FuseSharedModule } from "@fuse/shared.module";
+import { ToastrModule, ToastrService } from 'ngx-toastr';
+
 import {
     FuseProgressBarModule,
     FuseSidebarModule,
@@ -42,7 +44,7 @@ const appRoutes: Routes = [
         BrowserAnimationsModule,
         HttpClientModule,
         RouterModule.forRoot(appRoutes),
-
+        ToastrModule.forRoot(),
         // Material moment date module
         MatMomentDateModule,
 
@@ -66,11 +68,12 @@ const appRoutes: Routes = [
         LoginModule,ContactsModule
     ],
     providers: [
+        ToastrService,
         {
             provide: HTTP_INTERCEPTORS,
             useClass: TokenInterceptorService,
             multi: true,
-        },
+        } 
     ],
     bootstrap: [AppComponent],
 })

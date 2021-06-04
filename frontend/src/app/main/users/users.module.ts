@@ -14,19 +14,19 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { FuseSharedModule } from '@fuse/shared.module';
 import { FuseConfirmDialogModule, FuseSidebarModule } from '@fuse/components';
 
-import { ContactsComponent } from './contacts.component';
-import { ContactsService } from './contacts.service';
-import { ContactsContactListComponent } from './contact-list/contact-list.component';
+import { ContactsComponent } from './users.component';
+import { UsersService } from './users.service';
+import { ContactsContactListComponent } from './user-list/user-list.component';
 import { ContactsSelectedBarComponent } from './selected-bar/selected-bar.component';
 import { ContactsMainSidebarComponent } from './sidebars/main/main.component';
-import { ContactsContactFormDialogComponent } from './contact-form/contact-form.component';
+import { ContactsContactFormDialogComponent } from './user-form/user-form.component';
 
 const routes: Routes = [
     {
         path     : 'users',
         component: ContactsComponent,
         resolve  : {
-            contacts: ContactsService
+            contacts: UsersService
         }
     }
 ];
@@ -56,7 +56,7 @@ const routes: Routes = [
         FuseSidebarModule
     ],
     providers      : [
-        ContactsService
+        UsersService
     ],
     entryComponents: [
         ContactsContactFormDialogComponent

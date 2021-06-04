@@ -8,13 +8,13 @@ import { takeUntil } from 'rxjs/operators';
 import { fuseAnimations } from '@fuse/animations';
 import { FuseConfirmDialogComponent } from '@fuse/components/confirm-dialog/confirm-dialog.component';
 
-import { ContactsService } from '../contacts.service';
-import { ContactsContactFormDialogComponent } from '../contact-form/contact-form.component';
+import {  UsersService } from '../users.service';
+import { ContactsContactFormDialogComponent } from '../user-form/user-form.component';
 
 @Component({
     selector     : 'contacts-contact-list',
-    templateUrl  : './contact-list.component.html',
-    styleUrls    : ['./contact-list.component.scss'],
+    templateUrl  : './user-list.component.html',
+    styleUrls    : ['./user-list.component.scss'],
     encapsulation: ViewEncapsulation.None,
     animations   : fuseAnimations
 })
@@ -23,10 +23,10 @@ export class ContactsContactListComponent implements OnInit, OnDestroy
     @ViewChild('dialogContent')
     dialogContent: TemplateRef<any>;
 
-    contacts: any;
+    users: any;
     user: any;
     dataSource: FilesDataSource | null;
-    displayedColumns = ['checkbox', 'avatar', 'name', 'email', 'phone', 'jobTitle', 'buttons'];
+    displayedColumns = ['checkbox', 'avatar','name','cin',  'email', 'buttons'];
     selectedContacts: any[];
     checkboxes: {};
     dialogRef: any;
@@ -38,11 +38,11 @@ export class ContactsContactListComponent implements OnInit, OnDestroy
     /**
      * Constructor
      *
-     * @param {ContactsService} _contactsService
+     * @param {UsersService} _contactsService
      * @param {MatDialog} _matDialog
      */
     constructor(
-        private _contactsService: ContactsService,
+        private _contactsService: UsersService,
         public _matDialog: MatDialog
     )
     {
@@ -61,18 +61,18 @@ export class ContactsContactListComponent implements OnInit, OnDestroy
     {
         this.dataSource = new FilesDataSource(this._contactsService);
 
-        this._contactsService.onContactsChanged
+        this._contactsService.onUsersChanged
             .pipe(takeUntil(this._unsubscribeAll))
-            .subscribe(contacts => {
-                this.contacts = contacts;
+            .subscribe(users => {
+                this.users = users;
 
                 this.checkboxes = {};
-                contacts.map(contact => {
+                users.map(contact => {
                     this.checkboxes[contact.id] = false;
                 });
             });
 
-        this._contactsService.onSelectedContactsChanged
+        this._contactsService.onSelectedUsersChanged
             .pipe(takeUntil(this._unsubscribeAll))
             .subscribe(selectedContacts => {
                 for ( const id in this.checkboxes )
@@ -117,14 +117,14 @@ export class ContactsContactListComponent implements OnInit, OnDestroy
     /**
      * Edit contact
      *
-     * @param contact
+     * @param user
      */
-    editContact(contact): void
+    editContact(user): void
     {
         this.dialogRef = this._matDialog.open(ContactsContactFormDialogComponent, {
             panelClass: 'contact-form-dialog',
             data      : {
-                contact: contact,
+                user: user,
                 action : 'edit'
             }
         });
@@ -135,6 +135,8 @@ export class ContactsContactListComponent implements OnInit, OnDestroy
                 {
                     return;
                 }
+                console.log('res=>',response);
+                
                 const actionType: string = response[0];
                 const formData: FormGroup = response[1];
                 switch ( actionType )
@@ -152,7 +154,7 @@ export class ContactsContactListComponent implements OnInit, OnDestroy
                      */
                     case 'delete':
 
-                        this.deleteContact(contact);
+                        this.deleteContact(user);
 
                         break;
                 }
@@ -162,7 +164,7 @@ export class ContactsContactListComponent implements OnInit, OnDestroy
     /**
      * Delete Contact
      */
-    deleteContact(contact): void
+    deleteContact(user): void
     {
         this.confirmDialogRef = this._matDialog.open(FuseConfirmDialogComponent, {
             disableClose: false
@@ -173,7 +175,7 @@ export class ContactsContactListComponent implements OnInit, OnDestroy
         this.confirmDialogRef.afterClosed().subscribe(result => {
             if ( result )
             {
-                this._contactsService.deleteUser(contact);
+                this._contactsService.deleteUser(user);
             }
             this.confirmDialogRef = null;
         });
@@ -183,27 +185,27 @@ export class ContactsContactListComponent implements OnInit, OnDestroy
     /**
      * On selected change
      *
-     * @param contactId
+     * @param userId
      */
-    onSelectedChange(contactId): void
+    onSelectedChange(userId): void
     {
-        this._contactsService.toggleSelectedContact(contactId);
+        this._contactsService.toggleSelectedUser(userId);
     }
 
     /**
      * Toggle star
      *
-     * @param contactId
+     * @param userId
      */
-    toggleStar(contactId): void
+    toggleStar(userId): void
     {
-        if ( this.user.starred.includes(contactId) )
+        if ( this.user.starred.includes(userId) )
         {
-            this.user.starred.splice(this.user.starred.indexOf(contactId), 1);
+            this.user.starred.splice(this.user.starred.indexOf(userId), 1);
         }
         else
         {
-            this.user.starred.push(contactId);
+            this.user.starred.push(userId);
         }
 
         this._contactsService.updateUserData(this.user);
@@ -215,10 +217,10 @@ export class FilesDataSource extends DataSource<any>
     /**
      * Constructor
      *
-     * @param {ContactsService} _contactsService
+     * @param {UsersService} _userssService
      */
     constructor(
-        private _contactsService: ContactsService
+        private _userssService: UsersService
     )
     {
         super();
@@ -230,7 +232,7 @@ export class FilesDataSource extends DataSource<any>
      */
     connect(): Observable<any[]>
     {
-        return this._contactsService.onContactsChanged;
+        return this._userssService.onUsersChanged;
     }
 
     /**

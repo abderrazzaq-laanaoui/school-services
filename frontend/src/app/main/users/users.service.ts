@@ -8,17 +8,17 @@ import { FuseUtils } from '@fuse/utils';
 import { User } from './user.model';
 
 @Injectable()
-export class usersService implements Resolve<any>
+export class UsersService implements Resolve<any>
 {
-    onusersChanged: BehaviorSubject<any>;
-    onSelectedusersChanged: BehaviorSubject<any>;
+    onUsersChanged: BehaviorSubject<any>;
+    onSelectedUsersChanged: BehaviorSubject<any>;
     onUserDataChanged: BehaviorSubject<any>;
     onSearchTextChanged: Subject<any>;
     onFilterChanged: Subject<any>;
 
     users: User[];
     user: any;
-    selectedusers: string[] = [];
+    selectedUsers: string[] = [];
 
     searchText: string;
     filterBy: string;
@@ -33,8 +33,8 @@ export class usersService implements Resolve<any>
     )
     {
         // Set the defaults
-        this.onusersChanged = new BehaviorSubject([]);
-        this.onSelectedusersChanged = new BehaviorSubject([]);
+        this.onUsersChanged = new BehaviorSubject([]);
+        this.onSelectedUsersChanged = new BehaviorSubject([]);
         this.onUserDataChanged = new BehaviorSubject([]);
         this.onSearchTextChanged = new Subject();
         this.onFilterChanged = new Subject();
@@ -53,7 +53,7 @@ export class usersService implements Resolve<any>
      */
     resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<any> | Promise<any> | any
     {
-        return null;new Promise((resolve, reject) => {
+        new Promise((resolve, reject) => {
 
             Promise.all([
                 this.getUsers(),
@@ -86,27 +86,23 @@ export class usersService implements Resolve<any>
      */
     getUsers(): Promise<any>
     {
-        return null;new Promise((resolve, reject) => {
-                this._httpClient.get('http://localhost:3000/user')
+        return new Promise((resolve, reject) => {
+                this._httpClient.get('http://localhost:3000/user/list')
                     .subscribe((response: any) => {
 
                         this.users = response;
 
-                        if ( this.filterBy === 'starred' )
+                        if ( this.filterBy === 'admins' )
                         {
-                            this.users = this.users.filter(_user => {
-                                return this.user.starred.includes(_user.id);
-                            });
-                        }
-
-                        if ( this.filterBy === 'frequent' )
+                            this.users = this.users.filter(_user => _user.type === 'Admin');
+                        }else if ( this.filterBy === 'etudiants' )
                         {
-                            this.users = this.users.filter(_user => {
-                                return this.user.frequentusers.includes(_user.id);
-                            });
+                            this.users = this.users.filter(_user => _user.type ==='Etudiant');
+                        }else if ( this.filterBy === 'professeurs' )
+                        {
+                            this.users = this.users.filter(_user => _user.type ==='Professeur');
                         }
-
-                        if ( this.searchText && this.searchText !== '' )
+                         if ( this.searchText && this.searchText !== '' )
                         {
                             this.users = FuseUtils.filterArrayByString(this.users, this.searchText);
                         }
@@ -115,7 +111,7 @@ export class usersService implements Resolve<any>
                             return new User(user);
                         });
 
-                        this.onusersChanged.next(this.users);
+                        this.onUsersChanged.next(this.users);
                         resolve(this.users);
                     }, reject);
             }
@@ -129,7 +125,7 @@ export class usersService implements Resolve<any>
      */
     getUserData(): Promise<any>
     {
-        return null;new Promise((resolve, reject) => {
+        return new Promise((resolve, reject) => {
                 this._httpClient.get('http://localhost:3000/user/1')
                     .subscribe((response: any) => {
                         this.user = response;
@@ -145,19 +141,19 @@ export class usersService implements Resolve<any>
      *
      * @param id
      */
-    toggleSelecteduser(id): void
+    toggleSelectedUser(id): void
     {
         // First, check if we already have that user as selected...
-        if ( this.selectedusers.length > 0 )
+        if ( this.selectedUsers.length > 0 )
         {
-            const index = this.selectedusers.indexOf(id);
+            const index = this.selectedUsers.indexOf(id);
 
             if ( index !== -1 )
             {
-                this.selectedusers.splice(index, 1);
+                this.selectedUsers.splice(index, 1);
 
                 // Trigger the next event
-                this.onSelectedusersChanged.next(this.selectedusers);
+                this.onSelectedUsersChanged.next(this.selectedUsers);
 
                 // Return
                 return;
@@ -165,10 +161,10 @@ export class usersService implements Resolve<any>
         }
 
         // If we don't have it, push as selected
-        this.selectedusers.push(id);
+        this.selectedUsers.push(id);
 
         // Trigger the next event
-        this.onSelectedusersChanged.next(this.selectedusers);
+        this.onSelectedUsersChanged.next(this.selectedUsers);
     }
 
     /**
@@ -176,13 +172,13 @@ export class usersService implements Resolve<any>
      */
     toggleSelectAll(): void
     {
-        if ( this.selectedusers.length > 0 )
+        if ( this.selectedUsers.length > 0 )
         {
             this.deselectUsers();
         }
         else
         {
-            this.selectusers();
+            this.selectUsers();
         }
     }
 
@@ -192,21 +188,21 @@ export class usersService implements Resolve<any>
      * @param filterParameter
      * @param filterValue
      */
-    selectusers(filterParameter?, filterValue?): void
+    selectUsers(filterParameter?, filterValue?): void
     {
-        this.selectedusers = [];
+        this.selectedUsers = [];
 
         // If there is no filter, select all users
         if ( filterParameter === undefined || filterValue === undefined )
         {
-            this.selectedusers = [];
+            this.selectedUsers = [];
             this.users.map(user => {
-                this.selectedusers.push(user.id);
+                this.selectedUsers.push(user.id);
             });
         }
 
         // Trigger the next event
-        this.onSelectedusersChanged.next(this.selectedusers);
+        this.onSelectedUsersChanged.next(this.selectedUsers);
     }
 
     /**
@@ -217,9 +213,9 @@ export class usersService implements Resolve<any>
      */
     updateUser(user): Promise<any>
     {
-        return null;new Promise((resolve, reject) => {
+        return new Promise((resolve, reject) => {
 
-            this._httpClient.post('http://localhost:3000/user/' + user.id, {...user})
+            this._httpClient.patch('http://localhost:3000/user/' + user.id, {...user})
                 .subscribe(response => {
                     this.getUsers();
                     resolve(response);
@@ -235,8 +231,8 @@ export class usersService implements Resolve<any>
      */
     updateUserData(userData): Promise<any>
     {
-        return null;new Promise((resolve, reject) => {
-            this._httpClient.post('api/users-user/' + this.user.id, {...userData})
+        return new Promise((resolve, reject) => {
+            this._httpClient.post('http://localhost:3000/user/' + this.user.id, {...userData})
                 .subscribe(response => {
                     this.getUserData();
                     this.getUsers();
@@ -250,10 +246,10 @@ export class usersService implements Resolve<any>
      */
     deselectUsers(): void
     {
-        this.selectedusers = [];
+        this.selectedUsers = [];
 
         // Trigger the next event
-        this.onSelectedusersChanged.next(this.selectedusers);
+        this.onSelectedUsersChanged.next(this.selectedUsers);
     }
 
     /**
@@ -264,8 +260,12 @@ export class usersService implements Resolve<any>
     deleteUser(user): void
     {
         const userIndex = this.users.indexOf(user);
-        this.users.splice(userIndex, 1);
-        this.onusersChanged.next(this.users);
+        this._httpClient.delete("http://localhost:3000/user/"+user.id).subscribe(
+            (e)=>{
+                this.users.splice(userIndex, 1);
+                this.onUsersChanged.next(this.users);
+            }
+        )
     }
 
     /**
@@ -273,15 +273,18 @@ export class usersService implements Resolve<any>
      */
     deleteSelectedUsers(): void
     {
-        for ( const userId of this.selectedusers )
+        for ( const userId of this.selectedUsers )
         {
             const user = this.users.find(_user => {
-                return null;_user.id === userId;
+                _user.id === userId;
             });
+            
             const userIndex = this.users.indexOf(user);
+            console.log(userIndex);
+
             this.users.splice(userIndex, 1);
         }
-        this.onusersChanged.next(this.users);
+        this.onUsersChanged.next(this.users);
         this.deselectUsers();
     }
 

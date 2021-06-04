@@ -10,6 +10,13 @@ import { use } from 'passport';
 
 @EntityRepository(User)
 export class UserRepository extends Repository<User> {
+  // async getUsers() {
+  //   let users = await this.createQueryBuilder('user').addSelect("user.password").getMany();
+  //   console.log(users);
+  //   return users;
+    
+    
+  // }
   async getUser(id: number) {
     return await this.findOne({ id });
   }
@@ -72,8 +79,8 @@ export class UserRepository extends Repository<User> {
       .getOne();
 
     if (user && (await user.validatePassword(password))) {
-      let role = user instanceof Admin ? '/Admin' : user instanceof Etudiant ? '/Etudiant' : '/Professeur';
-      return {id:user.id, email: user.email, nom: user.nom, prenom: user.prenom, role };
+     // let role = user instanceof Admin ? '/Admin' : user instanceof Etudiant ? '/Etudiant' : '/Professeur';
+      return {id:user.id, email: user.email, nom: user.nom, prenom: user.prenom, role: user.type };
     }
     return null;
   }
