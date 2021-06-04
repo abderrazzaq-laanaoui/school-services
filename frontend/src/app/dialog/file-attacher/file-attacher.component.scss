@@ -1,23 +1,19 @@
 :host {
+    form {
+        width: 80vw;
+        max-width: 500px !important;
+    }
 
-    .content {
+    .form-errors-model {
+        flex: 1;
 
-        form {
-            width: 100%;
-            max-width: 800px !important;
+        code {
+            background: none !important;
         }
+    }
 
-        .form-errors-model {
-            flex: 1;
-
-            code {
-                background: none !important;
-            }
-        }
-
-        .horizontal-stepper-wrapper,
-        .vertical-stepper-wrapper {
-            max-width: 800px;
-        }
+    .horizontal-stepper-wrapper,
+    .vertical-stepper-wrapper {
+        max-width: 500px;
     }
 }

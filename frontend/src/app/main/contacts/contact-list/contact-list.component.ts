@@ -8,8 +8,8 @@ import { takeUntil } from 'rxjs/operators';
 import { fuseAnimations } from '@fuse/animations';
 import { FuseConfirmDialogComponent } from '@fuse/components/confirm-dialog/confirm-dialog.component';
 
-import { ContactsService } from 'app/main/apps/contacts/contacts.service';
-import { ContactsContactFormDialogComponent } from 'app/main/apps/contacts/contact-form/contact-form.component';
+import { ContactsService } from '../contacts.service';
+import { ContactsContactFormDialogComponent } from '../contact-form/contact-form.component';
 
 @Component({
     selector     : 'contacts-contact-list',
@@ -96,7 +96,7 @@ export class ContactsContactListComponent implements OnInit, OnDestroy
         this._contactsService.onFilterChanged
             .pipe(takeUntil(this._unsubscribeAll))
             .subscribe(() => {
-                this._contactsService.deselectContacts();
+                this._contactsService.deselectUsers();
             });
     }
 
@@ -144,7 +144,7 @@ export class ContactsContactListComponent implements OnInit, OnDestroy
                      */
                     case 'save':
 
-                        this._contactsService.updateContact(formData.getRawValue());
+                        this._contactsService.updateUser(formData.getRawValue());
 
                         break;
                     /**
@@ -173,7 +173,7 @@ export class ContactsContactListComponent implements OnInit, OnDestroy
         this.confirmDialogRef.afterClosed().subscribe(result => {
             if ( result )
             {
-                this._contactsService.deleteContact(contact);
+                this._contactsService.deleteUser(contact);
             }
             this.confirmDialogRef = null;
         });

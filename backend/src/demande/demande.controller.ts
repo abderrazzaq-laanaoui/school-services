@@ -4,7 +4,6 @@ import { GetUser } from 'src/user/get-user.decorator';
 import { Admin, Etudiant } from 'src/user/user.entity';
 import { DemandeService } from './demande.service';
 import { addDemandeDto } from './dto/add-demande.dto';
-import { DeliverDemandeDto } from './dto/deliver-demande.dto';
 
 @Controller('demande')
 @UseGuards(AuthGuard())
@@ -24,7 +23,11 @@ export class DemandeController {
   }
 
   @Patch(':id')
-  updateDemande(@Param('id', ParseIntPipe) id: number, @GetUser() user) {
+  deliverDemande(@Param('id', ParseIntPipe) id: number, @GetUser() user) {
     return this.demandeService.deliverDemande({ id }, user);
+  }
+  @Patch(':id')
+  rejectDemande(@Param('id',ParseIntPipe) id: number, @GetUser() user){
+    return this.demandeService.rejectDemande({ id }, user);
   }
 }

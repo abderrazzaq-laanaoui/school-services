@@ -5,7 +5,7 @@ import { takeUntil } from 'rxjs/operators';
 
 import { FuseConfirmDialogComponent } from '@fuse/components/confirm-dialog/confirm-dialog.component';
 
-import { ContactsService } from 'app/main/apps/contacts/contacts.service';
+import { ContactsService } from '../contacts.service';
 
 @Component({
     selector   : 'selected-bar',
@@ -52,7 +52,7 @@ export class ContactsSelectedBarComponent implements OnInit, OnDestroy
                 this.selectedContacts = selectedContacts;
                 setTimeout(() => {
                     this.hasSelectedContacts = selectedContacts.length > 0;
-                    this.isIndeterminate = (selectedContacts.length !== this._contactsService.contacts.length && selectedContacts.length > 0);
+                    this.isIndeterminate = (selectedContacts.length !== this._contactsService.users.length && selectedContacts.length > 0);
                 }, 0);
             });
     }
@@ -84,7 +84,7 @@ export class ContactsSelectedBarComponent implements OnInit, OnDestroy
      */
     deselectAll(): void
     {
-        this._contactsService.deselectContacts();
+        this._contactsService.deselectUsers();
     }
 
     /**
@@ -102,7 +102,7 @@ export class ContactsSelectedBarComponent implements OnInit, OnDestroy
             .subscribe(result => {
                 if ( result )
                 {
-                    this._contactsService.deleteSelectedContacts();
+                    this._contactsService.deleteSelectedUsers();
                 }
                 this.confirmDialogRef = null;
             });

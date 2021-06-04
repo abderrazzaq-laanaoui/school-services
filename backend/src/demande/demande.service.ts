@@ -1,13 +1,13 @@
 import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { GetUser } from 'src/user/get-user.decorator';
 import { Admin, Etudiant } from 'src/user/user.entity';
 import { DemandeRepository } from './demande.repository';
 import { addDemandeDto } from './dto/add-demande.dto';
-import { DeliverDemandeDto } from './dto/deliver-demande.dto';
+import { UpdateDemandeDto } from './dto/update-demande.dto';
 
 @Injectable()
 export class DemandeService {
+ 
   constructor(
     @InjectRepository(DemandeRepository)
     private demandeRepository: DemandeRepository,
@@ -22,8 +22,12 @@ export class DemandeService {
     throw new UnauthorizedException('You do not have authorization to do this opreration');
   }
 
-  async deliverDemande(deliverDemandeDto: DeliverDemandeDto, user: Admin) {
+  async deliverDemande(deliverDemandeDto: UpdateDemandeDto, user: Admin) {
     if (user instanceof Admin) return await this.demandeRepository.deliverDemande(deliverDemandeDto, user);
     throw new UnauthorizedException('You do not have authorization to do this opreration');
+  }
+  async rejectDemande(rejectDemandeDto: UpdateDemandeDto, user: Admin | Etudiant) {
+    if (user instanceof Admin) return await this.demandeRepository.deleteDemande(rejectDemandeDto);
+    if(user.demandes.find(d => d.id === rejectDemandeDto.id)) return; 
   }
 }

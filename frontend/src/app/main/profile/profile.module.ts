@@ -9,11 +9,12 @@ import { FuseSharedModule } from '@fuse/shared.module';
 import { ProfileService } from './profile.service';
 import { ProfileComponent } from './profile.component';
 import { ProfileAboutComponent } from './about/about.component';
+import { AuthService } from 'app/auth/auth.service';
 
 
 const routes = [
     {
-        path     : 'profile',
+        path     : 'profile/:id',
         component: ProfileComponent,
         resolve  : {
             profile: ProfileService
@@ -37,7 +38,8 @@ const routes = [
         FuseSharedModule
     ],
     providers   : [
-        ProfileService
+        ProfileService,
+        AuthService
     ]
 })
 export class ProfileModule

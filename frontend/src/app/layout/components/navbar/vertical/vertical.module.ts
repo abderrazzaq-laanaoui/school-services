@@ -4,8 +4,9 @@ import { MatIconModule } from '@angular/material/icon';
 
 import { FuseNavigationModule } from '@fuse/components';
 import { FuseSharedModule } from '@fuse/shared.module';
+import { LoginService } from 'app/main/login/login.service';
 
-import { NavbarVerticalStyle1Component } from 'app/layout/components/navbar/vertical/style-1/style-1.component';
+import { NavbarVerticalStyle1Component } from './vertical.component';
 
 @NgModule({
     declarations: [
@@ -20,7 +21,8 @@ import { NavbarVerticalStyle1Component } from 'app/layout/components/navbar/vert
     ],
     exports     : [
         NavbarVerticalStyle1Component
-    ]
+    ],
+    providers:[LoginService]
 })
 export class NavbarVerticalStyle1Module
 {

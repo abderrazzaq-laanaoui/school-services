@@ -1,6 +1,6 @@
 import { IsInt } from "class-validator";
 
-export class DeliverDemandeDto{
+export class UpdateDemandeDto{
   @IsInt()
   id: number;
 }

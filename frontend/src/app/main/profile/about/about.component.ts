@@ -14,7 +14,7 @@ import { ProfileService } from '../profile.service';
 })
 export class ProfileAboutComponent implements OnInit, OnDestroy
 {
-    about: any;
+    user: any;
 
     // Private
     private _unsubscribeAll: Subject<any>;
@@ -43,8 +43,8 @@ export class ProfileAboutComponent implements OnInit, OnDestroy
     {
         this._profileService.aboutOnChanged
             .pipe(takeUntil(this._unsubscribeAll))
-            .subscribe(about => {
-                this.about = about;
+            .subscribe(data => {
+                this.user = data;
             });
     }
 

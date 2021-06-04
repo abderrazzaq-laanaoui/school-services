@@ -6,9 +6,14 @@ import * as bcrypt from 'bcrypt';
 import * as _ from 'lodash';
 import { AuthCredentialDto } from './dto/auth-credential.dto';
 import { JwtPayload } from './auth/jwt-payload.interface';
+import { use } from 'passport';
 
 @EntityRepository(User)
 export class UserRepository extends Repository<User> {
+  async getUser(id: number) {
+    return await this.findOne({ id });
+  }
+
   async addStudent(addStudentDto: AddStudentDto): Promise<Partial<Etudiant>> {
     const { cin, cne, nom, prenom, email, password } = addStudentDto;
 
@@ -66,9 +71,9 @@ export class UserRepository extends Repository<User> {
       .where('user.email = :email', { email })
       .getOne();
 
-    if (user && (await user.validatePassword(password))){
-      let role = user instanceof Admin ? '/Admin': user instanceof Etudiant ? '/Etudiant': '/Professeur'
-      return { email: user.email, nom: user.nom, prenom: user.prenom, role };
+    if (user && (await user.validatePassword(password))) {
+      let role = user instanceof Admin ? '/Admin' : user instanceof Etudiant ? '/Etudiant' : '/Professeur';
+      return {id:user.id, email: user.email, nom: user.nom, prenom: user.prenom, role };
     }
     return null;
   }
@@ -77,4 +82,3 @@ export class UserRepository extends Repository<User> {
     return bcrypt.hash(password, salt);
   }
 }
- 

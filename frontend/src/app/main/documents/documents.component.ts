@@ -64,7 +64,9 @@ export class DocumentsComponent implements OnInit
     
     attachFile(contact){
         this._docService.populateDialog(contact);
-        this.dialog.open(FileAttacherComponent);
+        this.dialog.open(FileAttacherComponent,{
+          maxWidth:'fit-content'
+        });
     }
 
     

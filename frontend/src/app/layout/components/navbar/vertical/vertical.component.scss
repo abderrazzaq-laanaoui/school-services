@@ -9,7 +9,7 @@ fuse-sidebar {
 
             navbar {
 
-                navbar-vertical-style-1 {
+                navbar-vertical {
 
                     .navbar-top {
                         padding: 12px 0;
@@ -90,7 +90,7 @@ fuse-sidebar {
 
 navbar {
 
-    &.vertical-style-1 {
+    &.vertical{
         display: flex;
         flex-direction: column;
         flex: 1 1 auto;
@@ -108,7 +108,7 @@ navbar {
         }
     }
 
-    navbar-vertical-style-1 {
+    navbar-vertical{
         display: flex;
         flex-direction: column;
         width: 100%;

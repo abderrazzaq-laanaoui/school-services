@@ -1,13 +1,22 @@
-import { Body, Controller, Post,  ValidationPipe } from '@nestjs/common';
+import { Body, Controller, Get, Param, ParseIntPipe, Post, UseGuards, ValidationPipe } from '@nestjs/common';
+import { AuthGuard } from '@nestjs/passport';
 import { AddStudentDto, AddUserDto } from './dto/addUser.dto';
 import { AuthCredentialDto } from './dto/auth-credential.dto';
-import { Admin, Etudiant, Professeur } from './user.entity';
+import { GetUser } from './get-user.decorator';
+import { Admin, Etudiant, Professeur, User } from './user.entity';
 import { UserService } from './user.service';
 
 @Controller('user')
 export class UserController {
   constructor(private userService: UserService) {}
 
+  @UseGuards(AuthGuard())
+  @Get(':id')
+  getUser(@Param('id', ParseIntPipe) id: number, @GetUser() user: Etudiant | Admin | Professeur) {
+    return this.userService.getUser(id, user);
+  }
+
+  @UseGuards(AuthGuard())
   @Post('/etudiant')
   addEtudiant(@Body(ValidationPipe) addStudentDto: AddStudentDto): Promise<Partial<Etudiant>> {
     return this.userService.signUpStudent(addStudentDto);
@@ -27,5 +36,4 @@ export class UserController {
   signIn(@Body(ValidationPipe) authCredentialDto: AuthCredentialDto): Promise<{ accessToken: string }> {
     return this.userService.signIn(authCredentialDto);
   }
-
 }

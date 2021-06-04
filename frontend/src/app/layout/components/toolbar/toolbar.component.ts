@@ -1,30 +1,29 @@
-import { Component, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
-import { Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
-import * as _ from 'lodash';
+import { Component, OnDestroy, OnInit, ViewEncapsulation } from "@angular/core";
+import { Subject } from "rxjs";
+import { takeUntil } from "rxjs/operators";
+import * as _ from "lodash";
 
-import { FuseConfigService } from '@fuse/services/config.service';
-import { FuseSidebarService } from '@fuse/components/sidebar/sidebar.service';
-
-import { navigation } from 'app/navigation/navigation';
-import { FuseSplashScreenService } from '@fuse/services/splash-screen.service';
+import { FuseConfigService } from "@fuse/services/config.service";
+import { FuseSidebarService } from "@fuse/components/sidebar/sidebar.service";
+import { navigation } from "app/navigation/navigation";
+import { FuseSplashScreenService } from "@fuse/services/splash-screen.service";
+import { LoginService } from "app/main/login/login.service";
+import { Router } from "@angular/router";
 
 @Component({
-    selector     : 'toolbar',
-    templateUrl  : './toolbar.component.html',
-    styleUrls    : ['./toolbar.component.scss'],
-    encapsulation: ViewEncapsulation.None
+    selector: "toolbar",
+    templateUrl: "./toolbar.component.html",
+    styleUrls: ["./toolbar.component.scss"],
+    encapsulation: ViewEncapsulation.None,
 })
-
-export class ToolbarComponent implements OnInit, OnDestroy
-{
+export class ToolbarComponent implements OnInit, OnDestroy {
     horizontalNavbar: boolean;
     rightNavbar: boolean;
     hiddenNavbar: boolean;
-    languages: any;
     navigation: any;
     selectedLanguage: any;
     userStatusOptions: any[];
+    user: {id:string; nom: string; prenom: string; email: string };
 
     // Private
     private _unsubscribeAll: Subject<any>;
@@ -36,47 +35,18 @@ export class ToolbarComponent implements OnInit, OnDestroy
      * @param {FuseSidebarService} _fuseSidebarService
      */
     constructor(
+        private router : Router,
+        private loginService : LoginService,
         private _fuseConfigService: FuseConfigService,
         private _fuseSidebarService: FuseSidebarService,
-        private _fuseSplashScreenService: FuseSplashScreenService,
-
-    )
-    {
-        // Set the defaults
-        this.userStatusOptions = [
-            {
-                title: 'Online',
-                icon : 'icon-checkbox-marked-circle',
-                color: '#4CAF50'
-            },
-            {
-                title: 'Away',
-                icon : 'icon-clock',
-                color: '#FFC107'
-            },
-            {
-                title: 'Do not Disturb',
-                icon : 'icon-minus-circle',
-                color: '#F44336'
-            },
-            {
-                title: 'Invisible',
-                icon : 'icon-checkbox-blank-circle-outline',
-                color: '#BDBDBD'
-            },
-            {
-                title: 'Offline',
-                icon : 'icon-checkbox-blank-circle-outline',
-                color: '#616161'
-            }
-        ];
-
-   
+        private _fuseSplashScreenService: FuseSplashScreenService
+    ) {
         this.navigation = navigation;
-
         // Set the private defaults
         this._unsubscribeAll = new Subject();
 
+        // 
+        //this.user = this.authService.getUserData();
     }
 
     // -----------------------------------------------------------------------------------------------------
@@ -86,26 +56,23 @@ export class ToolbarComponent implements OnInit, OnDestroy
     /**
      * On init
      */
-    ngOnInit(): void
-    {
+    ngOnInit(): void {
         // Subscribe to the config changes
         this._fuseConfigService.config
             .pipe(takeUntil(this._unsubscribeAll))
             .subscribe((settings) => {
-                this.horizontalNavbar = settings.layout.navbar.position === 'top';
-                this.rightNavbar = settings.layout.navbar.position === 'right';
+                this.horizontalNavbar =
+                    settings.layout.navbar.position === "top";
+                this.rightNavbar = settings.layout.navbar.position === "right";
                 this.hiddenNavbar = settings.layout.navbar.hidden === true;
             });
-
-      
-
+            this.user = this.loginService.user;
     }
 
-    /**
+    /** 
      * On destroy
      */
-    ngOnDestroy(): void
-    {
+    ngOnDestroy(): void {
         // Unsubscribe from all subscriptions
         this._unsubscribeAll.next();
         this._unsubscribeAll.complete();
@@ -120,12 +87,18 @@ export class ToolbarComponent implements OnInit, OnDestroy
      *
      * @param key
      */
-    toggleSidebarOpen(key): void
-    {
+    toggleSidebarOpen(key): void {
         this._fuseSidebarService.getSidebar(key).toggleOpen();
     }
 
-
-
-
+    /**
+     * logOut
+     */
+    public logOut() {
+        this.loginService.logOut();
+    }
+    public gotoProfile(id:string)
+    {        
+        this.router.navigate(['profile',id])
+    }
 }

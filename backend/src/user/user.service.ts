@@ -1,4 +1,4 @@
-import { Injectable, UnauthorizedException } from '@nestjs/common';
+import { Injectable, NotFoundException, UnauthorizedException } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { InjectRepository } from '@nestjs/typeorm';
 import { AddStudentDto, AddUserDto } from './dto/addUser.dto';
@@ -14,6 +14,15 @@ export class UserService {
     private userRepository: UserRepository,
     private jwtService: JwtService,
   ) {}
+
+  async getUser(id: number, user: Etudiant | Admin | Professeur) {
+    if (user instanceof Admin) {
+      return await this.userRepository.getUser(id);
+    } else {
+      if (user.id === id) return await this.userRepository.getUser(id);
+      else throw new NotFoundException("L'utilisateur demandé n'existe pas!");
+    }
+  }
 
   async signUpStudent(addStudentDto: AddStudentDto): Promise<Partial<Etudiant>> {
     return this.userRepository.addStudent(addStudentDto);
@@ -37,4 +46,3 @@ export class UserService {
     }
   }
 }
- 

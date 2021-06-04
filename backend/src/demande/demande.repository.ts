@@ -3,11 +3,16 @@ import { EntityRepository, Repository } from 'typeorm';
 import { Demande } from './demande.entity';
 import { addDemandeDto } from './dto/add-demande.dto';
 import * as _ from 'lodash';
-import { DeliverDemandeDto } from './dto/deliver-demande.dto';
+import {  UpdateDemandeDto } from './dto/update-demande.dto';
 import { BadRequestException, NotFoundException } from '@nestjs/common';
 
 @EntityRepository(Demande)
 export class DemandeRepository extends Repository<Demande> {
+  async getDemande(id:number):Promise<Demande>{
+    let demande = await this.findOne(id);
+    if (!demande) throw new NotFoundException(`No demande with id ${id} was found !`);
+    return demande;
+  }
   async getDemandes(user: Admin | Etudiant) {
     if (user instanceof Admin) {
       return await this.find({ isDelivred: false });
@@ -29,16 +34,18 @@ export class DemandeRepository extends Repository<Demande> {
     return _.pick(await demande.save(), 'id');
   }
 
-  async deliverDemande(deliverDemandeDto: DeliverDemandeDto, user: Admin) {
-    const { id } = deliverDemandeDto;
-    let demande = await this.findOne(id);
-    if (!demande) throw new NotFoundException(`No demande with id ${id} was found !`);
-    if (demande.isDelivred) throw new BadRequestException(`Cannot deliver a document with id ${id}`);
+  async deliverDemande(deliverDemandeDto: UpdateDemandeDto, user: Admin) {
+    let demande = await this.getDemande(deliverDemandeDto.id);
+    if (demande.isDelivred ) throw new BadRequestException(`Cannot deliver a document with id ${demande.id}`);
 
     demande.isDelivred = true;
     demande.dateLaivraison = new Date();
     demande.livreur = user;
-    demande.path = `demande_${id}_${demande.date.getFullYear()}.pdf`;
+    demande.path = `demande_${demande.id}_${demande.date.getFullYear()}.pdf`;
     return _.pick(await demande.save(), 'id');
+  }
+  async deleteDemande(rejectDemandeDto: UpdateDemandeDto){
+    const {id} = rejectDemandeDto;
+    let demande = await this.delete({id});
   }
 }

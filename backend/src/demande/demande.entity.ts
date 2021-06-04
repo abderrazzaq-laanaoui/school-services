@@ -10,11 +10,12 @@ export class Demande extends BaseEntity {
   @Column()
   date: Date;
 
-  @Column({ default: null })
-  dateLaivraison: Date;
 
   @Column({ default: false })
   isDelivred: boolean;
+
+  @Column({ default: null })
+  dateLaivraison: Date;
 
   @Column({ default: null })
   path: string;

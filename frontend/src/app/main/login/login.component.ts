@@ -67,7 +67,7 @@ export class LoginComponent implements OnInit
     }
 
     login() {
-        const {email,password} = this.loginForm.controls;        
+        const {email, password} = this.loginForm.controls;        
         this.loginSerive.signIn(email.value,password.value);
     }
 }

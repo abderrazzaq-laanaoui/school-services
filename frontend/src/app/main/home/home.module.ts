@@ -10,9 +10,9 @@ import { MatTableModule } from '@angular/material/table';
 import { MatTabsModule } from '@angular/material/tabs';
 import { NgxChartsModule } from '@swimlane/ngx-charts';
 
-import { FuseSharedModule } from '../../../@fuse/shared.module';
-import { FuseSidebarModule } from '../../../@fuse/components';
-import { FuseWidgetModule } from '../../../@fuse/components/widget/widget.module';
+import { FuseSharedModule } from '@fuse/shared.module';
+import { FuseSidebarModule } from '@fuse/components';
+import { FuseWidgetModule } from '@fuse/components/widget/widget.module';
 
 import { ProjectDashboardComponent } from './home.component';
 import { ProjectDashboardService } from './home.service';
@@ -46,9 +46,7 @@ const routes: Routes = [
         MatSelectModule,
         MatTableModule,
         MatTabsModule,
-
         NgxChartsModule,
-
         FuseSharedModule,
         FuseSidebarModule,
         FuseWidgetModule

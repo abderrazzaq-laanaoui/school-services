@@ -3,10 +3,10 @@
 #profile {
 
     .header {
-        height: 320px;
-        min-height: 320px;
-        max-height: 320px;
-        background: url('/assets/images/backgrounds/dark-material-bg.jpg') no-repeat 0 45%;
+        height:     220px;
+        min-height: 220px;
+        max-height: 220px;
+        background: url('/assets/images/backgrounds/dark-material-bg.jpg') no-repeat 0 75%;
         background-size: cover;
 
         .profile-image {
@@ -19,7 +19,7 @@
 
         .name {
             font-size: 34px;
-            color: #FFFFFF;
+            color: #292727;
 
             @include media-breakpoint('sm') {
                 margin-bottom: 32px;

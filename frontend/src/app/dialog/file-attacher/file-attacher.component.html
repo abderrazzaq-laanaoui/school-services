@@ -6,6 +6,7 @@
     name="form"
     [formGroup]="form"
     (ngSubmit)="onSubmit()"
+    style="width: 80vw;"
 >
     <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
         <mat-form-field appearance="outline" fxFlex="50" class="pr-4">
@@ -17,7 +18,7 @@
 
         <mat-form-field appearance="outline" fxFlex="50" class="pl-4">
             <mat-label>CNE</mat-label>
-            <input matInput formControlName="cne"  readonly />
+            <input matInput formControlName="cne" readonly />
             <mat-icon matSuffix class="secondary-text">vpn_key</mat-icon>
         </mat-form-field>
     </div>
@@ -65,11 +66,11 @@
             <mat-error>Last Name is required!</mat-error>
         </mat-form-field>
     </div>
-    
+
     <div fxLayout="row wrap" fxLayoutAlign="start center" fxFlex="1 0 auto">
         <mat-form-field appearance="outline" fxFlex="100">
             <mat-label>Motif</mat-label>
-            <input matInput formControlName="motif"  readonly />
+            <input matInput formControlName="motif" readonly />
             <mat-icon matSuffix class="secondary-text">info</mat-icon>
         </mat-form-field>
     </div>

@@ -7,7 +7,7 @@ import { RouterModule, Routes } from "@angular/router";
 import { MatMomentDateModule } from "@angular/material-moment-adapter";
 import { MatButtonModule } from "@angular/material/button";
 import { MatIconModule } from "@angular/material/icon";
-
+import { ContactsModule } from './main/contacts/contacts.module'
 import { FuseModule } from "@fuse/fuse.module";
 import { FuseSharedModule } from "@fuse/shared.module";
 import {
@@ -63,7 +63,7 @@ const appRoutes: Routes = [
         HomeModule,
         ProfileModule,
         DocumentsModule,
-        LoginModule,
+        LoginModule,ContactsModule
     ],
     providers: [
         {

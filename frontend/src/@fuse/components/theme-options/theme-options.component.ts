@@ -191,7 +191,7 @@ export class FuseThemeOptionsComponent implements OnInit, OnDestroy
                             folded             : false,
                             hidden             : false,
                             position           : 'left',
-                            variant            : 'vertical-style-1'
+                            variant            : 'vertical'
                         },
                         toolbar  : {
                             background           : 'fuse-white-500',
@@ -227,7 +227,7 @@ export class FuseThemeOptionsComponent implements OnInit, OnDestroy
                             folded             : false,
                             hidden             : false,
                             position           : 'left',
-                            variant            : 'vertical-style-1'
+                            variant            : 'vertical'
                         },
                         toolbar  : {
                             background           : 'fuse-white-500',
@@ -263,7 +263,7 @@ export class FuseThemeOptionsComponent implements OnInit, OnDestroy
                             folded             : false,
                             hidden             : false,
                             position           : 'left',
-                            layout             : 'vertical-style-1'
+                            layout             : 'vertical'
                         },
                         toolbar  : {
                             background           : 'fuse-white-500',
@@ -299,7 +299,7 @@ export class FuseThemeOptionsComponent implements OnInit, OnDestroy
                             folded             : false,
                             hidden             : false,
                             position           : 'top',
-                            variant            : 'vertical-style-1'
+                            variant            : 'vertical'
                         },
                         toolbar  : {
                             background           : 'fuse-white-500',

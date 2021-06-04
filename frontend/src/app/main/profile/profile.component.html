@@ -6,16 +6,16 @@
 
         <div class="user-info" fxLayout="column" fxLayoutAlign="center center" fxLayout.gt-sm="row"
              fxLayoutAlign.gt-sm="start center">
-            <img class="profile-image avatar huge" src="assets/images/avatars/Velazquez.jpg"
+            <img class="profile-image avatar huge" [src]="'assets/images/avatars/'+user.id+'.jpg'"
                  [@animate]="{value:'*',params:{delay:'50ms',scale:'0.2'}}">
             <div class="name" [@animate]="{value:'*',params:{delay:'100ms',x:'-25px'}}">
-                Charlie Adams
+                {{user.nom + " " + user.prenom}}
             </div>
         </div>
 
         <div class="actions" fxLayout="row" fxLayoutAlign="end center" [@animate]="{value:'*',params:{delay:'200ms'}}">
-            <button mat-raised-button color="accent" aria-label="Follow">Follow</button>
-            <button mat-raised-button color="primary" aria-label="Send Message">Send Message</button>
+            <button (click)="editEmail()" mat-raised-button color="accent" aria-label="Modifier l'email">Modifier l'email</button>
+            <button (click)="editPassword()" mat-raised-button color="primary" aria-label="Modifer mot de passe">Modifier mot de passe</button>
         </div>
 
     </div>
@@ -23,11 +23,7 @@
 
     <!-- CONTENT -->
     <div class="content">
-
-        
                 <profile-about></profile-about>
-
-
     </div>
     <!-- / CONTENT -->
 

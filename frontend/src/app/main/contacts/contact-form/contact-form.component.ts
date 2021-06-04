@@ -2,7 +2,7 @@ import { Component, Inject, ViewEncapsulation } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 
-import { Contact } from 'app/main/apps/contacts/contact.model';
+import { User } from '../user.model';
 
 @Component({
     selector     : 'contacts-contact-form-dialog',
@@ -14,7 +14,7 @@ import { Contact } from 'app/main/apps/contacts/contact.model';
 export class ContactsContactFormDialogComponent
 {
     action: string;
-    contact: Contact;
+    contact: User;
     contactForm: FormGroup;
     dialogTitle: string;
 
@@ -42,7 +42,7 @@ export class ContactsContactFormDialogComponent
         else
         {
             this.dialogTitle = 'New Contact';
-            this.contact = new Contact({});
+            this.contact = new User({});
         }
 
         this.contactForm = this.createContactForm();

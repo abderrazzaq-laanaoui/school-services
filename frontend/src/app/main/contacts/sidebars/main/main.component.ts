@@ -2,7 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
-import { ContactsService } from 'app/main/apps/contacts/contacts.service';
+import { ContactsService } from '../../contacts.service';
 
 @Component({
     selector   : 'contacts-main-sidebar',

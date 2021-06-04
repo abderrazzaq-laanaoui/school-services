@@ -9,28 +9,22 @@
             </header>
 
             <div class="content">
+                <div class="info-line" *ngIf="user.cne">
+                    <div class="title">CNE</div>
+                    <div class="info">{{user.cne || ""}}</div>
+                </div>
                 <div class="info-line">
-                    <div class="title">Gender</div>
-                    <!-- <div class="info">{{about.general.gender}}</div> -->
+                    <div class="title">CIN</div>
+                    <div class="info">{{user.cin}}</div>
+                </div>
+                <div class="info-line">
+                    <div class="title">Sexe</div>
+                    <div class="info">{{"Male"}}</div>
                 </div>
 
                 <div class="info-line">
-                    <div class="title">Birthday</div>
-                    <!-- <div class="info">{{about.general.birthday}}</div> -->
-                </div>
-
-                <div class="info-line">
-                    <div class="title">Locations</div>
-                    <div class="info location" fxLayout="row" fxLayoutAlign="start center"
-                         *ngFor="let location of about.general.locations">
-                        <!-- <span>{{location}}</span> -->
-                        <mat-icon class="s-16 ml-4">location_on</mat-icon>
-                    </div>
-                </div>
-
-                <div class="info-line">
-                    <div class="title">About Me</div>
-                    <!-- <div class="info">{{about.general.about}}</div> -->
+                    <div class="title">Date de naissance</div>
+                    <div class="info">{{"20/09/2000"}}</div>
                 </div>
             </div>
 
@@ -44,24 +38,16 @@
 
             <div class="content">
                 <div class="info-line">
-                    <div class="title">Occupation</div>
-                    <!-- <div class="info">{{about.work.occupation}}</div> -->
+                    <div class="title">Semestre current</div>
+                    <div class="info">{{"Semestre 4"}}</div>
                 </div>
 
                 <div class="info-line">
-                    <div class="title">Skills</div>
-                    <!-- <div class="info">{{about.work.skills}}</div> -->
+                    <div class="title">Classe</div>
+                    <div class="info">{{"S3/S4-2021"}}</div>
                 </div>
 
-                <div class="info-line">
-                    <div class="title">Jobs</div>
-                    <table class="info jobs">
-                        <tr class="job" *ngFor="let job of about.work.jobs">
-                            <!-- <td class="company">{{job.company}}</td> -->
-                            <!-- <td class="date">{{job.date}}</td> -->
-                        </tr>
-                    </table>
-                </div>
+              
             </div>
         </div>
 
@@ -74,25 +60,15 @@
             <div class="content">
                 <div class="info-line">
                     <div class="title">Address</div>
-                    <!-- <div class="info">{{about.contact.address}}</div> -->
+                    <div class="info">{{user.address || ""}}</div>
                 </div>
                 <div class="info-line">
-                    <div class="title">Tel.</div>
-                    <div class="info" *ngFor="let tel of about.contact.tel">
-                        <span>{{tel}}</span>
-                    </div>
-                </div>
-                <div class="info-line">
-                    <div class="title">Website</div>
-                    <div class="info" *ngFor="let website of about.contact.websites">
-                        <!-- <span>{{website}}</span> -->
-                    </div>
+                    <div class="title">N° Telephone</div>
+                    <div class="info">{{user.tel || ""}}</div>
                 </div>
                 <div class="info-line">
                     <div class="title">Emails</div>
-                    <div class="info" *ngFor="let email of about.contact.emails">
-                        <!-- <span>{{email}}</span> -->
-                    </div>
+                    <div class="info">{{user.email}}</div>
                 </div>
             </div>
 

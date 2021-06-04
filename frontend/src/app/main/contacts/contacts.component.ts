@@ -7,8 +7,8 @@ import { debounceTime, distinctUntilChanged, takeUntil } from 'rxjs/operators';
 import { fuseAnimations } from '@fuse/animations';
 import { FuseSidebarService } from '@fuse/components/sidebar/sidebar.service';
 
-import { ContactsService } from 'app/main/apps/contacts/contacts.service';
-import { ContactsContactFormDialogComponent } from 'app/main/apps/contacts/contact-form/contact-form.component';
+import { ContactsService } from './contacts.service';
+import { ContactsContactFormDialogComponent } from './contact-form/contact-form.component';
 
 @Component({
     selector     : 'contacts',
@@ -108,7 +108,7 @@ export class ContactsComponent implements OnInit, OnDestroy
                     return;
                 }
 
-                this._contactsService.updateContact(response.getRawValue());
+                this._contactsService.updateUser(response.getRawValue());
             });
     }
 
