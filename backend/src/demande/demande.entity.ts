@@ -17,8 +17,8 @@ export class Demande extends BaseEntity {
   @Column({ default: null })
   dateLaivraison: Date;
 
-  @Column({ default: null })
-  path: string;
+  @Column({ default: null, type: 'longtext' })
+  file: string;
 
   @Column()
   motif: string;

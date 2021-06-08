@@ -44,9 +44,6 @@ export class ToolbarComponent implements OnInit, OnDestroy {
         this.navigation = navigation;
         // Set the private defaults
         this._unsubscribeAll = new Subject();
-
-        // 
-        //this.user = this.authService.getUserData();
     }
 
     // -----------------------------------------------------------------------------------------------------

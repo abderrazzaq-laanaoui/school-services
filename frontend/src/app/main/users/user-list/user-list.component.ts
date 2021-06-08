@@ -10,6 +10,7 @@ import { FuseConfirmDialogComponent } from '@fuse/components/confirm-dialog/conf
 
 import {  UsersService } from '../users.service';
 import { ContactsContactFormDialogComponent } from '../user-form/user-form.component';
+import { Router } from '@angular/router';
 
 @Component({
     selector     : 'contacts-contact-list',
@@ -43,7 +44,8 @@ export class ContactsContactListComponent implements OnInit, OnDestroy
      */
     constructor(
         private _contactsService: UsersService,
-        public _matDialog: MatDialog
+        public _matDialog: MatDialog,
+        private router : Router
     )
     {
         // Set the private defaults
@@ -191,25 +193,11 @@ export class ContactsContactListComponent implements OnInit, OnDestroy
     {
         this._contactsService.toggleSelectedUser(userId);
     }
-
-    /**
-     * Toggle star
-     *
-     * @param userId
-     */
-    toggleStar(userId): void
-    {
-        if ( this.user.starred.includes(userId) )
-        {
-            this.user.starred.splice(this.user.starred.indexOf(userId), 1);
-        }
-        else
-        {
-            this.user.starred.push(userId);
-        }
-
-        this._contactsService.updateUserData(this.user);
+    visitProfile(id:number){
+        this.router.navigate(['/profile',id])
     }
+
+  
 }
 
 export class FilesDataSource extends DataSource<any>

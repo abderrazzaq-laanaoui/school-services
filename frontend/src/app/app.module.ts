@@ -26,6 +26,7 @@ import { CalendarModule } from "app/main/calendar/calendar.module";
 import { LoginModule } from "./main/login/login.module";
 import { HomeModule } from "./main/home/home.module";
 import { ProfileModule } from "./main/profile/profile.module";
+import { InfosModule } from "./main/infos/infos.module";
 import { DocumentsModule } from "./main/documents/documents.module";
 import { FileAttacherComponent } from "./dialog/file-attacher/file-attacher.component";
 
@@ -64,6 +65,7 @@ const appRoutes: Routes = [
         CalendarModule,
         HomeModule,
         ProfileModule,
+        InfosModule,
         DocumentsModule,
         LoginModule,ContactsModule
     ],

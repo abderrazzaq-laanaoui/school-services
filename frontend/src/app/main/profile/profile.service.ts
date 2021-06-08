@@ -35,9 +35,7 @@ export class ProfileService implements Resolve<any> {
         route: ActivatedRouteSnapshot,
         state: RouterStateSnapshot
     ): Observable<any> | Promise<any> | any {
-        return new Promise((resolve, reject) => {
-                console.log("params",route.params);
-                
+        return new Promise((resolve, reject) => {                
                 Promise.all([this.getAbout(route.params.id)]).then(() => {
                     resolve();
                 }, reject);            

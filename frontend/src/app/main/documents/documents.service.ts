@@ -1,6 +1,6 @@
 import { Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
-import { FormBuilder, FormGroup, Validators } from "@angular/forms";
+import {  FormBuilder, FormGroup, Validators } from "@angular/forms";
 import {
     ActivatedRouteSnapshot,
     Resolve,
@@ -8,9 +8,11 @@ import {
     RouterStateSnapshot,
 } from "@angular/router";
 import { Observable } from "rxjs";
+import { ToastrService } from 'ngx-toastr';
 
 @Injectable()
 export class DocumentsService implements Resolve<any> {
+   
     projects: any[];
     data = {
         title: "Demandes des documents",
@@ -37,7 +39,8 @@ export class DocumentsService implements Resolve<any> {
     constructor(
         private router: Router,
         private _httpClient: HttpClient,
-        private _formBuilder: FormBuilder
+        private _formBuilder: FormBuilder,
+        private toastr :ToastrService
     ) {}
 
     /**
@@ -77,11 +80,26 @@ export class DocumentsService implements Resolve<any> {
         });
     }
 
+    sendDoc(id: number, file: string) {
+        return new Promise((resolve, reject) => {
+            this._httpClient.patch("http://localhost:3000/demande/"+id,{file}).subscribe(
+                (response: any) => {
+                    this.getWidgets();
+                    this.toastr.success("Le document a été bien delivré");
+                    resolve();
+                },
+                (reject) => {
+                    this.toastr.error(reject.error.message,"ERREUR");
+                }
+            );
+        });
+      }
     /**
      * populateDialog
      */
     public populateDialog(request): void {
         this.contactForm = this._formBuilder.group({
+            id: [request.id , Validators.required],
             cne: [request.etudiant.cne || "-", Validators.required],
             cin: [request.etudiant.cin, Validators.required],
             firstName: [request.etudiant.prenom, Validators.required],

@@ -7,7 +7,7 @@ export class Document  extends BaseEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column({ enum: [DocumentTypes.COURS, DocumentTypes.TD, DocumentTypes.TP] })
+  @Column()
   type: DocumentTypes;
 
   @Column()

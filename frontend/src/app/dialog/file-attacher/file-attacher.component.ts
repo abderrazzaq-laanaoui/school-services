@@ -12,6 +12,7 @@ import { Subject } from 'rxjs';
 export class FileAttacherComponent implements OnInit,OnDestroy {
 
   form: FormGroup;
+  private _file;
 
   // Private
   private _unsubscribeAll: Subject<any>;
@@ -41,6 +42,7 @@ export class FileAttacherComponent implements OnInit,OnDestroy {
   {
       // Reactive Form
       this.form = this._docService.contactForm;     
+      this._file ="";
   }
 
   /**
@@ -61,11 +63,24 @@ export class FileAttacherComponent implements OnInit,OnDestroy {
    * onSubmit
    */
   public onSubmit() {
-    if (this.form.valid) {
-      //this._docService.sendDoc(this.form.controls.cne)
-      this.onClose();       
+    let fileExt = "";
+    try {
+      fileExt = this.form.controls.file.value._fileNames.split('.')[1].toLowerCase() ;
+    } catch (e) { return; }
+    if (this.form.valid && fileExt === "pdf") {
+      const id = this.form.controls.id.value;
+      this._docService.sendDoc(id,this._file)
+      // this.onClose();       
     }
   }
+  handleUpload(event) {
+    const file = event.target.files[0];
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = () => {
+        this._file = reader.result;
+    };
+}
 
   /**
    * onClose

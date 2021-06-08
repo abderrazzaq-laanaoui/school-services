@@ -23,8 +23,8 @@ export class DemandeController {
   }
 
   @Patch(':id')
-  deliverDemande(@Param('id', ParseIntPipe) id: number, @GetUser() user) {
-    return this.demandeService.deliverDemande({ id }, user);
+  deliverDemande(@Param('id', ParseIntPipe) id: number,@Body('file') file:string, @GetUser() user) {
+    return this.demandeService.deliverDemande({ id, file }, user);
   }
   @Patch(':id')
   rejectDemande(@Param('id',ParseIntPipe) id: number, @GetUser() user){

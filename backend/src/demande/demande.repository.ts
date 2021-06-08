@@ -3,8 +3,9 @@ import { EntityRepository, Repository } from 'typeorm';
 import { Demande } from './demande.entity';
 import { addDemandeDto } from './dto/add-demande.dto';
 import * as _ from 'lodash';
-import {  UpdateDemandeDto } from './dto/update-demande.dto';
+import {  UpdateDemandeDto } from './dto/upload-demande.dto';
 import { BadRequestException, NotFoundException } from '@nestjs/common';
+import { RejectDemandeDto } from './dto/reject-file.dto';
 
 @EntityRepository(Demande)
 export class DemandeRepository extends Repository<Demande> {
@@ -41,11 +42,12 @@ export class DemandeRepository extends Repository<Demande> {
     demande.isDelivred = true;
     demande.dateLaivraison = new Date();
     demande.livreur = user;
-    demande.path = `demande_${demande.id}_${demande.date.getFullYear()}.pdf`;
+    demande.file = deliverDemandeDto.file;
     return _.pick(await demande.save(), 'id');
   }
-  async deleteDemande(rejectDemandeDto: UpdateDemandeDto){
+  
+  async deleteDemande(rejectDemandeDto: RejectDemandeDto){
     const {id} = rejectDemandeDto;
-    let demande = await this.delete({id});
+    return await this.delete({id});
   }
 }

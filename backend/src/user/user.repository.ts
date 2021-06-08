@@ -1,7 +1,7 @@
 import { EntityRepository, Repository } from 'typeorm';
 import { AddStudentDto, AddUserDto } from './dto/addUser.dto';
 import { Admin, Etudiant, Professeur, User } from './user.entity';
-import { ConflictException } from '@nestjs/common';
+import { ConflictException, NotFoundException } from '@nestjs/common';
 import * as bcrypt from 'bcrypt';
 import * as _ from 'lodash';
 import { AuthCredentialDto } from './dto/auth-credential.dto';
@@ -10,13 +10,19 @@ import { use } from 'passport';
 
 @EntityRepository(User)
 export class UserRepository extends Repository<User> {
-  // async getUsers() {
-  //   let users = await this.createQueryBuilder('user').addSelect("user.password").getMany();
-  //   console.log(users);
-  //   return users;
+  async updateUser(id: number, userData: any) {
+    let user = await this.findOne({id});    
+    if(!user) throw new NotFoundException("L'utilisateur demandé n'existe pas!");
+    user.nom = userData.nom;
+    user.prenom = userData.prenom;
+    user.email = userData.email;
+    user.cin = userData.cin;
+    if(user instanceof Etudiant && userData.cne)
+      user.cne = userData.cne;
     
-    
-  // }
+    return await user.save();
+    }
+
   async getUser(id: number) {
     return await this.findOne({ id });
   }
@@ -65,9 +71,7 @@ export class UserRepository extends Repository<User> {
     try {
       return await user.save();
     } catch (e) {
-      if (e.code === '23505')
-        // deplicate unique keys
-        throw new ConflictException(e.detail);
+      if (e.code === '23505') throw new ConflictException(e.detail);// deplicate unique keys
     }
   }
 

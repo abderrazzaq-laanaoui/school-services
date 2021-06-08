@@ -1,4 +1,4 @@
-import { Injectable, NotFoundException, UnauthorizedException } from '@nestjs/common';
+import { ForbiddenException, Injectable, NotFoundException, UnauthorizedException } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { InjectRepository } from '@nestjs/typeorm';
 import { AddStudentDto, AddUserDto } from './dto/addUser.dto';
@@ -9,18 +9,22 @@ import { UserRepository } from './user.repository';
 
 @Injectable()
 export class UserService {
+  async updateUser(id: number, userData: any, user: Etudiant | Admin | Professeur) {
+    if(user instanceof Admin || id === user.id) {
+      return await this.userRepository.updateUser(id, userData)
+    }
+    throw new ForbiddenException("Vous pouvez pas effectuer cette operation!");
+  }
+
   async deleteUser(id: number, user: Etudiant | Admin | Professeur) {
-    throw new Error('Method not implemented.');
+    if(user instanceof Admin) return await this.userRepository.delete(id);
+    throw new ForbiddenException("Vous pouvez pas effectuer cette operation!");
+    
   }
   async getUsers(user: Etudiant | Admin | Professeur) {
-    if (user instanceof Admin) {
-      const res = await this.userRepository.find();
-      console.log(res);
-
-      return res;
-    }
-    if (user instanceof Professeur) return 'list edtudiant';
-    throw new UnauthorizedException("Vous avez pas les droit d'access à ce resource");
+    if (user instanceof Admin)  return await this.userRepository.find();
+    // if (user instanceof Professeur) return 'list edtudiant'; //TODO : RETURN LIST OF STUDENTS 
+    throw new ForbiddenException("Vous avez pas les droit d'access à ce resource");
   }
   constructor(
     @InjectRepository(UserRepository)
@@ -38,7 +42,7 @@ export class UserService {
   }
 
   async signUpStudent(addStudentDto: AddStudentDto): Promise<Partial<Etudiant>> {
-    return this.userRepository.addStudent(addStudentDto);
+    return  this.userRepository.addStudent(addStudentDto);
   }
 
   async signUpProfesseur(addProfesseurDto: AddUserDto): Promise<Partial<Professeur>> {
@@ -55,7 +59,7 @@ export class UserService {
       const accessToken = await this.jwtService.sign(payload);
       return { accessToken };
     } catch (e) {
-      throw new UnauthorizedException('Invalid Credentails');
+      throw new UnauthorizedException('Données invalid!');
     }
   }
 }

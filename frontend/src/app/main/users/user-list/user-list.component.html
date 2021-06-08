@@ -37,10 +37,10 @@
 
     <!-- CIN Column -->
     <ng-container matColumnDef="cin">
-        <mat-header-cell *matHeaderCellDef fxHide  fxShow.gt-sm>
+        <mat-header-cell *matHeaderCellDef fxHide fxShow.gt-sm>
             CIN
         </mat-header-cell>
-        <mat-cell *matCellDef="let user" fxHide   fxShow.gt-sm>
+        <mat-cell *matCellDef="let user" fxHide fxShow.gt-sm>
             <p class="phone text-truncate">
                 {{ user.cin }}
             </p>
@@ -59,8 +59,6 @@
         </mat-cell>
     </ng-container>
 
-  
-
     <!-- Buttons Column -->
     <ng-container matColumnDef="buttons">
         <mat-header-cell *matHeaderCellDef></mat-header-cell>
@@ -77,11 +75,20 @@
                 <mat-menu #moreMenu="matMenu">
                     <button
                         mat-menu-item
+                        aria-label="visiter profile"
+                        (click)="visitProfile(user.id)"
+                    >
+                        <mat-icon>person</mat-icon>
+                        <span>Profile</span>
+                    </button>
+                    <hr class="list-devider">
+                    <button
+                        mat-menu-item
                         aria-label="remove"
                         (click)="deleteContact(user)"
                     >
                         <mat-icon>delete</mat-icon>
-                        <span>Remove</span>
+                        <span>Supprimer</span>
                     </button>
                 </mat-menu>
             </div>

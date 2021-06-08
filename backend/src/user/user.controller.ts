@@ -33,6 +33,8 @@ export class UserController {
   @UseGuards(AuthGuard())
   @Post('/professeur')
   addProfesseur(@Body(ValidationPipe) addProfesseurDto: AddUserDto): Promise<Partial<Professeur>> {
+    console.log(addProfesseurDto);
+    
     return this.userService.signUpProfesseur(addProfesseurDto);
   }
 
@@ -50,13 +52,12 @@ export class UserController {
   @UseGuards(AuthGuard())
   @Patch(':id')
   updateUser(@Param('id', ParseIntPipe) id: number,@Body() userData, @GetUser() user: Etudiant | Admin | Professeur){
-    console.log(id,'=>',userData);
-    //TODO
+    return this.userService.updateUser(id,userData,user);
   }
+  
   @UseGuards(AuthGuard())
   @Delete(':id')
   deleteUser(@Param('id', ParseIntPipe) id: number,@GetUser() user: Etudiant | Admin | Professeur){
-    //TODO
     return this.userService.deleteUser(id,user);
     
   }

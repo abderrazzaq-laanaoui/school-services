@@ -10,21 +10,26 @@ import { MatInputModule } from '@angular/material/input';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatTableModule } from '@angular/material/table';
 import { MatToolbarModule } from '@angular/material/toolbar';
-
+import { MatSelectModule } from '@angular/material/select';
 import { FuseSharedModule } from '@fuse/shared.module';
 import { FuseConfirmDialogModule, FuseSidebarModule } from '@fuse/components';
-
+import { RoleGuardService as RoleGuard} from 'app/auth/role-guard.service'
 import { ContactsComponent } from './users.component';
 import { UsersService } from './users.service';
 import { ContactsContactListComponent } from './user-list/user-list.component';
 import { ContactsSelectedBarComponent } from './selected-bar/selected-bar.component';
 import { ContactsMainSidebarComponent } from './sidebars/main/main.component';
 import { ContactsContactFormDialogComponent } from './user-form/user-form.component';
+import { ReactiveFormsModule } from '@angular/forms';
 
 const routes: Routes = [
     {
         path     : 'users',
         component: ContactsComponent,
+        canActivate: [RoleGuard],
+        data: {
+            expectedRole: ["Admin"],
+        },
         resolve  : {
             contacts: UsersService
         }
@@ -41,6 +46,8 @@ const routes: Routes = [
     ],
     imports        : [
         RouterModule.forChild(routes),
+        ReactiveFormsModule,
+        MatSelectModule,
         MatButtonModule,
         MatCheckboxModule,
         MatDatepickerModule,
@@ -60,7 +67,9 @@ const routes: Routes = [
     ],
     entryComponents: [
         ContactsContactFormDialogComponent
-    ]
+    ],
+    exports:[ ReactiveFormsModule,
+        MatSelectModule,]
 })
 export class ContactsModule
 {

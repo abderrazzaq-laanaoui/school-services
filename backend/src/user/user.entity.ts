@@ -25,8 +25,6 @@ export abstract class User extends BaseEntity {
   @Column({ unique: true })
   cin: string;
 
-
-
   @Column()
   nom: string;
 

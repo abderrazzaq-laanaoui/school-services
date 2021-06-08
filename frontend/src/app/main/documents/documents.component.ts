@@ -62,11 +62,12 @@ export class DocumentsComponent implements OnInit
       return  new Date(JSON.parse(date));
     }
     
-    attachFile(contact){
-        this._docService.populateDialog(contact);
-        this.dialog.open(FileAttacherComponent,{
+    attachFile(request){
+        this._docService.populateDialog(request);
+       this.dialog.open(FileAttacherComponent,{
           maxWidth:'fit-content'
         });
+        
     }
 
     
@@ -82,6 +83,8 @@ export class DocumentsComponent implements OnInit
 
     dialogRef.afterClosed().subscribe(dialogResult => {
       this.result = dialogResult;      
+      console.log(dialogResult);
+      
     });
   }
   
@@ -115,6 +118,10 @@ export class FilesDataSource extends DataSource<any>
      */
     disconnect(): void
     {
+    }
+
+    uploadFile(event){
+
     }
 }
 

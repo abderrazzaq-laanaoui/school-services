@@ -8,6 +8,7 @@
     (ngSubmit)="onSubmit()"
     style="width: 80vw;"
 >
+<input type="number" name="id"  formControlName="id" required readonly [hidden]="true">
     <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
         <mat-form-field appearance="outline" fxFlex="50" class="pr-4">
             <mat-label>CIN</mat-label>
@@ -82,6 +83,7 @@
                 formControlName="file"
                 placeholder="click here to add a file"
                 [accept]="'.pdf'"
+                (change)="handleUpload($event)"
                 required
             ></ngx-mat-file-input>
             <mat-icon matSuffix>folder</mat-icon>

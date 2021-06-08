@@ -7,10 +7,11 @@ export class User
     prenom: string;
     avatar: string;
     cin: string;
+    cne?: string;
     type: string;
     email: string;
-    phone: string;
-    address: string;
+    tel: string;
+    password?: string;
     birthday: string;
 
     /**
@@ -28,7 +29,7 @@ export class User
             this.cin = user.cin || '';
             this.email = user.email || '';
             this.type = user.type || '';
-            this.address = user.address || '';
+            this.password = user.password || '';
             this.birthday = user.birthday || '';
         }
     }

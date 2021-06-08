@@ -1,0 +1,48 @@
+<div id="info" class="page-layout simple full-width">
+
+    <!-- HEADER -->
+    <div class="header accent p-16 p-sm-24" fxLayout="column" fxLayoutAlign="center center">
+
+        <div class="hero-text mb-16">
+            <h1>Flash Infos</h1>
+        </div>
+
+        <div class="search mat-elevation-z7" fxLayout="row" fxLayoutAlign="start center">
+            <mat-icon>search</mat-icon>
+            <input [formControl]="searchInput" placeholder="Chercher dans les infos..." fxFlex>
+        </div>
+
+    </div>
+    <!-- / HEADER -->
+
+    <!-- CONTENT -->
+    <div class="content px-16 py-24 px-sm-24 py-sm-32">
+
+        <mat-accordion class="infos-accordion">
+
+            <mat-expansion-panel *ngFor="let info of infosFiltered.reverse(); let i = index" [expanded]="step === i" (opened)="setStep(i)" >
+                <mat-expansion-panel-header>
+                    <mat-panel-title fxLayout="row" fxLayoutAlign="start center">
+                        <mat-icon class="mr-12 s-20 secondary-text">info</mat-icon>
+                        {{info.title}}
+                    </mat-panel-title>
+                </mat-expansion-panel-header>
+                {{info.content}}
+            </mat-expansion-panel>
+        </mat-accordion>
+    </div>
+    <!-- / CONTENT -->
+
+
+</div>
+<button
+    mat-fab
+    class="accent"
+    id="add-info-button"
+    (click)="newInfo()"
+    aria-label="add info"
+    [@animate]="{ value: '*', params: { delay: '300ms', scale: '.2' } }"
+>
+    <mat-icon>playlist_add</mat-icon>
+</button>
+<!-- ADD CONTACT BUTTON -->

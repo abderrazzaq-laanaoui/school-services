@@ -17,6 +17,7 @@ import { EpreuveModule } from './epreuve/epreuve.module';
 import { AnneeScolaireModule } from './annee-scolaire/annee-scolaire.module';
 import { ClasseModule } from './classe/classe.module';
 import { LigneDocumentAffectationModule } from './ligne-document-affectation/ligne-document-affectation.module';
+import { InfoModule } from './info/info.module';
 
 @Module({
   imports: [
@@ -37,6 +38,7 @@ import { LigneDocumentAffectationModule } from './ligne-document-affectation/lig
     AnneeScolaireModule,
     ClasseModule,
     LigneDocumentAffectationModule,
+    InfoModule,
   ],
   controllers: [],
   providers: [],
