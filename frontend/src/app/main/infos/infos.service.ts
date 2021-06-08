@@ -46,7 +46,6 @@ export class InfosService implements Resolve<any> {
     getInfos(): Promise<any[]> {
         return new Promise((resolve, reject) => {
             this._httpClient.get("http://localhost:3000/infos").subscribe((response: any) => {
-                console.log("infos=>",response);
                 this.infos = response;
                 this.onInfosChanged.next(this.infos);
                 resolve(this.infos);

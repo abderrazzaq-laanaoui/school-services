@@ -2,9 +2,9 @@ import { Component, OnInit, ViewEncapsulation } from "@angular/core";
 import { DataSource } from "@angular/cdk/collections";
 import { BehaviorSubject, Observable } from "rxjs";
 import * as shape from "d3-shape";
-
+import {FuseNavigationService} from '@fuse/components/navigation/navigation.service';
 import { fuseAnimations } from "@fuse/animations";
-
+import {navigation} from 'app/navigation/navigation';
 import { ProjectDashboardService } from "./home.service";
 import { FuseSidebarService } from "@fuse/components/sidebar/sidebar.service";
 
@@ -21,7 +21,7 @@ export class ProjectDashboardComponent implements OnInit {
 
     widgets: any;
     widget7: any = {};
-
+    navigation: any;
     dateNow = Date.now();
 
     /**
@@ -32,7 +32,9 @@ export class ProjectDashboardComponent implements OnInit {
      */
     constructor(
         private _fuseSidebarService: FuseSidebarService,
-        private _projectDashboardService: ProjectDashboardService
+        private _projectDashboardService: ProjectDashboardService,
+        private _fuseNavigationService: FuseNavigationService,
+
     ) {
         /**
          * Widget 5
@@ -40,6 +42,7 @@ export class ProjectDashboardComponent implements OnInit {
         this.widget7 = {
             currentRange: "T",
         };
+    
     }
 
     // -----------------------------------------------------------------------------------------------------
@@ -52,6 +55,15 @@ export class ProjectDashboardComponent implements OnInit {
     ngOnInit(): void {
         this.projects = this._projectDashboardService.projects;
         this.widgets = this._projectDashboardService.widgets;
+            // Get default navigation
+            this.navigation = navigation;
+
+            // Register the navigation to the service
+            this._fuseNavigationService.register('main', this.navigation);
+    
+            // Set the main navigation as our current navigation
+            this._fuseNavigationService.setCurrentNavigation('main');
+        
     }
 
     // -----------------------------------------------------------------------------------------------------

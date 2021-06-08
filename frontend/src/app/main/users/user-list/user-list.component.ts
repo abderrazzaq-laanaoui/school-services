@@ -137,7 +137,6 @@ export class ContactsContactListComponent implements OnInit, OnDestroy
                 {
                     return;
                 }
-                console.log('res=>',response);
                 
                 const actionType: string = response[0];
                 const formData: FormGroup = response[1];

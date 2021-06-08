@@ -2,15 +2,21 @@ import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Router } from "@angular/router";
 import { ToastrService } from 'ngx-toastr';
+import {FuseNavigationService} from '@fuse/components/navigation/navigation.service';
 import decode from "jwt-decode";
 @Injectable({
     providedIn: "root",
 })
 export class LoginService {
     private url: string;
-    user: {id:string; nom: string; prenom: string; email: string };
+    user: {id:string; nom: string; prenom: string; email: string , role:string};
 
-    constructor(private httpClient: HttpClient, private router: Router, private toastr: ToastrService) {
+    constructor(
+        private httpClient: HttpClient,
+        private router: Router,
+        private toastr: ToastrService,
+        private _fuseNavigationService: FuseNavigationService
+        ) {
         this.url = "http://localhost:3000/user/SignIn";
         this.setUser();
 
@@ -21,6 +27,7 @@ export class LoginService {
             (res: { accessToken: string }) => {
                 this.setToken(res.accessToken);
                 this.setUser();
+                this._fuseNavigationService.setCurrentNavigation(this.user.role.toLowerCase());
                 this.router.navigateByUrl("/home");
             },
             (res) => {                
@@ -34,9 +41,9 @@ export class LoginService {
     }
     setUser() {
         try{
-        const  {id, nom, prenom, email } = <any>decode(this.getToken());
-        this.user = {id, nom, prenom, email };
-        }catch(e){ this.user = {id:"", nom:"",prenom:"",email:""}}
+        const  {id, nom, prenom, email, role } = <any>decode(this.getToken());
+        this.user = {id, nom, prenom, email,role };
+        }catch(e){ this.user = {id:"", nom:"",prenom:"",email:"", role:""}}
     }
 
     setToken(token: string) {

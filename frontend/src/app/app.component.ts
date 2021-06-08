@@ -3,12 +3,18 @@ import {DOCUMENT} from '@angular/common';
 import {Platform} from '@angular/cdk/platform';
 import {Subject} from 'rxjs';
 import {takeUntil} from 'rxjs/operators';
-
+import decode from "jwt-decode";
 import {FuseConfigService} from '@fuse/services/config.service';
 import {FuseNavigationService} from '@fuse/components/navigation/navigation.service';
 import {FuseSidebarService} from '@fuse/components/sidebar/sidebar.service';
 import {FuseSplashScreenService} from '@fuse/services/splash-screen.service';
-import {navigation} from 'app/navigation/navigation';
+import {
+    navigation,
+    etudiantNavigation,
+    professeurNavigation,
+    adminNavigation,
+    noNavigation,
+} from 'app/navigation/navigation';
 
 @Component({
     selector: 'app',
@@ -45,14 +51,18 @@ export class AppComponent implements OnInit, OnDestroy {
         this.navigation = navigation;
 
         // Register the navigation to the service
-        this._fuseNavigationService.register('main', this.navigation);
-
+        this._fuseNavigationService.register('admin', adminNavigation);
+        this._fuseNavigationService.register('etudiant', etudiantNavigation);
+        this._fuseNavigationService.register('professeur', professeurNavigation);
+        this._fuseNavigationService.register('noNav', noNavigation);
+        let currentNav: string;
+        try {
+            currentNav = (<any>decode(localStorage.getItem("data"))).role.toLowerCase();
+        } catch (e) {
+            currentNav = "noNav";
+        }
         // Set the main navigation as our current navigation
-        this._fuseNavigationService.setCurrentNavigation('main');
-
-      
-
-    
+        this._fuseNavigationService.setCurrentNavigation(currentNav);
       
         // Add is-mobile class to the body if the platform is mobile
         if (this._platform.ANDROID || this._platform.IOS) {

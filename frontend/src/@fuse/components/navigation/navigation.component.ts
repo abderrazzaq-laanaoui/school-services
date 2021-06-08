@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnInit, ViewEncapsulation } from '@angular/core';
+import { AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnInit, ViewEncapsulation } from '@angular/core';
 import { merge, Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
@@ -35,7 +35,7 @@ export class FuseNavigationComponent implements OnInit
         // Set the private defaults
         this._unsubscribeAll = new Subject();
     }
-
+   
     // -----------------------------------------------------------------------------------------------------
     // @ Lifecycle hooks
     // -----------------------------------------------------------------------------------------------------
@@ -46,7 +46,7 @@ export class FuseNavigationComponent implements OnInit
     ngOnInit(): void
     {
         // Load the navigation either from the input or from the service
-        this.navigation = this.navigation || this._fuseNavigationService.getCurrentNavigation();
+        this.navigation =  this._fuseNavigationService.getCurrentNavigation();
 
         // Subscribe to the current navigation changes
         this._fuseNavigationService.onNavigationChanged
@@ -72,4 +72,5 @@ export class FuseNavigationComponent implements OnInit
              this._changeDetectorRef.markForCheck();
          });
     }
+  
 }

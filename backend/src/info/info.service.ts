@@ -11,8 +11,7 @@ export class InfoService {
   async getInfos(): Promise<Info[]> {
     return this._infoRepository.find();
   }
-
-
+  
   async addInfo(addInfoDto:AddInfoDto, user: Admin){
     if(user.type ==="Admin")
       return this._infoRepository.addInfo(addInfoDto)

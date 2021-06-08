@@ -82,8 +82,7 @@ export class DocumentsComponent implements OnInit
     });
 
     dialogRef.afterClosed().subscribe(dialogResult => {
-      this.result = dialogResult;      
-      console.log(dialogResult);
+      this.result = dialogResult;  
       
     });
   }

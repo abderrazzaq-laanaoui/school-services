@@ -9,7 +9,7 @@ export class Info extends BaseEntity{
   @Column()
   title:string;
 
-  @Column()
+  @Column({type:'text'})
   content:string;
 
   @Column()

@@ -33,8 +33,6 @@ export class UserController {
   @UseGuards(AuthGuard())
   @Post('/professeur')
   addProfesseur(@Body(ValidationPipe) addProfesseurDto: AddUserDto): Promise<Partial<Professeur>> {
-    console.log(addProfesseurDto);
-    
     return this.userService.signUpProfesseur(addProfesseurDto);
   }
 

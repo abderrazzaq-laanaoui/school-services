@@ -35,8 +35,6 @@ export class ContactsContactFormDialogComponent {
         this.action = _data.action;
 
         if (this.action === "edit") {
-            console.log(_data);
-
             this.dialogTitle = "Modifier l'utilisateur";
             this.user = _data.user;
         } else {
@@ -45,7 +43,6 @@ export class ContactsContactFormDialogComponent {
         }
 
         this.userForm = this.createContactForm(_data.action);
-        // console.log();
 
     }
 

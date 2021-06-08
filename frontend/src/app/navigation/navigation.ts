@@ -1,7 +1,7 @@
 import { FuseNavigation } from "@fuse/types";
 import decode from "jwt-decode";
 
-const adminNavigation: FuseNavigation[] = [
+export const adminNavigation: FuseNavigation[] = [
     {
         id: "dashbord",
         title: "tableau de bord",
@@ -64,7 +64,7 @@ const adminNavigation: FuseNavigation[] = [
         ],
     },
 ];
-const etudiantNavigation: FuseNavigation[] = [
+export const professeurNavigation: FuseNavigation[] = [
     {
         id: "student",
         title: "Espace Professeur",
@@ -109,7 +109,7 @@ const etudiantNavigation: FuseNavigation[] = [
         ],
     },
 ];
-const professeurNavigation: FuseNavigation[] = [
+export const etudiantNavigation : FuseNavigation[] = [
     {
         id: "teacher",
         title: "Espace Etudiant",
@@ -143,13 +143,14 @@ const professeurNavigation: FuseNavigation[] = [
     }
 ];
 
+export const noNavigation: FuseNavigation[]=[];
+
 let role: string;
 try {
     role = (<any>decode(localStorage.getItem("data"))).role;
 } catch (e) {
     role = "";
 }
-
 export const navigation: FuseNavigation[] =
     role === "Admin"
         ? adminNavigation

@@ -193,15 +193,12 @@ export class UsersService implements Resolve<any>
     selectUsers(filterParameter?, filterValue?): void
     {
         this.selectedUsers = [];
-        console.log("select");
-        
+ 
         // If there is no filter, select all users
         if ( filterParameter === undefined || filterValue === undefined )
         {
             this.selectedUsers = [];
             this.users.map(user => {
-                console.log("user==>",user);
-                
                 this.selectedUsers.push(user.id);
             });
         }
@@ -288,8 +285,6 @@ export class UsersService implements Resolve<any>
      */
     deleteSelectedUsers(): void
     {
-        console.log("users",this.users);
-        console.log("selected",this.selectUsers);
         
         for ( const userId of this.selectedUsers )
         {

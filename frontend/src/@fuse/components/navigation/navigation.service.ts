@@ -213,7 +213,6 @@ export class FuseNavigationService
         if ( !this._currentNavigationKey )
         {
             console.warn(`The current navigation is not set.`);
-
             return;
         }
 

@@ -16,6 +16,7 @@ import { LoginService } from './login.service';
 export class LoginComponent implements OnInit
 {
     loginForm: FormGroup;
+    forgetPassword: boolean = false;
 
     /**
      * Constructor
@@ -69,5 +70,12 @@ export class LoginComponent implements OnInit
     login() {
         const {email, password} = this.loginForm.controls;        
         this.loginSerive.signIn(email.value,password.value);
+    }
+    onForgetPassword(){
+        this.forgetPassword = true;
+        setTimeout(() => {
+            this.forgetPassword = false;
+        }, 10000);
+
     }
 }
