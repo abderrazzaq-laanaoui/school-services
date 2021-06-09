@@ -54,6 +54,12 @@ export class UserController {
   }
   
   @UseGuards(AuthGuard())
+  @Patch('/avatar/:id')
+  updateAvatar(@Param('id', ParseIntPipe) id: number,@Body('avatar') avatar:string, @GetUser() user: Etudiant | Admin | Professeur){
+    return this.userService.updateAvatar(id,avatar,user);
+  }
+  
+  @UseGuards(AuthGuard())
   @Delete(':id')
   deleteUser(@Param('id', ParseIntPipe) id: number,@GetUser() user: Etudiant | Admin | Professeur){
     return this.userService.deleteUser(id,user);

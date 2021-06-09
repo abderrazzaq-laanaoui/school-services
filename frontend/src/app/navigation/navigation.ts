@@ -49,7 +49,8 @@ export const adminNavigation: FuseNavigation[] = [
                 type: "item",
                 icon: "account_circle",
                 url: "/users",
-            },{
+            },
+            {
                 id: "infos",
                 title: "Flash Infos",
                 type: "item",
@@ -94,7 +95,7 @@ export const professeurNavigation: FuseNavigation[] = [
                     fg: "#FFFFFF",
                 },
             },
-             {
+            {
                 id: "infos",
                 title: "Flash Infos",
                 type: "item",
@@ -109,7 +110,7 @@ export const professeurNavigation: FuseNavigation[] = [
         ],
     },
 ];
-export const etudiantNavigation : FuseNavigation[] = [
+export const etudiantNavigation: FuseNavigation[] = [
     {
         id: "teacher",
         title: "Espace Etudiant",
@@ -139,23 +140,21 @@ export const etudiantNavigation : FuseNavigation[] = [
                     fg: "#FFFFFF",
                 },
             },
+            {
+                id: "infos",
+                title: "Flash Infos",
+                type: "item",
+                icon: "info",
+                url: "/infos",
+                badge: {
+                    title: "1",
+                    bg: "#F44336",
+                    fg: "#FFFFFF",
+                },
+            },
         ],
-    }
+    },
 ];
 
-export const noNavigation: FuseNavigation[]=[];
+export const noNavigation: FuseNavigation[] = [];
 
-let role: string;
-try {
-    role = (<any>decode(localStorage.getItem("data"))).role;
-} catch (e) {
-    role = "";
-}
-export const navigation: FuseNavigation[] =
-    role === "Admin"
-        ? adminNavigation
-        : role === "Etudiant"
-        ? etudiantNavigation
-        : role === "Professeur"
-        ? professeurNavigation
-        : [];

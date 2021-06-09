@@ -34,14 +34,16 @@ export abstract class User extends BaseEntity {
   @Column({ unique: true })
   email: string;
 
-  @Column({select: false})
+  @Column({ select: false })
   password: string;
 
-  @Column({select: false})
+  @Column({ select: false })
   salt: string;
-  
+
   @Column()
-  type:string;
+  type: string;
+  @Column({ type: 'longtext'})
+  avatar: string;
 
   async validatePassword(password: string): Promise<boolean> {
     const hash = await bcrypt.hash(password, this.salt);

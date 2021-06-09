@@ -17,7 +17,7 @@
 
     <!-- CONTENT -->
     <div class="content px-16 py-24 px-sm-24 py-sm-32">
-
+<p style="text-align: center;" *ngIf="infosFiltered.length === 0">Y'a aucune info a afficher :-)</p>
         <mat-accordion class="infos-accordion">
 
             <mat-expansion-panel *ngFor="let info of infosFiltered.reverse(); let i = index" [expanded]="step === i" (opened)="setStep(i)" >

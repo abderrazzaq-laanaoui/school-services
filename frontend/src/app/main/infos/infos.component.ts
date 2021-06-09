@@ -78,9 +78,6 @@ export class InfosComponent implements OnInit, OnDestroy, AfterContentInit
     }
     ngAfterContentInit(): void {
         this.user = this.loginService.user.role;
-     
-
-
     }
 
  

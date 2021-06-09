@@ -9,7 +9,6 @@ import {FuseNavigationService} from '@fuse/components/navigation/navigation.serv
 import {FuseSidebarService} from '@fuse/components/sidebar/sidebar.service';
 import {FuseSplashScreenService} from '@fuse/services/splash-screen.service';
 import {
-    navigation,
     etudiantNavigation,
     professeurNavigation,
     adminNavigation,
@@ -47,8 +46,6 @@ export class AppComponent implements OnInit, OnDestroy {
         private _fuseSplashScreenService: FuseSplashScreenService,
         private _platform: Platform
     ) {
-        // Get default navigation
-        this.navigation = navigation;
 
         // Register the navigation to the service
         this._fuseNavigationService.register('admin', adminNavigation);

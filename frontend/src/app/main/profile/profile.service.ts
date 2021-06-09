@@ -8,9 +8,11 @@ import {
     RouterStateSnapshot,
 } from "@angular/router";
 import { BehaviorSubject, Observable } from "rxjs";
+import { ToastrService } from "ngx-toastr";
 
 @Injectable()
 export class ProfileService implements Resolve<any> {
+    
     user: any;
     aboutOnChanged: BehaviorSubject<any>;
 
@@ -19,7 +21,7 @@ export class ProfileService implements Resolve<any> {
      *
      * @param {HttpClient} _httpClient
      */
-    constructor(private _httpClient: HttpClient, private router : Router) {
+    constructor(private _httpClient: HttpClient, private router : Router, private toastr: ToastrService) {
         // Set the defaults
         this.aboutOnChanged = new BehaviorSubject({});
     }
@@ -57,8 +59,23 @@ export class ProfileService implements Resolve<any> {
                     this.aboutOnChanged.next(this.user);
                     resolve(this.user);
                 }, reject=> {
+                        this.toastr.error("Page non trouvé", "ERREUR")
                         this.router.navigateByUrl('home')
                 });
         });
     }
+    updateAvatar(id: number, avatar: string | ArrayBuffer) {
+        return new Promise((resolve, reject) => {
+            this._httpClient
+                .patch("http://localhost:3000/user/avatar/ " + id,{avatar})
+                .subscribe(
+                    (data: any) => {
+                    this.user.avatar = data.avatar;                    
+                    this.aboutOnChanged.next(this.user);
+                    resolve(this.user);
+                }, reject=> {
+                    this.toastr.error(reject.message, "ERREUR")
+                        //this.router.navigateByUrl('home')
+                });
+        });    }
 }

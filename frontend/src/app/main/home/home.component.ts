@@ -4,7 +4,6 @@ import { BehaviorSubject, Observable } from "rxjs";
 import * as shape from "d3-shape";
 import {FuseNavigationService} from '@fuse/components/navigation/navigation.service';
 import { fuseAnimations } from "@fuse/animations";
-import {navigation} from 'app/navigation/navigation';
 import { ProjectDashboardService } from "./home.service";
 import { FuseSidebarService } from "@fuse/components/sidebar/sidebar.service";
 
@@ -55,14 +54,7 @@ export class ProjectDashboardComponent implements OnInit {
     ngOnInit(): void {
         this.projects = this._projectDashboardService.projects;
         this.widgets = this._projectDashboardService.widgets;
-            // Get default navigation
-            this.navigation = navigation;
 
-            // Register the navigation to the service
-            this._fuseNavigationService.register('main', this.navigation);
-    
-            // Set the main navigation as our current navigation
-            this._fuseNavigationService.setCurrentNavigation('main');
         
     }
 

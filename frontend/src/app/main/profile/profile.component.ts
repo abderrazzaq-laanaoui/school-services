@@ -2,6 +2,7 @@ import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 
 import { fuseAnimations } from '@fuse/animations';
 import { ProfileService } from './profile.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
     selector     : 'profile',
@@ -16,17 +17,28 @@ export class ProfileComponent implements OnInit
     /**
      * Constructor
      */
-    constructor(private _profileSerive: ProfileService)
-    {
+    constructor(
+        private _profileSerive: ProfileService,
+        private toastr: ToastrService
+        ){}
 
-    }
     ngOnInit(): void {
-        //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
-        //Add 'implements OnInit' to the class.
         this.user = this._profileSerive.user;
     }
 
     editPassword(){}
-    editEmail(){}
+    onAvatarSelected(event){
+        const file = event.target.files[0];
+        if(!['jpg', 'jpeg', 'png'].includes(file.name.split(".")[file.name.split(".").length -1].toLowerCase())){
+            this.toastr.error("seulment les formates suivants sont acceptées : 'png/jpg/jpeg'","ERREUR");
+            return;
+        }
+        const reader = new FileReader();
+        reader.readAsDataURL(file);
+        reader.onload = () => {
+            this._profileSerive.updateAvatar( this.user.id,reader.result)
+            .then(this.user = this._profileSerive.user);
+        };        
+    }
     
 }

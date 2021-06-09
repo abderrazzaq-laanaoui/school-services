@@ -208,13 +208,14 @@ export class UsersService implements Resolve<any>
     }
 
     addUser(res: User) {
+        console.log(res);
         return new Promise((resolve, reject) => {
             const type = res.type.toLowerCase()
             let data;
             if(type === 'etudiant')
-               data =  _.pick(res,'cne','cin','nom', 'prenom', 'email','password');
+               data =  _.pick(res,'cne','cin','nom', 'prenom', 'email','password', 'avatar');
             else
-                data =  _.pick(res,'cin','nom', 'prenom', 'email','password');
+                data =  _.pick(res,'cin','nom', 'prenom', 'email','password', 'avatar');
 
                     this._httpClient.post('http://localhost:3000/user/'+type , {...data})
                 .subscribe(response => {

@@ -19,6 +19,11 @@ export class AddUserDto {
   prenom: string;
 
   @IsString()
+  @MinLength(3)
+  @IsNotEmpty()
+  avatar: string;
+
+  @IsString()
   @IsEmail()
   email: string;
 

@@ -2,7 +2,6 @@ import { Component, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
-import { navigation } from '../../../../app/navigation/navigation';
 import {FuseConfigService} from '../../../../@fuse/services/config.service';
 
 @Component({
@@ -29,7 +28,6 @@ export class VerticalLayoutComponent implements OnInit, OnDestroy
     )
     {
         // Set the defaults
-        this.navigation = navigation;
 
         // Set the private defaults
         this._unsubscribeAll = new Subject();

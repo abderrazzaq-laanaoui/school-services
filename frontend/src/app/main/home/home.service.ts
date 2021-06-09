@@ -16,9 +16,7 @@ export class ProjectDashboardService implements Resolve<any>
      */
     constructor(
         private _httpClient: HttpClient
-    )
-    {
-    }
+    ){}
 
     /**
      * Resolver
@@ -29,16 +27,12 @@ export class ProjectDashboardService implements Resolve<any>
      */
     resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<any> | Promise<any> | any
     {
-
         return new Promise((resolve, reject) => {
-
             Promise.all([
                 this.getProjects(),
                 this.getWidgets()
             ]).then(
-                () => {
-                    resolve(null);
-                },
+                () => { resolve(null); },
                 reject
             );
         });
@@ -51,7 +45,6 @@ export class ProjectDashboardService implements Resolve<any>
      */
     getProjects(): Promise<any>
     {
-        return null;
         return new Promise((resolve, reject) => {
             this._httpClient.get('http://localhost:3300/projects')
                 .subscribe((response: any) => {
@@ -68,7 +61,6 @@ export class ProjectDashboardService implements Resolve<any>
      */
     getWidgets(): Promise<any>
     {
-        return null;
         return new Promise((resolve, reject) => {
             this._httpClient.get('http://localhost:3300/widgets')
                 .subscribe((response: any) => {

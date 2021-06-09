@@ -7,7 +7,7 @@ import {
 } from "@angular/core";
 import { NavigationEnd, Router } from "@angular/router";
 import { Subject } from "rxjs";
-import { delay, filter, take, takeUntil } from "rxjs/operators";
+import { delay, delayWhen, filter, take, takeUntil } from "rxjs/operators";
 
 import { FuseConfigService } from "@fuse/services/config.service";
 import { FuseNavigationService } from "@fuse/components/navigation/navigation.service";
@@ -24,7 +24,7 @@ import { LoginService } from "app/main/login/login.service";
 export class NavbarVerticalStyle1Component implements OnInit, OnDestroy {
     fuseConfig: any;
     navigation: any;
-    user: { id;nom; prenom; email };
+    user: { id:string, nom:string, prenom:string, email:string };
 
     // Private
     private _fusePerfectScrollbar: FusePerfectScrollbarDirective;
@@ -50,6 +50,7 @@ export class NavbarVerticalStyle1Component implements OnInit, OnDestroy {
     ) {
         // Set the private defaults
         this._unsubscribeAll = new Subject();
+       
     }
 
     // -----------------------------------------------------------------------------------------------------

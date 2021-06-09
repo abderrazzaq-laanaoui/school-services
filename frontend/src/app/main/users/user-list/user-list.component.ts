@@ -124,7 +124,7 @@ export class ContactsContactListComponent implements OnInit, OnDestroy
     editContact(user): void
     {
         this.dialogRef = this._matDialog.open(ContactsContactFormDialogComponent, {
-            panelClass: 'contact-form-dialog',
+            panelClass: 'user-form-dialog',
             data      : {
                 user: user,
                 action : 'edit'

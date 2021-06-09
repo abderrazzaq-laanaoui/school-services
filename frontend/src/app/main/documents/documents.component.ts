@@ -119,8 +119,6 @@ export class FilesDataSource extends DataSource<any>
     {
     }
 
-    uploadFile(event){
-
-    }
+  
 }
 

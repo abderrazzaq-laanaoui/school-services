@@ -9,7 +9,7 @@ import decode from "jwt-decode";
 })
 export class LoginService {
     private url: string;
-    user: {id:string; nom: string; prenom: string; email: string , role:string};
+    public user: {id:string; nom: string; prenom: string; email: string , role:string};
 
     constructor(
         private httpClient: HttpClient,
@@ -21,7 +21,8 @@ export class LoginService {
         this.setUser();
 
     }
-
+    
+    
     signIn(email: string, password: string) {
         return this.httpClient.post(this.url, { email, password }).subscribe(
             (res: { accessToken: string }) => {

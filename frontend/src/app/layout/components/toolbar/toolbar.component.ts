@@ -5,7 +5,6 @@ import * as _ from "lodash";
 
 import { FuseConfigService } from "@fuse/services/config.service";
 import { FuseSidebarService } from "@fuse/components/sidebar/sidebar.service";
-import { navigation } from "app/navigation/navigation";
 import { FuseSplashScreenService } from "@fuse/services/splash-screen.service";
 import { LoginService } from "app/main/login/login.service";
 import { Router } from "@angular/router";
@@ -41,7 +40,6 @@ export class ToolbarComponent implements OnInit, OnDestroy {
         private _fuseSidebarService: FuseSidebarService,
         private _fuseSplashScreenService: FuseSplashScreenService
     ) {
-        this.navigation = navigation;
         // Set the private defaults
         this._unsubscribeAll = new Subject();
     }

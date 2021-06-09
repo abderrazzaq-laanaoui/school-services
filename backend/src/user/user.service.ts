@@ -9,6 +9,30 @@ import { UserRepository } from './user.repository';
 
 @Injectable()
 export class UserService {
+  
+  
+  constructor(
+    @InjectRepository(UserRepository)
+    private userRepository: UserRepository,
+    private jwtService: JwtService,
+  ) {}
+
+  async getUser(id: number, user: Etudiant | Admin | Professeur) {
+    if (user instanceof Admin) {
+      return await this.userRepository.getUser(id);
+    } else {
+      if (user.id === id) return await this.userRepository.getUser(id);
+      else throw new NotFoundException("L'utilisateur demandé n'existe pas!");
+    }
+  }
+
+  async updateAvatar(id: number, avatar: string, user: Etudiant | Admin | Professeur) {
+    if(user instanceof Admin || user.id === id)
+      return await this.userRepository.updateAvatar(id, avatar);
+    throw new ForbiddenException("Vous pouvez pas effectuer cette operation!");
+    
+  }
+  
   async updateUser(id: number, userData: any, user: Etudiant | Admin | Professeur) {
     if(user instanceof Admin || id === user.id) {
       return await this.userRepository.updateUser(id, userData)
@@ -25,20 +49,6 @@ export class UserService {
     if (user instanceof Admin)  return await this.userRepository.find();
     // if (user instanceof Professeur) return 'list edtudiant'; //TODO : RETURN LIST OF STUDENTS 
     throw new ForbiddenException("Vous avez pas les droit d'access à ce resource");
-  }
-  constructor(
-    @InjectRepository(UserRepository)
-    private userRepository: UserRepository,
-    private jwtService: JwtService,
-  ) {}
-
-  async getUser(id: number, user: Etudiant | Admin | Professeur) {
-    if (user instanceof Admin) {
-      return await this.userRepository.getUser(id);
-    } else {
-      if (user.id === id) return await this.userRepository.getUser(id);
-      else throw new NotFoundException("L'utilisateur demandé n'existe pas!");
-    }
   }
 
   async signUpStudent(addStudentDto: AddStudentDto): Promise<Partial<Etudiant>> {

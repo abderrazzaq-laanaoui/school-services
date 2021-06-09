@@ -3,6 +3,7 @@ import { FormGroup } from '@angular/forms';
 import { MatDialogRef } from "@angular/material/dialog";
 import { DocumentsService } from 'app/main/documents/documents.service';
 import { Subject } from 'rxjs';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-file-attacher',
@@ -24,7 +25,8 @@ export class FileAttacherComponent implements OnInit,OnDestroy {
    */
   constructor(
       private _docService: DocumentsService,
-      private _dialogRef: MatDialogRef<FileAttacherComponent>
+      private _dialogRef: MatDialogRef<FileAttacherComponent>,
+      private toastr: ToastrService
   )
   {
       // Set the private defaults
@@ -66,11 +68,17 @@ export class FileAttacherComponent implements OnInit,OnDestroy {
     let fileExt = "";
     try {
       fileExt = this.form.controls.file.value._fileNames.split('.')[1].toLowerCase() ;
-    } catch (e) { return; }
-    if (this.form.valid && fileExt === "pdf") {
+    } catch (e) { 
+      this.toastr.error("Seulement les fichier pdf sont acceptés","ERREUR")
+      return; 
+    }
+    if(fileExt !== 'pdf'){
+      return;
+    }
+    if (this.form.valid ) {
       const id = this.form.controls.id.value;
       this._docService.sendDoc(id,this._file)
-      // this.onClose();       
+      this.onClose();       
     }
   }
   handleUpload(event) {
