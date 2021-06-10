@@ -24,7 +24,7 @@ import { LoginService } from "app/main/login/login.service";
 export class NavbarVerticalStyle1Component implements OnInit, OnDestroy {
     fuseConfig: any;
     navigation: any;
-    user: { id:string, nom:string, prenom:string, email:string };
+    user: any;
 
     // Private
     private _fusePerfectScrollbar: FusePerfectScrollbarDirective;

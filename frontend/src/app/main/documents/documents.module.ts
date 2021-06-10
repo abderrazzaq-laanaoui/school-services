@@ -34,7 +34,7 @@ const routes: Routes = [
         }
     }
 ];
-export function tokenGetter() {
+ function tokenGetter() {
     try{
     return localStorage.getItem("data");
     }catch(e){        
@@ -43,7 +43,8 @@ export function tokenGetter() {
 @NgModule({
     declarations: [
         DocumentsComponent,
-       // ConfirmDialogComponent
+    //  ConfirmDialogComponent 
+    // TODO: 
     ],
     imports     : [
         RouterModule.forChild(routes),

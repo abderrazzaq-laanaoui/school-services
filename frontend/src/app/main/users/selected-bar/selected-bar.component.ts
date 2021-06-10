@@ -25,11 +25,11 @@ export class ContactsSelectedBarComponent implements OnInit, OnDestroy
     /**
      * Constructor
      *
-     * @param {UsersService} _contactsService
+     * @param {UsersService} _usersService
      * @param {MatDialog} _matDialog
      */
     constructor(
-        private _contactsService: UsersService,
+        private _usersService: UsersService,
         public _matDialog: MatDialog
     )
     {
@@ -46,13 +46,13 @@ export class ContactsSelectedBarComponent implements OnInit, OnDestroy
      */
     ngOnInit(): void
     {
-        this._contactsService.onSelectedUsersChanged
+        this._usersService.onSelectedUsersChanged
             .pipe(takeUntil(this._unsubscribeAll))
             .subscribe(selectedContacts => {
                 this.selectedContacts = selectedContacts;
                 setTimeout(() => {
                     this.hasSelectedContacts = selectedContacts.length > 0;
-                    this.isIndeterminate = (selectedContacts.length !== this._contactsService.users.length && selectedContacts.length > 0);
+                    this.isIndeterminate = (selectedContacts.length !== this._usersService.users.length && selectedContacts.length > 0);
                 }, 0);
             });
     }
@@ -76,7 +76,7 @@ export class ContactsSelectedBarComponent implements OnInit, OnDestroy
      */
     selectAll(): void
     {
-        this._contactsService.selectUsers();
+        this._usersService.selectUsers();
     }
 
     /**
@@ -84,7 +84,7 @@ export class ContactsSelectedBarComponent implements OnInit, OnDestroy
      */
     deselectAll(): void
     {
-        this._contactsService.deselectUsers();
+        this._usersService.deselectUsers();
     }
 
     /**
@@ -102,7 +102,7 @@ export class ContactsSelectedBarComponent implements OnInit, OnDestroy
             .subscribe(result => {
                 if ( result )
                 {
-                    this._contactsService.deleteSelectedUsers();
+                    this._usersService.deleteSelectedUsers();
                 }
                 this.confirmDialogRef = null;
             });

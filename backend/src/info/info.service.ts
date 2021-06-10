@@ -6,6 +6,7 @@ import { InfoRepository } from './info.repository';
 
 @Injectable()
 export class InfoService {
+  
   constructor(private _infoRepository: InfoRepository) {}
 
   async getInfos(): Promise<Info[]> {
@@ -18,4 +19,10 @@ export class InfoService {
     throw new ForbiddenException("Vous n'avez pas les droit pour faire cette operation!");
     
   };
+  async deleteInfo(id: number, user : Admin) {
+    if(user instanceof Admin)
+      return await this._infoRepository.delete(id);
+    throw new ForbiddenException("Vous n'avez pas les droit pour faire cette operation!");
+    
+  }
 }

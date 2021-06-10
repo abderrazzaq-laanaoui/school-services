@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Post, UseGuards } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, ParseIntPipe, Post, UseGuards } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 import { GetUser } from 'src/user/get-user.decorator';
 import { Admin } from 'src/user/user.entity';
@@ -20,6 +20,11 @@ export class InfoController {
   @Post()
   addInfo( @Body() addInfoDto: AddInfoDto, @GetUser() user: Admin):Promise<Info>{
     return this._infoService.addInfo(addInfoDto, user);
+  }
+
+  @Delete(':id')
+  deleteInfo(@Param('id', ParseIntPipe) id:number, @GetUser() user: Admin){
+    return this._infoService.deleteInfo(id, user)
   }
 
 }

@@ -20,14 +20,19 @@
 <p style="text-align: center;" *ngIf="infosFiltered.length === 0">Y'a aucune info a afficher :-)</p>
         <mat-accordion class="infos-accordion">
 
-            <mat-expansion-panel *ngFor="let info of infosFiltered.reverse(); let i = index" [expanded]="step === i" (opened)="setStep(i)" >
-                <mat-expansion-panel-header>
-                    <mat-panel-title fxLayout="row" fxLayoutAlign="start center">
+            <mat-expansion-panel *ngFor="let info of infosFiltered.reverse(); let i = index" 
+                                    [expanded]="step === i" (opened)="setStep(i)" 
+                                    [disabled]="clickButton" (click)="clickButton=false" >
+                <mat-expansion-panel-header [ngClass]="{'stage': info.type==='Stage'}">
+                    <mat-panel-title fxLayout="row" fxLayoutAlign="start center" >
                         <mat-icon class="mr-12 s-20 secondary-text">info</mat-icon>
                         {{info.title}}
                     </mat-panel-title>
-                </mat-expansion-panel-header>
-                {{info.content}}
+                    <mat-panel-description fxLayoutAlign="end" *ngIf="user === 'Admin'" >
+                        <button mat-button (click)="onDelete(info.id)" color="warn"><mat-icon>delete</mat-icon></button>
+                    </mat-panel-description>
+                </mat-expansion-panel-header >
+               <p [innerHTML]="info.content"></p>
             </mat-expansion-panel>
         </mat-accordion>
     </div>

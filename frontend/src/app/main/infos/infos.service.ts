@@ -9,6 +9,7 @@ import { BehaviorSubject, Observable } from "rxjs";
 import { ToastrService } from "ngx-toastr";
 @Injectable()
 export class InfosService implements Resolve<any> {
+   
     infos: any;
     onInfosChanged: BehaviorSubject<any>;
 
@@ -46,6 +47,7 @@ export class InfosService implements Resolve<any> {
     getInfos(): Promise<any[]> {
         return new Promise((resolve, reject) => {
             this._httpClient.get("http://localhost:3000/infos").subscribe((response: any) => {
+                console.log(response);
                 this.infos = response;
                 this.onInfosChanged.next(this.infos);
                 resolve(this.infos);
@@ -60,6 +62,24 @@ export class InfosService implements Resolve<any> {
             this._httpClient.post("http://localhost:3000/infos",info).subscribe((response: any) => {
                 this.toastr.success("L'info est bien ajouté")
                 this.infos.push(response);
+                this.onInfosChanged.next(this.infos);
+                resolve(this.infos);
+            }, reject=>{
+                this.toastr.error(reject.error.message,"ERREUR")
+            });
+        });
+    }
+
+    deleteInfo(id: number) {
+        return new Promise((resolve, reject) => {
+            this._httpClient.delete("http://localhost:3000/infos/"+id).subscribe((response: any) => {
+                if(response.affected <1){
+                    this.toastr.error("Cette info ne peut pas être supprimer","ERREUR");
+                    return;
+                }
+                
+                this.toastr.success("L'info est bien supprimé")
+                this.infos = this.infos.filter(i => i.id !== id)
                 this.onInfosChanged.next(this.infos);
                 resolve(this.infos);
             }, reject=>{

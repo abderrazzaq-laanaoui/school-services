@@ -192,6 +192,7 @@ export class ContactsContactListComponent implements OnInit, OnDestroy
     {
         this._contactsService.toggleSelectedUser(userId);
     }
+    
     visitProfile(id:number){
         this.router.navigate(['/profile',id])
     }
