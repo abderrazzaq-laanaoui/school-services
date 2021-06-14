@@ -1,5 +1,4 @@
-import { IsOptional, IsString, MaxLength, MinLength } from 'class-validator';
-import { DemandeType } from '../demande-type.entity';
+import { IsIn, IsOptional, IsString, MaxLength, MinLength } from 'class-validator';
 
 export class addDemandeDto {
   @IsOptional()
@@ -10,7 +9,8 @@ export class addDemandeDto {
 
   @IsOptional()
   @IsString()
-  type: DemandeType;
+  @IsIn( ["Attestation de scolarité", "Attestation de réussite","Bulletin","Diplôme","Convention de stage","Assurance","Autre"])
+  type: string;
 
   @IsOptional()
   @IsString()

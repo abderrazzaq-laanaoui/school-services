@@ -11,7 +11,7 @@ import { ContactsModule } from './main/users/users.module'
 import { FuseModule } from "@fuse/fuse.module";
 import { FuseSharedModule } from "@fuse/shared.module";
 import { ToastrModule, ToastrService } from 'ngx-toastr';
-
+import { DemandeModule}  from './main/demande/demande.module'
 import {
     FuseProgressBarModule,
     FuseSidebarModule,
@@ -28,6 +28,7 @@ import { HomeModule } from "./main/home/home.module";
 import { ProfileModule } from "./main/profile/profile.module";
 import { InfosModule } from "./main/infos/infos.module";
 import { DocumentsModule } from "./main/documents/documents.module";
+import { BiblioModule } from './main/biblio/biblio.module'
 import { FileAttacherComponent } from "./dialog/file-attacher/file-attacher.component";
 
 const appRoutes: Routes = [
@@ -67,7 +68,10 @@ const appRoutes: Routes = [
         ProfileModule,
         InfosModule,
         DocumentsModule,
-        LoginModule,ContactsModule
+        BiblioModule,
+        LoginModule,
+        ContactsModule,
+        DemandeModule,
     ],
     providers: [
         ToastrService,

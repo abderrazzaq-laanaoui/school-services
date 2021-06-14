@@ -1,0 +1,76 @@
+<div class="dialog-content-wrapper">
+
+    <mat-toolbar matDialogTitle class="mat-accent m-0">
+        <mat-toolbar-row>
+            <span class="title dialog-title">Ajouter un article</span>
+        </mat-toolbar-row>
+    </mat-toolbar>
+
+    <div mat-dialog-content class="p-24 m-0" fusePerfectScrollbar>
+        <form [formGroup]="articleForm" >
+            <!-- Role -->
+            <!-- <div
+                fxLayout="row"
+                fxLayoutAlign="start start"
+                *ngIf="action !== 'edit'"
+            >
+                <mat-form-field appearance="outline" fxFlex>
+                    <mat-label>Selectionner le type</mat-label>
+                    <mat-select
+                        name="matiere"
+                        formControlName="matiere"
+                        required
+                    >
+                        <mat-option *ngFor="let type of types" [value]="type">{{
+                            type
+                        }}</mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div> -->
+
+            <!-- TITLE -->
+            <div
+                fxLayout="row"
+                fxLayoutAlign="start start"
+            >
+                <mat-form-field appearance="outline" fxFlex>
+                    <mat-label>Titre</mat-label>
+                    <mat-icon matSuffix class="secondary-text"
+                        >title</mat-icon
+                    >
+                    <input name="title" formControlName="title" matInput required />
+                </mat-form-field>
+            </div>
+
+            <!-- CIN -->
+            <!-- <!-- <div fxLayout="row" fxLayoutAlign="start start"> -->
+                <!-- <mat-form-field appearance="outline" fxFlex> -->
+                    <!-- <mat-label>Contenu</mat-label> -->
+                    <!-- <mat-icon matSuffix class="secondary-text" -->
+                        <!-- >text_fields</mat-icon> -->
+                    <quill-editor
+                    class="editor-layout"
+                        name="content" required
+                        formControlName="content"
+                           >
+                    </quill-editor>
+                <!-- </mat-form-field> -->
+            <!-- </div>  -->
+        </form>    </div>
+
+    <div mat-dialog-actions class="m-0 p-16" fxLayout="row" fxLayoutAlign="end center">
+        <button
+            mat-button
+            class="save-button"
+            (click)="matDialogRef.close(articleForm.value)"
+            [disabled]="articleForm.invalid"
+            aria-label="SAVE"
+        >
+            Ajouter
+        </button>
+        <button mat-button (click)="matDialogRef.close()" class="mat-accent" aria-label="Close">
+            CLOSE
+        </button>
+    </div>
+
+</div>

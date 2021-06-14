@@ -4,8 +4,9 @@ import { ActivatedRouteSnapshot, Resolve, RouterStateSnapshot } from '@angular/r
 import { BehaviorSubject, Observable } from 'rxjs';
 
 @Injectable()
-export class KnowledgeBaseService implements Resolve<any>
+export class BiblioService implements Resolve<any>
 {
+    
     knowledgeBase: any;
     onKnowledgeBaseChanged: BehaviorSubject<any>;
 
@@ -33,7 +34,7 @@ export class KnowledgeBaseService implements Resolve<any>
     {
         return new Promise((resolve, reject) => {
             Promise.all([
-                this.getKnowledgeBase()
+                this.getArticles()
             ]).then(
                 () => {
                     resolve();
@@ -46,16 +47,25 @@ export class KnowledgeBaseService implements Resolve<any>
     /**
      * Get knowledge base
      */
-    getKnowledgeBase(): Promise<any[]>
+    getArticles(): Promise<any[]>
     {
         return new Promise((resolve, reject) => {
 
-            this._httpClient.get('api/knowledge-base')
+            this._httpClient.get('http://localhost:3300/biblio')
                 .subscribe((response: any) => {
                     this.knowledgeBase = response;
                     this.onKnowledgeBaseChanged.next(this.knowledgeBase);
                     resolve(this.knowledgeBase);
                 }, reject);
         });
+    }
+    
+    addArtice(e: any) {
+        console.log(e);
+        
+    }
+    deleteArticle(id:number){
+        console.log(id);
+        
     }
 }

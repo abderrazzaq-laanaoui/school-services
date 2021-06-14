@@ -1,0 +1,60 @@
+<div id="demande" class="page-layout simple full-width">
+
+    <!-- HEADER -->
+    <div class="header accent p-16 p-sm-24" fxLayout="column" fxLayoutAlign="center center">
+
+        <div class="hero-text mb-16">
+            <h1>Mes Demandes De Documents</h1>
+        </div>
+
+        <div class="search mat-elevation-z7" fxLayout="row" fxLayoutAlign="start center">
+            <mat-icon>search</mat-icon>
+            <input [formControl]="searchInput" placeholder="Chercher dans les demandes..." fxFlex>
+        </div>
+
+    </div>
+    <!-- / HEADER -->
+
+    <!-- CONTENT -->
+    <div class="content px-16 py-24 px-sm-24 py-sm-32">
+<p style="text-align: center;" *ngIf="demandesFiltered.length === 0">Y'a aucune demande a afficher :-)</p>
+        <mat-accordion class="demandes-accordion">
+
+            <mat-expansion-panel class="mv-5" *ngFor="let demande of demandesFiltered.reverse(); let i = index" 
+                                    [expanded]="step === i" (opened)="setStep(i)" 
+                                    [disabled]="clickButton" (click)="clickButton=false" >
+                <mat-expansion-panel-header [ngClass]="{'green': demande.isDelivred && demande.file, 'red':demande.isDelivred && !demande.file}">
+                    <mat-panel-title fxLayout="row" fxLayoutAlign="start center" >
+                        <mat-icon class="mr-12 s-20 secondary-text">insert_drive_file</mat-icon>
+                        {{demande.type === 'Autre' ? demande.autre : demande.type}}
+                    </mat-panel-title>
+                    <mat-panel-description fxLayoutAlign="end"  >
+                        <button mat-button (click)="onDelete(demande.id)" ><mat-icon>delete</mat-icon></button>
+                    </mat-panel-description>
+                </mat-expansion-panel-header  >
+               <p [innerHTML]="demande.content" [disabled]="true"></p>
+               <p> <span class="label">Motif: </span> {{demande.motif || '-'}}</p>
+               <p><span class="label">Date: </span> {{demande.date.slice(0,10).replaceAll("-","/")}}</p>
+               <p #link ><span class="label">Fichier: </span>
+                 <a *ngIf="demande.isDelivred && demande.file" [download]="demande.type || demande.autre"  title='Download pdf document' target="_blank" [href]="demande.file | safeHtml" alt="fichier" > Cliquer ici </a>
+                 <span *ngIf="!demande.isDelivred"> Votre demande est en course de traintement </span>
+                 <span *ngIf="demande.isDelivred && !demande.file"> Votre demande à été rejeté par l'administrateur, Si vous penser que c'est un erreur merci de redemander cette document </span>
+               </p>
+            </mat-expansion-panel>
+        </mat-accordion>
+    </div>
+    <!-- / CONTENT -->
+
+
+</div>
+<button
+    mat-fab
+    class="accent"
+    id="add-demande-button"
+    (click)="newDemande()"
+    aria-label="add demande"
+    [@animate]="{ value: '*', params: { delay: '300ms', scale: '.2' } }"
+>
+    <mat-icon>note_add</mat-icon>
+</button>
+<!-- ADD CONTACT BUTTON -->

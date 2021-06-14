@@ -80,9 +80,7 @@ export class UserRepository extends Repository<User> {
   private async saveUser<T extends User>(user: T): Promise<Partial<T>> {
     try {
       return await user.save();
-    } catch (e) {
-      console.log(e);
-      
+    } catch (e) {      
       if (e.errno === 1062) throw new ConflictException("Il exsite deja un utilisateur soit avec même email, cne ou cin       ");// deplicate unique keys
       throw new Error(e.sqlMessage);
       

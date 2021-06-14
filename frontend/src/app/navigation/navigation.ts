@@ -152,6 +152,18 @@ export const etudiantNavigation: FuseNavigation[] = [
                     fg: "#FFFFFF",
                 },
             },
+            {
+                id: "demandes",
+                title: "Mes Demandes",
+                type: "item",
+                icon: "file_copy",
+                url: "/demande/documents",
+                badge: {
+                    title: "1",
+                    bg: "#F44336",
+                    fg: "#FFFFFF",
+                },
+            },
         ],
     },
 ];

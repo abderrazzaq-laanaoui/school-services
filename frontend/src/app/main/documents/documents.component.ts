@@ -16,7 +16,6 @@ import {  ConfirmDialogModel,ConfirmDialogComponent } from "app/dialog/confirm-d
 export class DocumentsComponent implements OnInit
 {
     projects: any[];
-
     widget: any = {};
     dateNow = Date.now();
     result: any;
@@ -41,17 +40,13 @@ export class DocumentsComponent implements OnInit
      */
     ngOnInit(): void
     {  
-
         /**
          * Widget 11
         */
-       this.widget = this._docService.data;
-       
+        this.widget = this._docService.data; 
         this.widget.onContactsChanged = new BehaviorSubject({});
-        this.widget.onContactsChanged.next(this.widget.table.rows);
-        this.widget.dataSource = new FilesDataSource(this.widget);
-        
-        
+        this.widget.onContactsChanged.next(this.widget.table.rows); 
+        this.widget.dataSource = new FilesDataSource(this.widget); 
     }
 
     // -----------------------------------------------------------------------------------------------------
@@ -64,17 +59,25 @@ export class DocumentsComponent implements OnInit
     
     attachFile(request){
         this._docService.populateDialog(request);
-       this.dialog.open(FileAttacherComponent,{
+       const dialogRef = this.dialog.open(FileAttacherComponent,{
           maxWidth:'fit-content'
         });
+        dialogRef.afterClosed().subscribe(dialogRes=>{
+          if(dialogRes){
+            this._docService.sendDoc(dialogRes.id, dialogRes.file).then(v =>{
+              this.ngOnInit(); 
+
+            })
+          }
+        })
         
     }
 
     
   confirmDialog(): void {
-    const message = `Are you sure you want to do this?`;
+    const message = `Êtes-vous sûr de vouloir rejeter cette demande ?`;
 
-    const dialogData = new ConfirmDialogModel("Confirm Action", message);
+    const dialogData = new ConfirmDialogModel("Confirmer Cette Action", message);
 
     const dialogRef = this.dialog.open(ConfirmDialogComponent, {
       maxWidth: "500px",

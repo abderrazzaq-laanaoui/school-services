@@ -77,8 +77,7 @@ export class FileAttacherComponent implements OnInit,OnDestroy {
     }
     if (this.form.valid ) {
       const id = this.form.controls.id.value;
-      this._docService.sendDoc(id,this._file)
-      this.onClose();       
+      this.onClose(id);       
     }
   }
   handleUpload(event) {
@@ -93,10 +92,11 @@ export class FileAttacherComponent implements OnInit,OnDestroy {
   /**
    * onClose
    */
-  public onClose() {
+  public onClose(id:number) {
     this.form.reset();
     this._docService.resetFormGroup();
-    this._dialogRef.close();
+
+    this._dialogRef.close({id,file:this._file});
   }
 
 

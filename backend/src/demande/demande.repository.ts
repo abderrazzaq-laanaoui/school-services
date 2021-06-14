@@ -9,6 +9,9 @@ import { RejectDemandeDto } from './dto/reject-file.dto';
 
 @EntityRepository(Demande)
 export class DemandeRepository extends Repository<Demande> {
+  rejectDemande(rejectDemandeDto: RejectDemandeDto) {
+    throw new Error('Method not implemented.');
+  }
   async getDemande(id:number):Promise<Demande>{
     let demande = await this.findOne(id);
     if (!demande) throw new NotFoundException(`No demande with id ${id} was found !`);
@@ -19,7 +22,9 @@ export class DemandeRepository extends Repository<Demande> {
       return await this.find({ isDelivred: false });
     }
     if (user instanceof Etudiant) {
-      return await this.find({ where: { etudiant: user } });
+      let res = await this.find({ where: { etudiant: user } });
+      return _.map(res, d=> _.pick(d, 'id','motif','date','type','autre','isDelivred','file'));
+      
     }
   }
 
@@ -29,10 +34,10 @@ export class DemandeRepository extends Repository<Demande> {
     demande.etudiant = user;
     demande.date = new Date();
     demande.motif = motif;
-    if (type) demande.type = type;
-    else demande.autre = autre;
+    demande.type = type;
+    demande.autre = autre;
 
-    return _.pick(await demande.save(), 'id');
+    return _.pick(await demande.save(), 'id','motif','date','type','autre','isDelivred','file');
   }
 
   async deliverDemande(deliverDemandeDto: UpdateDemandeDto, user: Admin) {

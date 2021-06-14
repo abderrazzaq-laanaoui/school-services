@@ -17,7 +17,6 @@ import { RoleGuardService as RoleGuard} from 'app/auth/role-guard.service'
 import { ContactsComponent } from './users.component';
 import { UsersService } from './users.service';
 import { ContactsContactListComponent } from './user-list/user-list.component';
-import { ContactsSelectedBarComponent } from './selected-bar/selected-bar.component';
 import { ContactsMainSidebarComponent } from './sidebars/main/main.component';
 import { ContactsContactFormDialogComponent } from './user-form/user-form.component';
 import { ReactiveFormsModule } from '@angular/forms';
@@ -40,7 +39,6 @@ const routes: Routes = [
     declarations   : [
         ContactsComponent,
         ContactsContactListComponent,
-        ContactsSelectedBarComponent,
         ContactsMainSidebarComponent,
         ContactsContactFormDialogComponent
     ],

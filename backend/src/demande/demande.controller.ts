@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Param, ParseIntPipe, Patch, Post, UseGuards, ValidationPipe } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, ParseIntPipe, Patch, Post, UseGuards, ValidationPipe } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 import { GetUser } from 'src/user/get-user.decorator';
 import { Admin, Etudiant } from 'src/user/user.entity';
@@ -13,7 +13,7 @@ export class DemandeController {
   @Get()
   getDemandes(
     @GetUser() user: Admin | Etudiant
-  ){
+  ){    
     return this.demandeService.getDemandes(user);
   }
 
@@ -28,6 +28,11 @@ export class DemandeController {
   }
   @Patch(':id')
   rejectDemande(@Param('id',ParseIntPipe) id: number, @GetUser() user){
+    return this.demandeService.rejectDemande({ id }, user);
+  }
+
+  @Delete(':id')
+  deleteDemande(@Param('id',ParseIntPipe) id: number, @GetUser() user){
     return this.demandeService.rejectDemande({ id }, user);
   }
 }

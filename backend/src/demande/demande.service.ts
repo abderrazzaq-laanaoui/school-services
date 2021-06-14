@@ -28,7 +28,8 @@ export class DemandeService {
      throw new ForbiddenException("Vous n'avez pas les droits d'accées à cette opreration");
   }
   async rejectDemande(rejectDemandeDto: RejectDemandeDto, user: Admin | Etudiant) {
-    if (user instanceof Admin) return await this.demandeRepository.deleteDemande(rejectDemandeDto);
-    if(user.demandes.find(d => d.id === rejectDemandeDto.id)) return; 
+    if (user instanceof Admin) return await this.demandeRepository.rejectDemande(rejectDemandeDto);
+    if((await this.demandeRepository.findOne(rejectDemandeDto.id)).etudiant.id === user.id) return this.demandeRepository.delete(rejectDemandeDto.id); 
+    
   }
 }

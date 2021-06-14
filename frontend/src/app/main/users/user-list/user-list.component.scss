@@ -10,13 +10,10 @@ contacts-contact-list {
         background: transparent;
         box-shadow: none;
 
-        .mat-column-checkbox {
-            flex: 0 1 64px;
-            padding-left: 18px;
-        }
+       
 
         .mat-column-avatar {
-            flex: 0 1 64px;
+            flex: 0 1 80px;
         }
 
         .mat-column-buttons {
@@ -43,7 +40,9 @@ contacts-contact-list {
         }
     }
 }
-
+.mat-menu-content{
+    overflow: hidden;
+}
 #add-contact-button {
     position: absolute;
     bottom: 12px;
@@ -59,7 +58,8 @@ contacts-contact-list {
 }
 .list-devider{
     display: block;
-    margin: 10px 0 10px 0;
+    background-color: rgba(0, 0, 0, .12);
+    margin:  0;
     border-top: 1px solid rgba(0, 0, 0, .12);
     width: 100%
 }

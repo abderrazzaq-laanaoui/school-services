@@ -34,7 +34,7 @@ export class InfosFormDialogComponent {
             this.dialogTitle = "Ajouter une Info";
             this.info = new Info();
             this.infoForm = this.createInfoForm();
-        }
+        } 
 
        
     

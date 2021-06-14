@@ -12,14 +12,12 @@ export class UsersService implements Resolve<any>
 {
     
     onUsersChanged: BehaviorSubject<any>;
-    onSelectedUsersChanged: BehaviorSubject<any>;
     onUserDataChanged: BehaviorSubject<any>;
     onSearchTextChanged: Subject<any>;
     onFilterChanged: Subject<any>;
 
     users: User[];
     user: any;
-    selectedUsers: string[] = [];
 
     searchText: string;
     filterBy: string;
@@ -36,7 +34,6 @@ export class UsersService implements Resolve<any>
     {
         // Set the defaults
         this.onUsersChanged = new BehaviorSubject([]);
-        this.onSelectedUsersChanged = new BehaviorSubject([]);
         this.onUserDataChanged = new BehaviorSubject([]);
         this.onSearchTextChanged = new Subject();
         this.onFilterChanged = new Subject();
@@ -138,77 +135,9 @@ export class UsersService implements Resolve<any>
         );
     }
 
-    /**
-     * Toggle selected user by id
-     *
-     * @param id
-     */
-    toggleSelectedUser(id): void
-    {
-        // First, check if we already have that user as selected...
-        if ( this.selectedUsers.length > 0 )
-        {
-            const index = this.selectedUsers.indexOf(id);
-
-            if ( index !== -1 )
-            {
-                this.selectedUsers.splice(index, 1);
-
-                // Trigger the next event
-                this.onSelectedUsersChanged.next(this.selectedUsers);
-
-                // Return
-                return;
-            }
-        }
-
-        // If we don't have it, push as selected
-        this.selectedUsers.push(id);
-
-        // Trigger the next event
-        this.onSelectedUsersChanged.next(this.selectedUsers);
-    }
-
-    /**
-     * Toggle select all
-     */
-    toggleSelectAll(): void
-    {
-        if ( this.selectedUsers.length > 0 )
-        {
-            this.deselectUsers();
-        }
-        else
-        {
-            this.selectUsers();
-        }
-    }
-
-    /**
-     * Select users
-     *
-     * @param filterParameter
-     * @param filterValue
-     */
-    selectUsers(filterParameter?, filterValue?): void
-    {
-        this.selectedUsers = [];
- 
-        // If there is no filter, select all users
-        if ( filterParameter === undefined || filterValue === undefined )
-        {
-            this.selectedUsers = [];
-            this.users.map(user => {
-                this.selectedUsers.push(user.id);
-            });
-        }
-
-        // Trigger the next event
-        this.onSelectedUsersChanged.next(this.selectedUsers);
-    }
+   
 
     addUser(res: User) {
-        console.log(res);
         return new Promise((resolve, reject) => {
             const type = res.type.toLowerCase()
             let data;
@@ -250,16 +179,6 @@ export class UsersService implements Resolve<any>
         });
     }
 
-    /**
-     * Deselect users
-     */
-    deselectUsers(): void
-    {
-        this.selectedUsers = [];
-
-        // Trigger the next event
-        this.onSelectedUsersChanged.next(this.selectedUsers);
-    }
 
     /**
      * Delete user
@@ -281,25 +200,6 @@ export class UsersService implements Resolve<any>
         )
     }
 
-    /**
-     * Delete selected users
-     */
-    deleteSelectedUsers(): void
-    {
-        
-        for ( const userId of this.selectedUsers )
-        {
-            const user = this.users.find(_user => {
-                _user.id === userId;
-            });
-
-            this.deleteUser(user);
-            const userIndex = this.users.indexOf(user);
-
-            this.users.splice(userIndex, 1);
-        }
-        this.onUsersChanged.next(this.users);
-        this.deselectUsers();
-    }
+    
 
 }

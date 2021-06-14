@@ -32,5 +32,5 @@ export class User
             this.password = user.password || '';
             this.birthday = user.birthday || '';
         }
-    }
+    } 
 }

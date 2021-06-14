@@ -2,21 +2,21 @@ import { Component, ViewEncapsulation, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 
 @Component({
-    selector     : 'knowledge-base-article',
+    selector     : 'biblio-article',
     templateUrl  : './article.component.html',
     styleUrls    : ['./article.component.scss'],
     encapsulation: ViewEncapsulation.None
 })
-export class KnowledgeBaseArticleComponent
+export class BiblioArticleComponent
 {
     /**
      * Constructor
      *
-     * @param {MatDialogRef<KnowledgeBaseArticleComponent>} matDialogRef
+     * @param {MatDialogRef<BiblioArticleComponent>} matDialogRef
      * @param _data
      */
     constructor(
-        public matDialogRef: MatDialogRef<KnowledgeBaseArticleComponent>,
+        public matDialogRef: MatDialogRef<BiblioArticleComponent>,
         @Inject(MAT_DIALOG_DATA) public _data: any
     )
     {

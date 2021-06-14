@@ -3,16 +3,19 @@ import { MatDialog } from '@angular/material/dialog';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
-import { KnowledgeBaseService } from 'app/main/pages/knowledge-base/knowledge-base.service';
-import { KnowledgeBaseArticleComponent } from 'app/main/pages/knowledge-base/dialogs/article/article.component';
+import { BiblioService } from './biblio.service';
+import { BiblioArticleComponent } from './dialogs/article/article.component';
+import { fuseAnimations } from "@fuse/animations";
+import { BiblioAddArticleComponent } from './dialogs/add-article/add-article.component';
 
 @Component({
-    selector     : 'knowledge-base',
-    templateUrl  : './knowledge-base.component.html',
-    styleUrls    : ['./knowledge-base.component.scss'],
-    encapsulation: ViewEncapsulation.None
+    selector     : 'biblio',
+    templateUrl  : './biblio.component.html',
+    styleUrls    : ['./biblio.component.scss'],
+    encapsulation: ViewEncapsulation.None,
+    animations: fuseAnimations
 })
-export class KnowledgeBaseComponent implements OnInit, OnDestroy
+export class BiblioComponent implements OnInit, OnDestroy
 {
     knowledgeBase: any;
 
@@ -22,11 +25,11 @@ export class KnowledgeBaseComponent implements OnInit, OnDestroy
     /**
      * Constructor
      *
-     * @param {KnowledgeBaseService} _knowledgeBaseService
+     * @param {BiblioService} _biblioService
      * @param {MatDialog} _matDialog
      */
     constructor(
-        private _knowledgeBaseService: KnowledgeBaseService,
+        private _biblioService: BiblioService,
         private _matDialog: MatDialog
     )
     {
@@ -43,7 +46,7 @@ export class KnowledgeBaseComponent implements OnInit, OnDestroy
      */
     ngOnInit(): void
     {
-        this._knowledgeBaseService.onKnowledgeBaseChanged
+        this._biblioService.onKnowledgeBaseChanged
             .pipe(takeUntil(this._unsubscribeAll))
             .subscribe(response => {
                 this.knowledgeBase = response;
@@ -71,9 +74,25 @@ export class KnowledgeBaseComponent implements OnInit, OnDestroy
      */
     readArticle(article): void
     {
-        this._matDialog.open(KnowledgeBaseArticleComponent, {
-            panelClass: 'knowledgebase-article-dialog',
+        this._matDialog.open(BiblioArticleComponent, {
+            panelClass: 'biblio-article-dialog',
             data      : {article: article}
         });
+    }
+     /**
+     * Read article
+     *
+     * @param article
+     */
+    addArticle(): void
+    {
+        let dialogRef = this._matDialog.open(BiblioAddArticleComponent, {
+            panelClass: 'biblio-add-article-dialog',
+            data      : {article: "test"}
+        });
+        dialogRef.afterClosed().subscribe(e=>{
+            if(!e) return;
+            this._biblioService.addArtice(e);
+        })
     }
 }

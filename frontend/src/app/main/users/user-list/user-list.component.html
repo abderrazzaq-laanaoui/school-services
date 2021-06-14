@@ -1,19 +1,7 @@
 <mat-table #table [dataSource]="dataSource" [@animateStagger]="{ value: '50' }">
-    <!-- Checkbox Column -->
-    <ng-container matColumnDef="checkbox">
-        <mat-header-cell *matHeaderCellDef></mat-header-cell>
-        <mat-cell *matCellDef="let user">
-            <mat-checkbox
-                [(ngModel)]="checkboxes[user.id]"
-                (ngModelChange)="onSelectedChange(user.id)"
-                (click)="$event.stopPropagation()"
-            >
-            </mat-checkbox>
-        </mat-cell>
-    </ng-container>
-
+ 
     <!-- Avatar Column -->
-    <ng-container matColumnDef="avatar">
+    <ng-container matColumnDef="avatar" >
         <mat-header-cell *matHeaderCellDef></mat-header-cell>
         <mat-cell *matCellDef="let user">
             <img
@@ -26,10 +14,10 @@
     </ng-container>
 
     <!-- Name Column -->
-    <ng-container matColumnDef="name">
-        <mat-header-cell *matHeaderCellDef>Name</mat-header-cell>
+    <ng-container matColumnDef="name" >
+        <mat-header-cell *matHeaderCellDef><span style="margin-left: 10px;">Name</span></mat-header-cell>
         <mat-cell *matCellDef="let user">
-            <p class="text-truncate font-weight-600">
+            <p class="name text-truncate font-weight-600">
                 {{ user.nom }} {{ user.prenom }}
             </p>
         </mat-cell>
@@ -72,7 +60,7 @@
                 >
                     <mat-icon class="secondary-text">more_vert</mat-icon>
                 </button>
-                <mat-menu #moreMenu="matMenu">
+                <mat-menu #moreMenu="matMenu" >
                     <button
                         mat-menu-item
                         aria-label="visiter profile"
@@ -84,7 +72,7 @@
                     <hr class="list-devider">
                     <button
                         mat-menu-item
-                        aria-label="remove"
+                        aria-label="Supprimer"
                         (click)="deleteContact(user)"
                     >
                         <mat-icon>delete</mat-icon>
@@ -105,3 +93,4 @@
     >
     </mat-row>
 </mat-table>
+ 

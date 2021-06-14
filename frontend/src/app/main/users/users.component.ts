@@ -55,11 +55,11 @@ export class ContactsComponent implements OnInit, OnDestroy
      */
     ngOnInit(): void
     {
-        this._contactsService.onSelectedUsersChanged
-            .pipe(takeUntil(this._unsubscribeAll))
-            .subscribe(selectedContacts => {
-                this.hasSelectedContacts = selectedContacts.length > 0;
-            });
+        // this._contactsService.onSelectedUsersChanged
+        //     .pipe(takeUntil(this._unsubscribeAll))
+        //     .subscribe(selectedContacts => {
+        //         this.hasSelectedContacts = selectedContacts.length > 0;
+        //     });
 
         this.searchInput.valueChanges
             .pipe(

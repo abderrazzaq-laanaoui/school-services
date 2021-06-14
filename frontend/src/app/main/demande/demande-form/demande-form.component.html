@@ -1,0 +1,89 @@
+<div class="dialog-content-wrapper">
+    <mat-toolbar matDialogTitle class="mat-accent m-0">
+        <mat-toolbar-row fxLayout="row" fxLayoutAlign="space-between center">
+            <span class="title dialog-title">Ajouter une Demande</span>
+            <button
+                mat-icon-button
+                (click)="matDialogRef.close()"
+                aria-label="Close dialog"
+            >
+                <mat-icon>close</mat-icon>
+            </button>
+        </mat-toolbar-row>
+
+        
+    </mat-toolbar>
+
+    <div mat-dialog-content class="p-24 pb-0 m-0" fusePerfectScrollbar>
+        <form [formGroup]="demandeForm">
+            <!-- TYPE --> 
+             <div
+                fxLayout="row"
+                fxLayoutAlign="start start"
+            >
+                 <mat-form-field appearance="outline" fxFlex> 
+                    <mat-label>Selectionner le document</mat-label>
+                    
+                    <mat-select
+                        (selectionChange)="onSelectChange($event.value)"
+                        name="type"
+                        formControlName="type"
+                        required
+                    >
+                        <mat-option *ngFor="let type of types" [value]="type">{{type}}</mat-option>
+                    </mat-select> 
+                 </mat-form-field>
+            </div>  
+
+            <!-- TITLE -->
+             <div
+                [ngClass]="{'d-none': selectedType !== 'Autre'}"
+                fxLayout="row"
+                fxLayoutAlign="start start"
+            >
+                <mat-form-field appearance="outline" fxFlex
+                                
+>
+                    <mat-label>Nom de document</mat-label>
+                    <mat-icon matSuffix class="secondary-text"
+                        >title</mat-icon
+                    >
+                    <input name="autre" formControlName="autre" matInput  [required]="selectedType === 'Autre'" />
+                </mat-form-field>
+            </div> 
+
+            <!-- MOTIF -->
+             <div fxLayout="row" fxLayoutAlign="start start">
+                <mat-form-field appearance="outline" fxFlex>
+                    <mat-label>Motif</mat-label>
+                    <mat-icon matSuffix class="secondary-text"
+                        >text_fields</mat-icon
+                    >
+                    <textarea  
+                        name="motif" 
+                        formControlName="motif"
+                        matInput rows="10" >
+                    </textarea>
+                </mat-form-field>
+            </div> 
+        </form>
+    </div>
+    <div
+        mat-dialog-actions
+        class="m-0 p-16"
+        fxLayout="row"
+        fxLayoutAlign="end center"
+    >
+
+
+        <button
+            mat-button
+            class="save-button"
+            (click)="matDialogRef.close(demandeForm)"
+            [disabled]="demandeForm.invalid"
+            aria-label="SAVE"
+        >
+            Ajouter
+        </button>
+    </div>
+</div>

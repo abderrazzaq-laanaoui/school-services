@@ -4,6 +4,9 @@ import {
     OnDestroy,
     ViewEncapsulation,
     AfterContentInit,
+    ViewChild,
+    AfterViewInit,
+    ViewChildren,
 } from "@angular/core";
 import { FormControl, FormGroup } from "@angular/forms";
 import { Subject } from "rxjs";
@@ -24,7 +27,7 @@ import { FuseConfirmDialogComponent } from "@fuse/components/confirm-dialog/conf
     encapsulation: ViewEncapsulation.None,
     animations: fuseAnimations,
 })
-export class InfosComponent implements OnInit, OnDestroy, AfterContentInit {
+export class InfosComponent implements OnInit, OnDestroy, AfterContentInit, AfterViewInit {
     infos: any;
     infosFiltered: any;
     step: number;
@@ -33,6 +36,7 @@ export class InfosComponent implements OnInit, OnDestroy, AfterContentInit {
     dialogRef: any;
     confirmDialogRef: MatDialogRef<FuseConfirmDialogComponent>;
     clickButton: boolean;
+     @ViewChildren('para')  para;
     // Private
     private _unsubscribeAll: Subject<any>;
 
@@ -53,6 +57,7 @@ export class InfosComponent implements OnInit, OnDestroy, AfterContentInit {
         // Set the private defaults
         this._unsubscribeAll = new Subject();
     }
+   
 
     // -----------------------------------------------------------------------------------------------------
     // @ Lifecycle hooks
@@ -85,6 +90,12 @@ export class InfosComponent implements OnInit, OnDestroy, AfterContentInit {
     }
     ngAfterContentInit(): void {
         this.user = this.loginService.user.role;
+    }
+    
+    ngAfterViewInit(): void {
+        this.para.first.nativeElement.addEventListener("click", function(event) {
+            event.stopImmediatePropagation();
+        }, true);
     }
 
     /**
@@ -137,29 +148,42 @@ export class InfosComponent implements OnInit, OnDestroy, AfterContentInit {
                 return;
             }
             const res = response.getRawValue();
-            res.content = res.content.replace(/\n/g, "<br />");
-            this._infosService.addInfo(res)
+            res.content = this.formatHTML(res.content);
+            this._infosService.addInfo(res);
         });
     }
 
-    onDelete(id:number){
+    onDelete(id: number) {
         this.clickButton = true;
-  
-             this.confirmDialogRef = this._matDialog.open(FuseConfirmDialogComponent, {
-                 disableClose: false
-             });
-     
-             this.confirmDialogRef.componentInstance.confirmMessage = 'Are you sure you want to delete?';
-     
-             this.confirmDialogRef.afterClosed().subscribe(result => {
-                 if ( result )
-                 {
-                     this._infosService.deleteInfo(id)
-                     
-                 }
-                 this.confirmDialogRef = null;
-             });
-     
-         }
-     
+
+        this.confirmDialogRef = this._matDialog.open(
+            FuseConfirmDialogComponent,
+            {
+                disableClose: false,
+            }
+        );
+
+        this.confirmDialogRef.componentInstance.confirmMessage =
+            "Are you sure you want to delete?";
+
+        this.confirmDialogRef.afterClosed().subscribe((result) => {
+            if (result) {
+                this._infosService.deleteInfo(id);
+            }
+            this.confirmDialogRef = null;
+        });
+    }
+   
+    formatHTML(string:string): string {
+        const urls = string.match(
+            /(([a-z]+:\/\/)?(([a-z0-9\-]+\.)+([a-z]{2}|aero|ma|fr|arpa|biz|com|coop|edu|gov|info|int|jobs|mil|museum|name|nato|net|org|pro|travel|local|internal))(:[0-9]{1,5})?(\/[a-z0-9_\-\.~]+)*(\/([a-z0-9_\-\.]*)(\?[a-z0-9+_\-\.%=&amp;]*)?)?(#[a-zA-Z0-9!$&'()*+.=-_~:@/?]*)?)(\s+|$)/gi
+        );
+        if (urls) {
+            urls.forEach(function (url) {
+                let rep = ( url.startsWith("https://") ||  url.startsWith("http://") ||  url.startsWith("ftp://")  ) ? '<a target="_blank" href="' + url + '">' + url + "</a>" : '<a target="_blank" href="http://' + url + '">' + url + "</a>"
+                string = string.replace( url, rep );
+            });
+        }
+        return string.replace(/\n/g, "<br />");
+    }
 }

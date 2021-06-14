@@ -27,7 +27,7 @@ export class ContactsContactListComponent implements OnInit, OnDestroy
     users: any;
     user: any;
     dataSource: FilesDataSource | null;
-    displayedColumns = ['checkbox', 'avatar','name','cin',  'email', 'buttons'];
+    displayedColumns = [ 'avatar','name','cin',  'email', 'buttons'];
     selectedContacts: any[];
     checkboxes: {};
     dialogRef: any;
@@ -74,20 +74,20 @@ export class ContactsContactListComponent implements OnInit, OnDestroy
                 });
             });
 
-        this._contactsService.onSelectedUsersChanged
-            .pipe(takeUntil(this._unsubscribeAll))
-            .subscribe(selectedContacts => {
-                for ( const id in this.checkboxes )
-                {
-                    if ( !this.checkboxes.hasOwnProperty(id) )
-                    {
-                        continue;
-                    }
+        // this._contactsService.onSelectedUsersChanged
+        //     .pipe(takeUntil(this._unsubscribeAll))
+        //     .subscribe(selectedContacts => {
+        //         for ( const id in this.checkboxes )
+        //         {
+        //             if ( !this.checkboxes.hasOwnProperty(id) )
+        //             {
+        //                 continue;
+        //             }
 
-                    this.checkboxes[id] = selectedContacts.includes(id);
-                }
-                this.selectedContacts = selectedContacts;
-            });
+        //             // this.checkboxes[id] = selectedContacts.includes(id);
+        //         }
+        //         // this.selectedContacts = selectedContacts;
+        //     });
 
         this._contactsService.onUserDataChanged
             .pipe(takeUntil(this._unsubscribeAll))
@@ -98,7 +98,7 @@ export class ContactsContactListComponent implements OnInit, OnDestroy
         this._contactsService.onFilterChanged
             .pipe(takeUntil(this._unsubscribeAll))
             .subscribe(() => {
-                this._contactsService.deselectUsers();
+                // this._contactsService.deselectUsers();
             });
     }
 
@@ -188,10 +188,10 @@ export class ContactsContactListComponent implements OnInit, OnDestroy
      *
      * @param userId
      */
-    onSelectedChange(userId): void
-    {
-        this._contactsService.toggleSelectedUser(userId);
-    }
+    // onSelectedChange(userId): void
+    // {
+    //     this._contactsService.toggleSelectedUser(userId);
+    // }
     
     visitProfile(id:number){
         this.router.navigate(['/profile',id])

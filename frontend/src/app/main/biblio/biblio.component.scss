@@ -1,14 +1,13 @@
 @import "src/@fuse/scss/fuse";
 
-#knowledgebase {
+#biblio {
 
     .header {
         flex: 1 0 auto;
         height: 280px;
         max-height: 280px;
-        background: #1A237E;
-        background: linear-gradient(to right, #0E2A3B 0%, #34306B 100%);
-
+        background: #43a047;
+        background: linear-gradient(to right, #0d5c08 0%, #43a047 100%);
         @include media-breakpoint('xs') {
             height: 240px;
             padding: 16px;
@@ -46,7 +45,7 @@
     }
 
     .content {
-        max-width: 960px;
+        max-width: 90vw;
         width: 100%;
         margin: 0 auto;
 
@@ -71,5 +70,18 @@
                 font-size: 14px;
             }
         }
+    }
+}
+#add-article-button {
+    position: sticky;
+    top: calc(100vh - 75px);;
+    right: 12px;
+    padding: 0;
+    z-index: 99;
+
+    @include media-breakpoint('xs') {
+        position: sticky;
+        top: calc(100vh - 75px);
+        bottom: auto;
     }
 }

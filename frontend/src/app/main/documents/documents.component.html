@@ -42,7 +42,7 @@
                                 <img
                                     class="avatar"
                                     [alt]="request.etudiant.nom"
-                                    [src]="'assets/images/avatars/'+request.etudiant.id +'.jpg'"
+                                    [src]="request.etudiant.avatar"
                                 />
                             </mat-cell>
                         </ng-container>
@@ -120,7 +120,7 @@
                                 *matCellDef="let request"
                             >
                                 <p class="document text-truncate">
-                                    {{ request.type || request.autre }}
+                                    {{ request.type === 'Autre' ? request.autre : request.type }}
                                 </p>
                             </mat-cell>
                         </ng-container>

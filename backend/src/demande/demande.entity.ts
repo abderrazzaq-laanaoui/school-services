@@ -20,14 +20,15 @@ export class Demande extends BaseEntity {
   @Column({ default: null, type: 'longtext' })
   file: string;
 
-  @Column()
+  @Column({nullable:true})
   motif: string;
 
   @Column({ default: null })
   autre: string;
 
-  @ManyToOne(() => DemandeType, (demandeType) => demandeType.demandes, { eager: true })
-  type: DemandeType;
+  // @ManyToOne(() => DemandeType, (demandeType) => demandeType.demandes, { eager: true })*
+  @Column()
+  type: string;
 
   @ManyToOne(() => Admin, (admin) => admin.livraisons)
   livreur: Admin;
