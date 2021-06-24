@@ -4,7 +4,7 @@ import { ActivatedRouteSnapshot, Resolve, RouterStateSnapshot } from '@angular/r
 import { BehaviorSubject, Observable } from 'rxjs';
 
 @Injectable()
-export class ProfileService implements Resolve<any>
+export class SeanceService implements Resolve<any>
 {
     timeline: any;
     about: any;
@@ -57,7 +57,8 @@ export class ProfileService implements Resolve<any>
      */
     getTimeline(): Promise<any[]>
     {
-        return new Promise((resolve, reject) => {
+        return null;
+        new Promise((resolve, reject) => {
 
             this._httpClient.get('api/profile-timeline')
                 .subscribe((timeline: any) => {
@@ -73,7 +74,8 @@ export class ProfileService implements Resolve<any>
      */
     getAbout(): Promise<any[]>
     {
-        return new Promise((resolve, reject) => {
+        return null;
+        new Promise((resolve, reject) => {
 
             this._httpClient.get('api/profile-about')
                 .subscribe((about: any) => {
@@ -89,7 +91,8 @@ export class ProfileService implements Resolve<any>
      */
     getPhotosVideos(): Promise<any[]>
     {
-        return new Promise((resolve, reject) => {
+        return null;
+         new Promise((resolve, reject) => {
 
             this._httpClient.get('api/profile-photos-videos')
                 .subscribe((photosVideos: any) => {

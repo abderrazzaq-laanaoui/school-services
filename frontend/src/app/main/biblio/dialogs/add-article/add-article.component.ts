@@ -65,7 +65,6 @@ export class BiblioAddArticleComponent
         });
     }
 onSubmit(){
-    console.log(this.articleForm);
     
     
 }
@@ -73,7 +72,6 @@ onSubmit(){
      * onSelectChange
      */
     public onSelectChange(type: string) {
-        console.log(type);
         
         // this.selectedType = type;
     }

@@ -6,45 +6,54 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatTabsModule } from '@angular/material/tabs';
 
 import { FuseSharedModule } from '@fuse/shared.module';
-
-import { ProfileService } from 'app/main/pages/profile/profile.service';
-import { ProfileComponent } from 'app/main/pages/profile/profile.component';
-import { ProfileTimelineComponent } from 'app/main/pages/profile/tabs/timeline/timeline.component';
-import { ProfileAboutComponent } from 'app/main/pages/profile/tabs/about/about.component';
-import { ProfilePhotosVideosComponent } from 'app/main/pages/profile/tabs/photos-videos/photos-videos.component';
-
-
+import {NgxMaterialTimepickerModule} from 'ngx-material-timepicker';
+import { SeanceService } from './seance.service';
+import { SeanceComponent } from './seance.component';
+import {AbsenceComponent} from './tabs/absence/absence.component';
+import {InfoComponent} from './tabs/info/info.component';
+import{RapportComponent} from './tabs/rapport/rapport.component';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatSelectModule } from '@angular/material/select';
+import { MatStepperModule } from '@angular/material/stepper';
+import {MatDatepickerModule} from '@angular/material/datepicker';
+import { MatCheckboxModule } from '@angular/material/checkbox';
 const routes = [
     {
-        path     : 'profile',
-        component: ProfileComponent,
+        path     : 'seance',
+        component: SeanceComponent,
         resolve  : {
-            profile: ProfileService
+            profile: SeanceService
         }
     }
 ];
 
 @NgModule({
     declarations: [
-        ProfileComponent,
-        ProfileTimelineComponent,
-        ProfileAboutComponent,
-        ProfilePhotosVideosComponent
+        SeanceComponent,
+        AbsenceComponent,
+        InfoComponent,
+        RapportComponent,
     ],
     imports     : [
         RouterModule.forChild(routes),
-
+        MatFormFieldModule,
+        MatInputModule,
+        MatSelectModule,
+        MatStepperModule,
         MatButtonModule,
         MatDividerModule,
         MatIconModule,
         MatTabsModule,
-
+        MatDatepickerModule,
+        MatCheckboxModule,
+        NgxMaterialTimepickerModule,
         FuseSharedModule
     ],
     providers   : [
-        ProfileService
+        SeanceService
     ]
 })
-export class ProfileModule
+export class SeanceModule
 {
 }

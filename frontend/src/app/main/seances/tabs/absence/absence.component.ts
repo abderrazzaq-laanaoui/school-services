@@ -2,18 +2,18 @@ import { Component, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
 
 import { fuseAnimations } from '@fuse/animations';
 
-import { ProfileService } from 'app/main/pages/profile/profile.service';
+import { SeanceService } from '../../../seances/seance.service';
 import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 
 @Component({
-    selector     : 'profile-photos-videos',
-    templateUrl  : './photos-videos.component.html',
-    styleUrls    : ['./photos-videos.component.scss'],
+    selector     : 'seance-absence',
+    templateUrl  : './absence.component.html',
+    styleUrls    : ['./absence.component.scss'],
     encapsulation: ViewEncapsulation.None,
     animations   : fuseAnimations
 })
-export class ProfilePhotosVideosComponent implements OnInit, OnDestroy
+export class AbsenceComponent implements OnInit, OnDestroy
 {
     photosVideos: any;
 
@@ -23,10 +23,10 @@ export class ProfilePhotosVideosComponent implements OnInit, OnDestroy
     /**
      * Constructor
      *
-     * @param {ProfileService} _profileService
+     * @param {SeanceService} _SeanceService
      */
     constructor(
-        private _profileService: ProfileService
+        private _seanceService: SeanceService
     )
     {
         // Set the private defaults
@@ -42,7 +42,7 @@ export class ProfilePhotosVideosComponent implements OnInit, OnDestroy
      */
     ngOnInit(): void
     {
-        this._profileService.photosVideosOnChanged
+        this._seanceService.photosVideosOnChanged
             .pipe(takeUntil(this._unsubscribeAll))
             .subscribe(photosVideos => {
                 this.photosVideos = photosVideos;

@@ -2,18 +2,18 @@ import { Component, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
 
 import { fuseAnimations } from '@fuse/animations';
 
-import { ProfileService } from '../../profile.service';
+import { SeanceService } from '../../seance.service';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
 @Component({
-    selector     : 'profile-timeline',
-    templateUrl  : './timeline.component.html',
-    styleUrls    : ['./timeline.component.scss'],
+    selector     : 'seance-rapport',
+    templateUrl  : './rapport.component.html',
+    styleUrls    : ['./rapport.component.scss'],
     encapsulation: ViewEncapsulation.None,
     animations   : fuseAnimations
 })
-export class ProfileTimelineComponent implements OnInit, OnDestroy
+export class RapportComponent implements OnInit, OnDestroy
 {
     timeline: any;
 
@@ -23,10 +23,10 @@ export class ProfileTimelineComponent implements OnInit, OnDestroy
     /**
      * Constructor
      *
-     * @param {ProfileService} _profileService
+     * @param {SeanceService} _seanceService
      */
     constructor(
-        private _profileService: ProfileService
+        private _seanceService: SeanceService
     )
     {
         // Set the private defaults
@@ -42,7 +42,7 @@ export class ProfileTimelineComponent implements OnInit, OnDestroy
      */
     ngOnInit(): void
     {
-        this._profileService.timelineOnChanged
+        this._seanceService.timelineOnChanged
             .pipe(takeUntil(this._unsubscribeAll))
             .subscribe(timeline => {
                 this.timeline = timeline;
@@ -52,6 +52,7 @@ export class ProfileTimelineComponent implements OnInit, OnDestroy
     /**
      * On destroy
      */
+    
     ngOnDestroy(): void
     {
         // Unsubscribe from all subscriptions

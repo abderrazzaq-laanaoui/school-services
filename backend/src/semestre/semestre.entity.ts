@@ -1,4 +1,5 @@
-import {  BaseEntity, Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { Module } from "src/module/module.entity";
+import {  BaseEntity, Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity()
 export class Semestre  extends BaseEntity {
@@ -7,5 +8,8 @@ export class Semestre  extends BaseEntity {
   
   @Column({unique:true})
   nom: string;
+
+  @OneToMany(type=>Module, module => module.semestre,{eager:true})
+  modules:Module[]
 
 }

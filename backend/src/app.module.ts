@@ -18,6 +18,7 @@ import { AnneeScolaireModule } from './annee-scolaire/annee-scolaire.module';
 import { ClasseModule } from './classe/classe.module';
 import { LigneDocumentAffectationModule } from './ligne-document-affectation/ligne-document-affectation.module';
 import { InfoModule } from './info/info.module';
+import { ArticleModule } from './article/article.module';
 
 @Module({
   imports: [
@@ -39,6 +40,7 @@ import { InfoModule } from './info/info.module';
     ClasseModule,
     LigneDocumentAffectationModule,
     InfoModule,
+    ArticleModule,
   ],
   controllers: [],
   providers: [],

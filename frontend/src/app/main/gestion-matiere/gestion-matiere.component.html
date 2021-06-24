@@ -1,0 +1,82 @@
+<div class="page-layout carded left-sidebar tabbed inner-scroll">
+
+    <!-- TOP BACKGROUND -->
+    <div class="top-bg accent"></div>
+    <!-- / TOP BACKGROUND -->
+
+    <!-- SIDEBAR -->
+    <fuse-sidebar class="sidebar" name="carded-left-sidebar-tabbed-2" position="left" lockedOpen="gt-md">
+
+        <!-- SIDEBAR HEADER -->
+        <div class="header p-24 accent h-90">
+            <h2 fxHide.gt-md class="m-0">Liste des semestres</h2>
+        </div>
+        <!-- / SIDEBAR HEADER -->
+
+        <!-- SIDEBAR CONTENT -->
+        <div class="content " fusePerfectScrollbar>
+            <div class="demo-sidebar">
+                <mat-list>
+                    <ng-container *ngFor="let semestre of semstresList;let i = index">
+                        <mat-list-item [ngClass]="{'active-tab': currentSemestre == (i+1)}" (click)="goToSemestre(i+1)">
+                            <p>{{semestre}}</p>
+                        </mat-list-item>
+                        <mat-divider></mat-divider>
+                    </ng-container>
+                </mat-list>
+            </div>
+            
+        </div>
+        <!-- / SIDEBAR CONTENT -->
+
+    </fuse-sidebar>
+    <!-- / SIDEBAR -->
+
+    <!-- CENTER -->
+    <div class="center">
+
+        <!-- CONTENT HEADER -->
+        <div class="header accent p-24">
+
+            <div fxLayout="row" fxLayoutAlign="start start">
+
+                <button mat-icon-button class="sidebar-toggle mr-8" fxHide.gt-md
+                        (click)="toggleSidebar('carded-left-sidebar-tabbed-2')">
+                    <mat-icon>menu</mat-icon>
+                </button>
+                <h2 class="m-0">Gérer les elements des modules</h2>
+
+            </div>
+
+        </div>
+        <!-- / CONTENT HEADER -->
+
+        <!-- CONTENT CARD -->
+        <div class="content-card">
+
+            <!-- CONTENT -->
+            <div class="content">
+
+                <mat-tab-group  #moduleTabs>
+                    <ng-container *ngFor="let module of semestre.modules; let i = index">
+                        <mat-tab [label]="'module ' + (i+1)" >
+                            <div class="tab-content p-24" fusePerfectScrollbar>
+                                <!-- PUT YOUR TAB CONTENT HERE -->
+                                <h2><li>{{module.nom}}</li></h2>
+                                <matiere-table [module]="getModule(i)"></matiere-table>
+                                <!-- / PUT YOUR TAB CONTENT HERE -->
+                            </div>
+                        </mat-tab>
+                    </ng-container>
+                </mat-tab-group>
+
+            </div>
+            <!-- / CONTENT -->
+
+        </div>
+        <!-- / CONTENT CARD -->
+
+    </div>
+    <!-- / CENTER -->
+
+</div>

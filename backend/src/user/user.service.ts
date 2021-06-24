@@ -14,13 +14,13 @@ export class UserService {
   constructor(
     @InjectRepository(UserRepository)
     private userRepository: UserRepository,
-    private jwtService: JwtService,
+    private jwtService: JwtService, 
   ) {}
 
   async getUser(id: number, user: Etudiant | Admin | Professeur) {
     if (user instanceof Admin) {
       return await this.userRepository.getUser(id);
-    } else {
+    } else { 
       if (user.id === id) return await this.userRepository.getUser(id);
       else throw new NotFoundException("L'utilisateur demandé n'existe pas!");
     }

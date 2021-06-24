@@ -93,10 +93,9 @@ export class InfosComponent implements OnInit, OnDestroy, AfterContentInit, Afte
     }
     
     ngAfterViewInit(): void {
-        this.para.first.nativeElement.addEventListener("click", function(event) {
-            event.stopImmediatePropagation();
-        }, true);
+        this.unableLinks();
     }
+ 
 
     /**
      * On destroy
@@ -186,4 +185,12 @@ export class InfosComponent implements OnInit, OnDestroy, AfterContentInit, Afte
         }
         return string.replace(/\n/g, "<br />");
     }
+
+unableLinks() {
+    this.para.forEach(element => {
+        element.nativeElement.addEventListener("click", function(event) {
+            event.stopImmediatePropagation();
+        }, true);
+    });
+}
 }

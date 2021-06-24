@@ -36,8 +36,8 @@ export class BiblioService implements Resolve<any>
             Promise.all([
                 this.getArticles()
             ]).then(
-                () => {
-                    resolve();
+                (e) => {
+                    resolve(e);
                 },
                 reject
             );
@@ -61,11 +61,9 @@ export class BiblioService implements Resolve<any>
     }
     
     addArtice(e: any) {
-        console.log(e);
         
     }
     deleteArticle(id:number){
-        console.log(id);
         
     }
 }

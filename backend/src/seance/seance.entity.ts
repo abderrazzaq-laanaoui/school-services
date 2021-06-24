@@ -27,6 +27,5 @@ export class Seance  extends BaseEntity {
   @ManyToOne(() => LigneClasseSemstre, (lcs) => lcs.seances)
   ligneClasseSemstre: LigneClasseSemstre;
 
-  @ManyToOne(() => Matiere, (matiere) => matiere.seances)
-  matiere: Matiere;
+
 }

@@ -1,0 +1,76 @@
+<mat-table #table [dataSource]="datasource">
+
+  <!-- Name Column -->
+  <ng-container matColumnDef="nom">
+      <mat-header-cell *matHeaderCellDef 
+      fxShow class="text-truncate"
+          >Matière</mat-header-cell
+      >
+      <mat-cell 
+      *matCellDef="let module"
+      fxShow>
+          <p class="text-truncate font-weight-600">
+              {{ module.nom }} 
+          </p>
+      </mat-cell>
+  </ng-container>
+  <!-- Name Column -->
+  <ng-container matColumnDef="pourcentage">
+      <mat-header-cell *matHeaderCellDef class="text-truncate">Pourcentage</mat-header-cell>
+      <mat-cell *matCellDef="let module">
+          <p class="cin font-weight-600">
+              {{ module.coefficient*100 }}% 
+          </p>
+      </mat-cell>
+  </ng-container>
+
+  <!-- Email Column -->
+  <ng-container matColumnDef="professeur">
+      <mat-header-cell
+          *matHeaderCellDef
+          fxShow class="text-truncate"
+          >Professeur
+      </mat-header-cell>
+      <mat-cell
+          *matCellDef="let matiere"
+          fxShow
+      >
+          <p class="position text-truncate">
+              {{ matiere.professeur }}
+          </p>
+      </mat-cell>
+  </ng-container>
+
+
+  <!-- action Column -->
+  <ng-container matColumnDef="action">
+      <mat-header-cell *matHeaderCellDef class="text-truncate"
+          >Action
+      </mat-header-cell>
+      <mat-cell
+          *matCellDef="let matiere"
+      >
+          <button class="action-btn"
+              mat-mini-fab
+             (click)="attachFile(matiere)"
+          >
+              <mat-icon>attachment</mat-icon>
+          </button>
+          <button (click)="confirmDialog()"
+           mat-mini-fab class="action-btn delete-btn mat-warn">
+              <mat-icon>delete</mat-icon>
+          </button>
+      </mat-cell>
+  </ng-container>
+
+  <mat-header-row
+      *matHeaderRowDef="['nom','pourcentage','professeur','action']"
+  ></mat-header-row>
+  <mat-row
+      *matRowDef="
+          let matiere;
+          columns: ['nom','pourcentage','professeur','action']
+      "
+  >
+  </mat-row>
+</mat-table>

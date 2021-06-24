@@ -26,8 +26,6 @@ export class Epreuve extends BaseEntity {
   @ManyToOne(() => LigneClasseSemstre, (lcs) => lcs.epreuves)
   lcs: LigneClasseSemstre;
 
-  @ManyToOne(() => Matiere, (matiere) => matiere.epreuves)
-  matiere: Matiere;
 }
 
 export enum Sessions {

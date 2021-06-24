@@ -1,8 +1,8 @@
-import { IsString, IsUppercase, MaxLength } from "class-validator";
+import { IsNotEmpty, IsString, IsUppercase, MaxLength } from "class-validator";
 
 export class SemestreDto{
   @IsString()
-  @IsUppercase()
-  @MaxLength(10)
+  @MaxLength(15)
+  @IsNotEmpty()
   nom:string;
 }

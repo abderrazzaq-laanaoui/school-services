@@ -19,7 +19,7 @@ import {
 } from "@fuse/components";
 
 import { fuseConfig } from "app/fuse-config";
-
+import { GestionMatiereModule} from './main/gestion-matiere/gestion-matiere.module'
 import { AppComponent } from "app/app.component";
 import { LayoutModule } from "app/layout/layout.module";
 import { CalendarModule } from "app/main/calendar/calendar.module";
@@ -30,7 +30,8 @@ import { InfosModule } from "./main/infos/infos.module";
 import { DocumentsModule } from "./main/documents/documents.module";
 import { BiblioModule } from './main/biblio/biblio.module'
 import { FileAttacherComponent } from "./dialog/file-attacher/file-attacher.component";
-
+import { SeanceModule } from "./main/seances/seance.module";
+import {  NotesModule } from './main/notes/notes.module'
 const appRoutes: Routes = [
     {
         path: "**",
@@ -66,12 +67,15 @@ const appRoutes: Routes = [
         CalendarModule,
         HomeModule,
         ProfileModule,
+        NotesModule,
         InfosModule,
         DocumentsModule,
         BiblioModule,
+        SeanceModule,
         LoginModule,
         ContactsModule,
         DemandeModule,
+        GestionMatiereModule
     ],
     providers: [
         ToastrService,

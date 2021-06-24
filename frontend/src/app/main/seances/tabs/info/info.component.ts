@@ -3,16 +3,16 @@ import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
 import { fuseAnimations } from '@fuse/animations';
-import { ProfileService } from 'app/main/pages/profile/profile.service';
+import { SeanceService } from '../../../seances/seance.service';
 
 @Component({
-    selector     : 'profile-about',
-    templateUrl  : './about.component.html',
-    styleUrls    : ['./about.component.scss'],
+    selector     : 'seance-info',
+    templateUrl  : './info.component.html',
+    styleUrls    : ['./info.component.scss'],
     encapsulation: ViewEncapsulation.None,
     animations   : fuseAnimations
 })
-export class ProfileAboutComponent implements OnInit, OnDestroy
+export class InfoComponent implements OnInit, OnDestroy
 {
     about: any;
 
@@ -22,10 +22,10 @@ export class ProfileAboutComponent implements OnInit, OnDestroy
     /**
      * Constructor
      *
-     * @param {ProfileService} _profileService
+     * @param {SeanceService} _seanceService
      */
     constructor(
-        private _profileService: ProfileService
+        private _seanceService: SeanceService
     )
     {
         // Set the private defaults
@@ -41,7 +41,7 @@ export class ProfileAboutComponent implements OnInit, OnDestroy
      */
     ngOnInit(): void
     {
-        this._profileService.aboutOnChanged
+        this._seanceService.aboutOnChanged
             .pipe(takeUntil(this._unsubscribeAll))
             .subscribe(about => {
                 this.about = about;

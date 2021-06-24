@@ -1,46 +1,125 @@
 <div id="seance" class="page-layout simple tabbed">
-
-    <!-- HEADER -->
-    <div class="header p-24" fxLayout="column" fxLayoutAlign="center center" fxLayout.gt-sm="row"
-         fxLayoutAlign.gt-sm="space-between end">
-
-        <div class="user-info" fxLayout="column" fxLayoutAlign="center center" fxLayout.gt-sm="row"
-             fxLayoutAlign.gt-sm="start center">
-            <img class="profile-image avatar huge" src="assets/images/avatars/Velazquez.jpg"
-                 [@animate]="{value:'*',params:{delay:'50ms',scale:'0.2'}}">
-            <div class="name" [@animate]="{value:'*',params:{delay:'100ms',x:'-25px'}}">
-                Charlie Adams
-            </div>
-        </div>
-
-        <div class="actions" fxLayout="row" fxLayoutAlign="end center" [@animate]="{value:'*',params:{delay:'200ms'}}">
-            <button mat-raised-button color="accent" aria-label="Follow">Follow</button>
-            <button mat-raised-button color="primary" aria-label="Send Message">Send Message</button>
-        </div>
-
-    </div>
-    <!-- / HEADER -->
-
     <!-- CONTENT -->
     <div class="content">
+  <form  name="form"  fxLayout="column">
+        <mat-horizontal-stepper linear class="p-24" #stepper>
+            <mat-step [stepControl]="firstFormGroup">
+                <!-- <form [formGroup]="firstFormGroup"> -->
+                    <ng-template matStepLabel>Informations</ng-template>
 
-        <mat-tab-group dynamicHeight="true">
+                        <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
+                            <mat-form-field appearance="outline" fxFlex="50" class="pr-4">
+                                <mat-label>Classe</mat-label>
+            
+                                <!-- <input matInput formControlClass="class" required> -->
+                                <mat-select>
+                                    <mat-option value="1">Classe1</mat-option>
+                                    <mat-option value="2">Classe2</mat-option>
+                                    <mat-option value="3">Classe3</mat-option>
+                                    <mat-option value="4">Classe4</mat-option>
+                                    <mat-option value="5">Classe5</mat-option>
+                                </mat-select>
+                                <mat-error>La Classe est requise!</mat-error>
+                            </mat-form-field>
+            
+                            <mat-form-field appearance="outline" fxFlex="50" class="pl-4">
+                                <mat-label>Matiere</mat-label>
+                                <mat-select>
+                                    <mat-option value="1">Matiere1</mat-option>
+                                    <mat-option value="2">Matiere2</mat-option>
+                                    <mat-option value="3">Matiere3</mat-option>
+                                    <mat-option value="4">Matiere4</mat-option>
+                                    <mat-option value="5">Matiere5</mat-option>
+                                </mat-select>
+                                <!-- <input matInput formControlSubject="subject" required> -->
+                                <mat-error>La matiere est requise!</mat-error>
+                            </mat-form-field>
+            
+                        </div>
+                        <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
+                            <mat-form-field appearance="outline" fxFlex="50" class="pr-4">
+                                <mat-label>Heure de debut</mat-label>
+                                <input matInput formControlClass="class" required>
+                                <mat-error>L'heure est requise!</mat-error>
+                            </mat-form-field>
+            
+                            <mat-form-field appearance="outline" fxFlex="50" class="pl-4">
+                                <mat-label>Heure de Fin</mat-label>
+            
+                                <input matInput formControlSubject="subject" required>
+                                <mat-error>L'heure est requise!</mat-error>
+                            </mat-form-field>
+            
+                        </div>
+                        <div fxLayout="row wrap" fxLayoutAlign="center center" fxFlex="1 0 auto">
+                            <mat-form-field appearance="fill" style="width: 440px;">
+                                <mat-label>Date de la seance</mat-label>
+                                <input matInput [matDatepicker]="picker">
+                                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                                <mat-datepicker #picker startView="year"></mat-datepicker>
+                            </mat-form-field>
+            
+                        </div>
+                        <!-- <div fxLayout="row" fxLayoutAlign="center center">
+                            <button mat-raised-button style="background: #5D9E52;">
+                                Suivant
+                            </button>
+                            <button mat-raised-button style="background: #838383;">
+                                Retour
+                            </button>
+                        </div> -->
+                    <!-- </form> -->
+                    <div>
+                        <button type="button" mat-button matStepperNext>Suivant</button>
+                    </div>
+                <!-- </form> -->
+            </mat-step>
+            <mat-step
+                [stepControl]="secondFormGroup"
+                label="Fill out your address"
+            >
+                <form [formGroup]="secondFormGroup">
+                    <mat-form-field>
+                        <mat-label>Address</mat-label>
+                        <input
+                            matInput
+                            formControlName="secondCtrl"
+                            placeholder="Ex. 1 Main St, New York, NY"
+                            required
+                        />
+                    </mat-form-field>
+                    <div>
+                        <button mat-button matStepperPrevious>Back</button>
+                        <button mat-button matStepperNext>Next</button>
+                    </div>
+                </form>
+            </mat-step>
+            <mat-step>
+                <ng-template matStepLabel>Done</ng-template>
+                <p>You are now done.</p>
+                <div>
+                    <button mat-button matStepperPrevious>Back</button>
+                    <button mat-button (click)="stepper.reset()">Reset</button>
+                </div>
+            </mat-step>
+        </mat-horizontal-stepper>
+        </form>
 
+        <!-- <mat-tab-group dynamicHeight="true">
+            
             <mat-tab label="Informations">
-                <profile-timeline></profile-timeline>
+                <seance-info></seance-info>
             </mat-tab>
 
-            <mat-tab label="Absence">
-                <profile-about></profile-about>
+            <mat-tab label="Absence" [disabled]="absence">
+                <seance-absence></seance-absence>
             </mat-tab>
 
-            <mat-tab label="">
-                <profile-photos-videos></profile-photos-videos>
+            <mat-tab label="Rapport">
+                <seance-rapport></seance-rapport>
             </mat-tab>
 
-        </mat-tab-group>
-
+        </mat-tab-group> -->
     </div>
     <!-- / CONTENT -->
-
 </div>

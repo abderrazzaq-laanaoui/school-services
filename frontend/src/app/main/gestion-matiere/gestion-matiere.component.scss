@@ -1,0 +1,11 @@
+mat-tab-group{
+  width: 100%;
+}
+
+mat-list-item{
+  cursor: pointer;
+}
+.active-tab{
+  background-color: rgb(0 0 0 / 22%);
+  font-weight: bolder;
+}
