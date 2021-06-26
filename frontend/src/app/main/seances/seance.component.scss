@@ -1,35 +1,32 @@
 @import "src/@fuse/scss/fuse";
 #seance {
+    background-color: white;
     .content {
         flex: 1;
-        mat-tab-group {
-            height: 100%;
-            .mat-tab-body-wrapper {
-                flex-grow: 1;
-            }
-        }
     }
 }
 
-.mat-tab-label-container {
-    margin: 20px;
+table[mat-table]{
+        width: 100%;
 }
 
-.mat-tab-label .mat-tab-label-content {
-    font-size: 20px;
-    color: black;
-}
-.mat-stepper-horizontal {
-    margin-top: 8px;
 
-    .mat-step-icon-selected{
+body.theme-default .mat-step-header {
+    background-color: whitesmoke;
+    margin-top: 12px;
+    .mat-step-icon-selected,
+    .mat-step-icon-state-done,
+    .mat-step-icon-state-edit {
         background-color: green !important;
     }
-  }
-  
-  .mat-form-field {
-    margin-top: 16px;
-  }
+}
+.mat-form-field {
+    margin-top: 12px;
+}
 
-
-  
+ngx-material-timepicker-content > .ng-star-inserted {
+    position: absolute !important;
+    top: 100px !important;
+    left: 50% !important;
+    transform: translate(-50%, 0) !important;
+}

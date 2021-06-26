@@ -6,6 +6,7 @@ import { BehaviorSubject, Observable } from 'rxjs';
 @Injectable()
 export class SeanceService implements Resolve<any>
 {
+   
     timeline: any;
     about: any;
     photosVideos: any;
@@ -42,7 +43,6 @@ export class SeanceService implements Resolve<any>
             Promise.all([
                 this.getTimeline(),
                 this.getAbout(),
-                this.getPhotosVideos()
             ]).then(
                 () => {
                     resolve();
@@ -86,19 +86,17 @@ export class SeanceService implements Resolve<any>
         });
     }
 
-    /**
-     * Get photos & videos
-     */
-    getPhotosVideos(): Promise<any[]>
-    {
-        return null;
-         new Promise((resolve, reject) => {
+  
 
-            this._httpClient.get('api/profile-photos-videos')
-                .subscribe((photosVideos: any) => {
-                    this.photosVideos = photosVideos;
-                    this.photosVideosOnChanged.next(this.photosVideos);
-                    resolve(this.photosVideos);
+    getStudentList(lcs: any): any {
+        return new Promise((resolve, reject) => {
+            this._httpClient.get('http://localhost:3000/ligne-classe-semestre/liste-etudiants/'+lcs)
+                .subscribe((about: any) => {
+                    this.about = about;
+                    console.log(about);
+                    
+                    this.aboutOnChanged.next(this.about);
+                    resolve(this.about);
                 }, reject);
         });
     }

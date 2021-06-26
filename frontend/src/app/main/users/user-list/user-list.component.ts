@@ -196,6 +196,9 @@ export class ContactsContactListComponent implements OnInit, OnDestroy
     visitProfile(id:number){
         this.router.navigate(['/profile',id])
     }
+    consulterNotes(id:number){
+        this.router.navigate(['/notes',id,1])
+    }
 
   
 }

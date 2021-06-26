@@ -32,7 +32,7 @@ export class FuseUtils
     {
         for ( const prop in itemObj )
         {
-            if ( !itemObj.hasOwnProperty(prop) )
+            if ( !itemObj.hasOwnProperty(prop) || prop.toLocaleLowerCase() === 'avatar' )
             {
                 continue;
             }

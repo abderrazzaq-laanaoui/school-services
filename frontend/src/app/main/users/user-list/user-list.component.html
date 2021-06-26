@@ -70,6 +70,16 @@
                         <span>Profile</span>
                     </button>
                     <hr class="list-devider">
+                    <button *ngIf="user.type === 'Etudiant'"
+                        mat-menu-item
+                        aria-label="consulter les notes"
+                        (click)="consulterNotes(user.id)"
+                    >
+                    <!-- TODO : FIND ICON -->
+                        <mat-icon>files</mat-icon>
+                        <span>Notes</span>
+                    </button>
+                    <hr class="list-devider" *ngIf="user.type === 'Etudiant'">
                     <button
                         mat-menu-item
                         aria-label="Supprimer"

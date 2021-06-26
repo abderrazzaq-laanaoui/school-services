@@ -4,9 +4,11 @@ import { takeUntil } from 'rxjs/operators';
 
 import { fuseAnimations } from '@fuse/animations';
 import { SeanceService } from '../../../seances/seance.service';
+import { NgxMaterialTimepickerTheme } from "ngx-material-timepicker";
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
-    selector     : 'seance-info',
+    selector     : '[seance-info]',
     templateUrl  : './info.component.html',
     styleUrls    : ['./info.component.scss'],
     encapsulation: ViewEncapsulation.None,
@@ -15,9 +17,21 @@ import { SeanceService } from '../../../seances/seance.service';
 export class InfoComponent implements OnInit, OnDestroy
 {
     about: any;
-
+    costumTheme: NgxMaterialTimepickerTheme = {
+        container: {
+            buttonColor: '#000',  
+        },
+        dial: {
+            dialBackgroundColor: '#008000',
+        },
+        clockFace: {
+            clockFaceBackgroundColor: '#F0F0F0',
+            clockHandColor: '#008000',
+        }
+    };
     // Private
     private _unsubscribeAll: Subject<any>;
+    infoFormGroup: FormGroup;
 
     /**
      * Constructor
@@ -25,7 +39,8 @@ export class InfoComponent implements OnInit, OnDestroy
      * @param {SeanceService} _seanceService
      */
     constructor(
-        private _seanceService: SeanceService
+        private _seanceService: SeanceService,
+        private _formBuilder: FormBuilder
     )
     {
         // Set the private defaults
@@ -46,6 +61,12 @@ export class InfoComponent implements OnInit, OnDestroy
             .subscribe(about => {
                 this.about = about;
             });
+            this.infoFormGroup = this._formBuilder.group({
+                heureDebut: ["", Validators.required],
+                heureFin: ["", Validators.required],     
+                matiere: ["", Validators.required],     
+                date: ["", Validators.required],     
+               });
     }
 
     /**

@@ -1,6 +1,10 @@
 import { FuseNavigation } from "@fuse/types";
 import decode from "jwt-decode";
 
+
+
+let id = (<any>decode(localStorage.getItem('data'))).id;
+
 export const adminNavigation: FuseNavigation[] = [
     {
         id: "dashbord",
@@ -55,12 +59,14 @@ export const adminNavigation: FuseNavigation[] = [
                 title: "Flash Infos",
                 type: "item",
                 icon: "info",
-                url: "/infos",
-                badge: {
-                    title: "2 ",
-                    bg: "#F44336",
-                    fg: "#FFFFFF",
-                },
+                url: "/infos"
+            },
+             {
+                id: "etudes",
+                title: "Gestion Etudes",
+                type: "item",
+                icon: "info",
+                url: "/gestion-etudes/1",
             },
         ],
     },
@@ -96,6 +102,13 @@ export const professeurNavigation: FuseNavigation[] = [
                 },
             },
             {
+                id: "seance",
+                title: "Ajouter Une Seance",
+                type: "item",
+                icon: "today",
+                url: "/seance",
+            },
+            {
                 id: "infos",
                 title: "Flash Infos",
                 type: "item",
@@ -112,7 +125,7 @@ export const professeurNavigation: FuseNavigation[] = [
 ];
 export const etudiantNavigation: FuseNavigation[] = [
     {
-        id: "teacher",
+        id: "student",
         title: "Espace Etudiant",
         type: "group",
         children: [
@@ -158,6 +171,18 @@ export const etudiantNavigation: FuseNavigation[] = [
                 type: "item",
                 icon: "file_copy",
                 url: "/demande/documents",
+                badge: {
+                    title: "1",
+                    bg: "#F44336",
+                    fg: "#FFFFFF",
+                },
+            },
+            {
+                id: "notes",
+                title: "Mes Notes",
+                type: "item",
+                icon: "file_copy",
+                url: "/notes/"+id,
                 badge: {
                     title: "1",
                     bg: "#F44336",

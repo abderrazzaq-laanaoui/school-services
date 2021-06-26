@@ -1,98 +1,233 @@
-<div id="seance" class="page-layout simple tabbed">
+<div id="seance" class="page-layout simple">
     <!-- CONTENT -->
     <div class="content">
-  <form  name="form"  fxLayout="column">
-        <mat-horizontal-stepper linear class="p-24" #stepper>
+        <mat-vertical-stepper linear #stepper>
             <mat-step [stepControl]="firstFormGroup">
-                <!-- <form [formGroup]="firstFormGroup"> -->
+                <form
+                    [formGroup]="firstFormGroup"
+                    fxLayout="column"
+                    (ngSubmit)="submitFirstForm($event)"
+                >
                     <ng-template matStepLabel>Informations</ng-template>
 
-                        <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
-                            <mat-form-field appearance="outline" fxFlex="50" class="pr-4">
-                                <mat-label>Classe</mat-label>
-            
-                                <!-- <input matInput formControlClass="class" required> -->
-                                <mat-select>
-                                    <mat-option value="1">Classe1</mat-option>
-                                    <mat-option value="2">Classe2</mat-option>
-                                    <mat-option value="3">Classe3</mat-option>
-                                    <mat-option value="4">Classe4</mat-option>
-                                    <mat-option value="5">Classe5</mat-option>
-                                </mat-select>
-                                <mat-error>La Classe est requise!</mat-error>
-                            </mat-form-field>
-            
-                            <mat-form-field appearance="outline" fxFlex="50" class="pl-4">
-                                <mat-label>Matiere</mat-label>
-                                <mat-select>
-                                    <mat-option value="1">Matiere1</mat-option>
-                                    <mat-option value="2">Matiere2</mat-option>
-                                    <mat-option value="3">Matiere3</mat-option>
-                                    <mat-option value="4">Matiere4</mat-option>
-                                    <mat-option value="5">Matiere5</mat-option>
-                                </mat-select>
-                                <!-- <input matInput formControlSubject="subject" required> -->
-                                <mat-error>La matiere est requise!</mat-error>
-                            </mat-form-field>
-            
-                        </div>
-                        <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
-                            <mat-form-field appearance="outline" fxFlex="50" class="pr-4">
-                                <mat-label>Heure de debut</mat-label>
-                                <input matInput formControlClass="class" required>
-                                <mat-error>L'heure est requise!</mat-error>
-                            </mat-form-field>
-            
-                            <mat-form-field appearance="outline" fxFlex="50" class="pl-4">
-                                <mat-label>Heure de Fin</mat-label>
-            
-                                <input matInput formControlSubject="subject" required>
-                                <mat-error>L'heure est requise!</mat-error>
-                            </mat-form-field>
-            
-                        </div>
-                        <div fxLayout="row wrap" fxLayoutAlign="center center" fxFlex="1 0 auto">
-                            <mat-form-field appearance="fill" style="width: 440px;">
-                                <mat-label>Date de la seance</mat-label>
-                                <input matInput [matDatepicker]="picker">
-                                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-                                <mat-datepicker #picker startView="year"></mat-datepicker>
-                            </mat-form-field>
-            
-                        </div>
-                        <!-- <div fxLayout="row" fxLayoutAlign="center center">
-                            <button mat-raised-button style="background: #5D9E52;">
-                                Suivant
-                            </button>
-                            <button mat-raised-button style="background: #838383;">
-                                Retour
-                            </button>
-                        </div> -->
-                    <!-- </form> -->
-                    <div>
-                        <button type="button" mat-button matStepperNext>Suivant</button>
+                    <div
+                        fxLayout="column"
+                        fxLayout.lg="row"
+                        fxLayoutAlign="start center"
+                        fxFlex="1 1 auto"
+                    >
+                        <!-- <input matInput formControlClass="class" required> -->
+                        <mat-form-field
+                            appearance="outline"
+                            fxFlex="50"
+                            style="width: 100%"
+                            class="pl-4"
+                        >
+                            <mat-label>Classe</mat-label>
+                            <mat-select
+                                (selectionChange)="selectClass($event.value)"
+                                formControlName="class"
+                                required
+                            >
+                            <mat-option value="1">Semestre 1</mat-option>
+                            <mat-option value="2">Semestre 2</mat-option>
+                            <mat-option value="3">Semestre 3</mat-option>
+                            <mat-option value="4">Semestre 4</mat-option>
+                            <mat-option value="5">Semestre 5</mat-option>
+                            <mat-option value="6">Semestre 6</mat-option>
+                            <mat-option value="7">Semestre 7</mat-option>
+                            <mat-option value="8">Semestre 8</mat-option>
+                            <mat-option value="9">Semestre 9</mat-option>
+                            <mat-option value="10">PFE</mat-option>
+                            </mat-select>
+                            <mat-error>La classe est requise!</mat-error>
+                        </mat-form-field>
+                        <mat-form-field
+                            appearance="outline"
+                            fxFlex="50"
+                            style="width: 100%"
+                            class="pl-4"
+                        >
+                            <mat-label>Matiere</mat-label>
+                            <mat-select formControlName="matiere" required>
+                                <mat-option value="1">Matiere1</mat-option>
+                                <mat-option value="2">Matiere2</mat-option>
+                                <mat-option value="3">Matiere3</mat-option>
+                                <mat-option value="4">Matiere4</mat-option>
+                                <mat-option value="5">Matiere5</mat-option>
+                            </mat-select>
+                            <!-- <input matInput formControlSubject="subject" required> -->
+                            <mat-error>La matiere est requise!</mat-error>
+                        </mat-form-field>
                     </div>
+                    <div
+                        fxLayout="column"
+                        fxLayout.lg="row"
+                        fxLayoutAlign="start center"
+                        fxFlex="1 0 auto"
+                    >
+                        <mat-form-field
+                            appearance="outline"
+                            fxFlex="50"
+                            style="width: 100%"
+                            class="pl-4"
+                        >
+                            <mat-label>Date de la seance</mat-label>
+                            <input
+                                matInput
+                                [matDatepicker]="picker"
+                                formControlName="date"
+                                required
+                                placeholder="mm/jj/yyyy"
+                            />
+                            <mat-datepicker-toggle
+                                matSuffix
+                                [for]="picker"
+                            ></mat-datepicker-toggle>
+                            <mat-datepicker #picker></mat-datepicker>
+                            <mat-error>La date est requise!</mat-error>
+                        </mat-form-field>
+
+                        <mat-form-field
+                            appearance="outline"
+                            fxFlex="50"
+                            class="pl-4"
+                            style="width: 100%"
+                        >
+                            <mat-label>Heure de debut</mat-label>
+                            <input
+                                [ngxTimepicker]="heureDebut"
+                                [format]="24"
+                                matInput
+                                formControlName="heureDebut"
+                                readonly
+                                required
+                            />
+                            <ngx-material-timepicker
+                                [theme]="costumTheme"
+                                #heureDebut
+                                [defaultTime]="'14:30'"
+                                [appendToInput]="true"
+                            ></ngx-material-timepicker>
+                            <mat-icon matSuffix>access_time</mat-icon>
+                            <mat-error>L'heure est requise!</mat-error>
+                        </mat-form-field>
+
+                        <mat-form-field
+                            appearance="outline"
+                            fxFlex="50"
+                            class="pl-4"
+                            style="width: 100%"
+                        >
+                            <mat-label>Heure de Fin</mat-label>
+                            <input
+                                [ngxTimepicker]="heureFin"
+                                [format]="24"
+                                matInput
+                                formControlName="heureFin"
+                                readonly
+                                required
+                            />
+                            <ngx-material-timepicker
+                                [theme]="costumTheme"
+                                #heureFin
+                                [defaultTime]="'16:30'"
+                                [appendToInput]="true"
+                            ></ngx-material-timepicker>
+                            <mat-icon matSuffix>access_time</mat-icon>
+                            <mat-error>L'heure est requise!</mat-error>
+                        </mat-form-field>
+                    </div>
+                    <div>
+                        <button
+                            style="
+                                display: block;
+                                margin-left: auto;
+                                margin-right: auto;
+                                margin-top: 20px;
+                            "
+                            mat-flat-button
+                            color="accent"
+                            [disabled]="!firstFormGroup.valid"
+                            mat-button
+                            matStepperNext
+                        >
+                            Suivant
+                        </button>
+                    </div>
+                </form>
+
                 <!-- </form> -->
             </mat-step>
             <mat-step
                 [stepControl]="secondFormGroup"
                 label="Fill out your address"
             >
-                <form [formGroup]="secondFormGroup">
-                    <mat-form-field>
-                        <mat-label>Address</mat-label>
-                        <input
-                            matInput
-                            formControlName="secondCtrl"
-                            placeholder="Ex. 1 Main St, New York, NY"
-                            required
-                        />
-                    </mat-form-field>
-                    <div>
-                        <button mat-button matStepperPrevious>Back</button>
-                        <button mat-button matStepperNext>Next</button>
-                    </div>
-                </form>
+                <table
+                    mat-table
+                    [dataSource]="dataSource"
+                >
+                    <!-- Position Column -->
+                    <ng-container matColumnDef="avatar">
+                        <th mat-header-cell *matHeaderCellDef></th>
+                        <td mat-cell *matCellDef="let student">
+                            {{ student.avatar }}
+                        </td>
+                    </ng-container>
+
+                    <!-- Name Column -->
+                    <ng-container matColumnDef="nom">
+                        <th mat-header-cell *matHeaderCellDef>Nom</th>
+                        <td mat-cell *matCellDef="let student">
+                            {{ studnet.nom }} {{ student.prenom }}
+                        </td>
+                    </ng-container>
+
+                    <!-- Weight Column -->
+                    <ng-container matColumnDef="cin">
+                        <th mat-header-cell *matHeaderCellDef>CIN</th>
+                        <td mat-cell *matCellDef="let student">
+                            {{ sctudent.cin }}
+                        </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="select">
+                        <th mat-header-cell *matHeaderCellDef>
+                            <mat-checkbox
+                                (change)="$event ? masterToggle() : null"
+                                [checked]="
+                                    selection.hasValue() && isAllSelected()
+                                "
+                                [indeterminate]="
+                                    selection.hasValue() && !isAllSelected()
+                                "
+                            >
+                            </mat-checkbox>
+                        </th>
+                        <td
+                            mat-cell
+                            *matCellDef="let row"
+                            click="selection.toggle(row)"
+                        >
+                            <mat-checkbox
+                                (click)="$event.stopPropagation()"
+                                (change)="$event ? selection.toggle(row) : null"
+                                [checked]="selection.isSelected(row)"
+                            >
+                            </mat-checkbox>
+                        </td>
+                    </ng-container>
+
+                    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                    <tr
+                        mat-row
+                        *matRowDef="let row; columns: displayedColumns"
+                    ></tr>
+                </table>
+                <div>
+                    <button mat-button matStepperPrevious>Back</button>
+                    <button mat-button matStepperNext>Next</button>
+                </div>
             </mat-step>
             <mat-step>
                 <ng-template matStepLabel>Done</ng-template>
@@ -102,24 +237,7 @@
                     <button mat-button (click)="stepper.reset()">Reset</button>
                 </div>
             </mat-step>
-        </mat-horizontal-stepper>
-        </form>
-
-        <!-- <mat-tab-group dynamicHeight="true">
-            
-            <mat-tab label="Informations">
-                <seance-info></seance-info>
-            </mat-tab>
-
-            <mat-tab label="Absence" [disabled]="absence">
-                <seance-absence></seance-absence>
-            </mat-tab>
-
-            <mat-tab label="Rapport">
-                <seance-rapport></seance-rapport>
-            </mat-tab>
-
-        </mat-tab-group> -->
+        </mat-vertical-stepper>
     </div>
     <!-- / CONTENT -->
 </div>

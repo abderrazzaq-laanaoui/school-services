@@ -15,7 +15,7 @@ import { NotesTableComponent } from "./table/table.component";
 import { NotesService } from "./notes.service";
 const routes: Routes = [
     {
-        path: "notes",
+        path: "notes/:id/:semestre",
         component: NotesComponent,
         canActivate: [AuthGuard],
     },

@@ -3,7 +3,7 @@ import { RouterModule } from '@angular/router';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatIconModule } from '@angular/material/icon';
-import { MatTabsModule } from '@angular/material/tabs';
+import { MatTableModule } from '@angular/material/table'  
 
 import { FuseSharedModule } from '@fuse/shared.module';
 import {NgxMaterialTimepickerModule} from 'ngx-material-timepicker';
@@ -44,7 +44,7 @@ const routes = [
         MatButtonModule,
         MatDividerModule,
         MatIconModule,
-        MatTabsModule,
+        MatTableModule,
         MatDatepickerModule,
         MatCheckboxModule,
         NgxMaterialTimepickerModule,

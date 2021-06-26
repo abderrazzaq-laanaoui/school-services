@@ -1,68 +1,50 @@
-<div id="forms" class="page-layout simple fullwidth" fxLayout="column">
-    <div class="content p-24">
-        <form class="mat-card mat-elevation-z4 p-24 mr-50 " fxLayout="column" fxLayoutAlign="start" fxFlex="1 0 auto" name="form">
+<form [formGroup]="infoFormGroup"   fxLayout="column">
+    <ng-template matStepLabel>Informations</ng-template>
 
-            <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
-                <mat-form-field appearance="outline" fxFlex="50" class="pr-4">
-                    <mat-label>Classe</mat-label>
+        <div fxLayout="column" fxLayout.lg="row"  fxLayoutAlign="start center" fxFlex="1 1 auto">
+            
 
-                    <!-- <input matInput formControlClass="class" required> -->
-                    <mat-select>
-                        <mat-option value="1">Classe1</mat-option>
-                        <mat-option value="2">Classe2</mat-option>
-                        <mat-option value="3">Classe3</mat-option>
-                        <mat-option value="4">Classe4</mat-option>
-                        <mat-option value="5">Classe5</mat-option>
-                    </mat-select>
-                    <mat-error>La Classe est requise!</mat-error>
-                </mat-form-field>
-
-                <mat-form-field appearance="outline" fxFlex="50" class="pl-4">
-                    <mat-label>Matiere</mat-label>
-                    <mat-select>
-                        <mat-option value="1">Matiere1</mat-option>
-                        <mat-option value="2">Matiere2</mat-option>
-                        <mat-option value="3">Matiere3</mat-option>
-                        <mat-option value="4">Matiere4</mat-option>
-                        <mat-option value="5">Matiere5</mat-option>
-                    </mat-select>
-                    <!-- <input matInput formControlSubject="subject" required> -->
-                    <mat-error>La matiere est requise!</mat-error>
-                </mat-form-field>
-
-            </div>
-            <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
-                <mat-form-field appearance="outline" fxFlex="50" class="pr-4">
-                    <mat-label>Heure de debut</mat-label>
-                    <input matInput formControlClass="class" required>
-                    <mat-error>L'heure est requise!</mat-error>
-                </mat-form-field>
-
-                <mat-form-field appearance="outline" fxFlex="50" class="pl-4">
-                    <mat-label>Heure de Fin</mat-label>
-
-                    <input matInput formControlSubject="subject" required>
-                    <mat-error>L'heure est requise!</mat-error>
-                </mat-form-field>
-
-            </div>
-            <div fxLayout="row wrap" fxLayoutAlign="center center" fxFlex="1 0 auto">
-                <mat-form-field appearance="fill" style="width: 440px;">
+                <!-- <input matInput formControlClass="class" required> -->
+                <mat-form-field appearance="outline" fxFlex="50" style="width: 100%;"  class="pl-4" >
                     <mat-label>Date de la seance</mat-label>
-                    <input matInput [matDatepicker]="picker">
+                    <input matInput [matDatepicker]="picker" formControlName="date" required placeholder="mm/jj/yyyy">
                     <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-                    <mat-datepicker #picker startView="year"></mat-datepicker>
+                    <mat-datepicker #picker ></mat-datepicker>
+                    <mat-error>La date est requise!</mat-error>
                 </mat-form-field>
 
-            </div>
-            <div fxLayout="row" fxLayoutAlign="center center">
-                <button mat-raised-button style="background: #5D9E52;">
-                    Suivant
-                </button>
-                <button mat-raised-button style="background: #838383;">
-                    Retour
-                </button>
-            </div>
-        </form>
-    </div>
-</div>
+            <mat-form-field appearance="outline" fxFlex="50" style="width: 100%;"  class="pl-4">
+                <mat-label>Matiere</mat-label>
+                <mat-select formControlName="matiere">
+                    <mat-option value="1">Matiere1</mat-option>
+                    <mat-option value="2">Matiere2</mat-option>
+                    <mat-option value="3">Matiere3</mat-option>
+                    <mat-option value="4">Matiere4</mat-option>
+                    <mat-option value="5">Matiere5</mat-option>
+                </mat-select>
+                <!-- <input matInput formControlSubject="subject" required> -->
+                <mat-error>La matiere est requise!</mat-error>
+            </mat-form-field>
+
+        </div>
+        <div  fxLayout="column" fxLayout.lg="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
+            <mat-form-field appearance="outline" fxFlex="50" class="pr-4" style="width: 100%;">
+                <mat-label>Heure de debut</mat-label>
+                <input  [ngxTimepicker]="heureDebut" [format]="24"  matInput formControlName="heureDebut" readonly required>
+                <ngx-material-timepicker  [theme]="costumTheme"  #heureDebut [defaultTime]="'14:30'" [appendToInput]="true"></ngx-material-timepicker>
+                <mat-icon matSuffix >access_time</mat-icon>
+                <mat-error>L'heure est requise!</mat-error>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" fxFlex="50" class="pl-4" style="width: 100%;">
+                <mat-label>Heure de Fin</mat-label>
+                <input  [ngxTimepicker]="heureFin" [format]="24"  matInput formControlName="heureFin" readonly required>
+                <ngx-material-timepicker  [theme]="costumTheme"    #heureFin [defaultTime]="'16:30'" [appendToInput]="true"></ngx-material-timepicker>
+                <mat-icon matSuffix >access_time</mat-icon>
+                <mat-error>L'heure est requise!</mat-error>
+            </mat-form-field>
+        </div>
+        <div>
+            <button style="display:block;margin-left: auto;margin-right: auto;margin-top: 20px;"  mat-button matStepperNext>Suivant</button>
+        </div>
+</form>
