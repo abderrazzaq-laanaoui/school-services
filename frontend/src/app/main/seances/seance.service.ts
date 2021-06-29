@@ -92,9 +92,7 @@ export class SeanceService implements Resolve<any>
         return new Promise((resolve, reject) => {
             this._httpClient.get('http://localhost:3000/ligne-classe-semestre/liste-etudiants/'+lcs)
                 .subscribe((about: any) => {
-                    this.about = about;
-                    console.log(about);
-                    
+                    this.about = about; 
                     this.aboutOnChanged.next(this.about);
                     resolve(this.about);
                 }, reject);

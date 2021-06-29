@@ -17,7 +17,7 @@ export class LoginService {
         private toastr: ToastrService,
         private _fuseNavigationService: FuseNavigationService
         ) {
-        this.url = "http://localhost:3000/user/SignIn";
+        this.url = "http://localhost:3000/user/login";
         this.setUser();
 
     }

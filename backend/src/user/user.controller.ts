@@ -42,7 +42,7 @@ export class UserController {
     return this.userService.signUpAdmin(addAdminDto);
   }
 
-  @Post('/signIn')
+  @Post('/login')
   signIn(@Body(ValidationPipe) authCredentialDto: AuthCredentialDto): Promise<{ accessToken: string }> {
     return this.userService.signIn(authCredentialDto);
   }

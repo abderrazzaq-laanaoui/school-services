@@ -3,7 +3,14 @@ import decode from "jwt-decode";
 
 
 
-let id = (<any>decode(localStorage.getItem('data'))).id;
+let id: any;
+try{
+    id = (<any>decode(localStorage.getItem('data'))).id;
+}catch(e){
+    id = 0;
+}
+
+
 
 export const adminNavigation: FuseNavigation[] = [
     {
