@@ -10,6 +10,11 @@ import { ProfileService } from './profile.service';
 import { ProfileComponent } from './profile.component';
 import { ProfileAboutComponent } from './about/about.component';
 import { AuthService } from 'app/auth/auth.service';
+import { MatInputModule } from '@angular/material/input';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { ReactiveFormsModule } from '@angular/forms';
+import { EditPasswordComponent } from './edit-password/edit-password.component';
+import { MatToolbarModule } from '@angular/material/toolbar';
 
 
 const routes = [
@@ -25,22 +30,29 @@ const routes = [
 @NgModule({
     declarations: [
         ProfileComponent,
-        ProfileAboutComponent
+        ProfileAboutComponent,
+        EditPasswordComponent
         ],
     imports     : [
         RouterModule.forChild(routes),
-
+        ReactiveFormsModule,
         MatButtonModule,
         MatDividerModule,
         MatIconModule,
         MatTabsModule,
+        MatButtonModule,
+        FuseSharedModule,
+        MatIconModule,
+        MatFormFieldModule,
+        MatInputModule,
+        MatToolbarModule
 
-        FuseSharedModule
     ],
     providers   : [
         ProfileService,
         AuthService
-    ]
+    ],
+    exports:[ReactiveFormsModule]
 })
 export class ProfileModule
 {

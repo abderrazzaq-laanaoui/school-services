@@ -15,8 +15,18 @@
 
         <div class="actions" fxLayout="row" fxLayoutAlign="end center" [@animate]="{value:'*',params:{delay:'200ms'}}">
             <input type="file" #avatarImg style="display: none;" (change)="onAvatarSelected($event)" accept="image/png, image/jpeg">
-            <button mat-raised-button color="accent" (click)="avatarImg.click()" aria-label="Modifier l'image de profile">Modifier l'image de profile</button>
-            <button (click)="editPassword()" mat-raised-button color="primary" aria-label="Modifer mot de passe">Modifier mot de passe</button>
+            <button  *ngIf="isCurrentUser"
+                mat-raised-button color="accent" (click)="avatarImg.click()" aria-label="Modifier l'image de profile">
+                Modifier l'image de profile
+            </button>
+            <button *ngIf="isCurrentUser" 
+                (click)="editPassword(user.id)" mat-raised-button color="primary" aria-label="Modifer mot de passe">
+                Modifier mot de passe
+            </button>
+            <button *ngIf="!isCurrentUser"
+                 (click)="resetPassword(user.id)" mat-raised-button color="accent" aria-label="Réinitialiser mot de passe">
+                 Réinitialiser mot de passe
+            </button>
         </div>
 
     </div>

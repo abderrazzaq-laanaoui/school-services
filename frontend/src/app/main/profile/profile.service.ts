@@ -11,7 +11,7 @@ import { ToastrService } from "ngx-toastr";
 
 @Injectable()
 export class ProfileService implements Resolve<any> {
-    
+   
     private _user: any;
     aboutOnChanged: BehaviorSubject<any>;
 
@@ -47,7 +47,6 @@ export class ProfileService implements Resolve<any> {
     }
 
 
-
     /**
      * Get about
      */
@@ -65,6 +64,33 @@ export class ProfileService implements Resolve<any> {
                         this.router.navigateByUrl('home')
                 });
         });
+    }
+    updatePassword(id: number, data: { old_password: string; new_password: string; }) {
+        return new Promise((resolve, reject) => {
+            this._httpClient
+                .patch(`http://localhost:3000/user/password/${id}`,data)
+                .subscribe(
+                    () => {
+                    this.toastr.info("Le mot de passe est bien modifier") ;              
+                    resolve(null);
+                }, reject=> {
+                    this.toastr.error(reject.message, "ERREUR")
+                });
+    });    
+}
+    
+    resetPassword(id: number) {
+         return new Promise((resolve, reject) => {
+            this._httpClient
+                .patch(`http://localhost:3000/user/password`,{id})
+                .subscribe(
+                    () => {
+                    this.toastr.info("Le mot de passe est bien réinitialiser");              
+                    resolve(null);
+                }, reject=> {
+                    this.toastr.error(reject.message, "ERREUR")
+                });
+    }); 
     }
 
     updateAvatar(id: number, avatar: string | ArrayBuffer) {
@@ -85,4 +111,5 @@ export class ProfileService implements Resolve<any> {
     getUserAvatar(id: number){
          
     }
+    
 }

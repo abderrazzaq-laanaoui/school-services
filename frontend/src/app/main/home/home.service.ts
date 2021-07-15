@@ -29,7 +29,7 @@ export class ProjectDashboardService implements Resolve<any>
     {
         return new Promise((resolve, reject) => {
             Promise.all([
-                this.getProjects(),
+                // this.getProjects(),
                 this.getWidgets()
             ]).then(
                 () => { resolve(null); },
@@ -45,7 +45,8 @@ export class ProjectDashboardService implements Resolve<any>
      */
     getProjects(): Promise<any>
     {
-        return new Promise((resolve, reject) => {
+        return null;
+        new Promise((resolve, reject) => {
             this._httpClient.get('http://localhost:3300/projects')
                 .subscribe((response: any) => {
                     this.projects = response;
