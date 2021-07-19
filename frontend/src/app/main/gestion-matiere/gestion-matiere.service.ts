@@ -4,9 +4,12 @@ import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, Resolve, RouterStateSnapshot } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { BehaviorSubject, Observable } from 'rxjs';
+import  * as _ from 'lodash';
 
 @Injectable()
 export class GestionMatiereService implements Resolve<any> {
+
+  
    onModuleChanged: any; 
     semestre: any;
   /**
@@ -48,4 +51,13 @@ export class GestionMatiereService implements Resolve<any> {
               }, reject);
       });
   }
+
+    // send delete request to delete matiere with id
+    deleteMatiere(id: number) {
+        return this._httpClient.delete(`http://localhost:3000/matiere/${id}`)
+    }
+    // send patch request to update matiere with id
+    updateMatiere(matiere: any): any {
+        return this._httpClient.patch(`http://localhost:3000/matiere/${matiere.id}`, _.omit(matiere, 'id'))
+    }
  }

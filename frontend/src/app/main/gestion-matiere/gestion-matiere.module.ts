@@ -13,6 +13,11 @@ import { MatListModule } from "@angular/material/list";
 import { MatTableModule } from "@angular/material/table";
 import { MatiereTableComponent } from './table/table.component'
 import { GestionMatiereService } from "./gestion-matiere.service";
+import { EditMatiereComponent } from './edit-matiere/edit-matiere.component'
+import { ReactiveFormsModule } from "@angular/forms";
+import { MatFormFieldModule } from "@angular/material/form-field";
+import { MatInputModule } from "@angular/material/input";
+import { MatToolbarModule } from "@angular/material/toolbar";
 const routes: Routes = [
     {
         path: "gestion-etudes/:id",
@@ -24,9 +29,12 @@ const routes: Routes = [
     },
 ];
 @NgModule({
-    declarations: [GestionMatiereComponent, MatiereTableComponent ],
+    declarations: [GestionMatiereComponent, MatiereTableComponent, EditMatiereComponent ],
     imports: [
       RouterModule.forChild(routes),
+      ReactiveFormsModule,
+      MatFormFieldModule,
+      MatInputModule,
       MatButtonModule,
       MatIconModule, 
       MatTabsModule,
@@ -35,9 +43,10 @@ const routes: Routes = [
       FuseDemoModule,
       MatDividerModule,
       MatTableModule,
+      MatToolbarModule,
       MatListModule
     ],
-    exports: [],
+    exports: [ReactiveFormsModule],
     providers: [GestionMatiereService],
 })
 export class GestionMatiereModule {}

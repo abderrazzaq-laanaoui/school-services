@@ -3,7 +3,6 @@ import decode from "jwt-decode";
 import { fuseAnimations } from "@fuse/animations";
 import { ProfileService } from "./profile.service";
 import { ToastrService } from "ngx-toastr";
-import { FormGroup } from "@angular/forms";
 import { MatDialog, MatDialogRef } from "@angular/material/dialog";
 import { EditPasswordComponent } from "./edit-password/edit-password.component";
 import { FuseConfirmDialogComponent } from "@fuse/components/confirm-dialog/confirm-dialog.component";

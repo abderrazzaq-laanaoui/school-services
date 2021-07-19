@@ -30,7 +30,7 @@
     <div class="h3 username">{{user.prenom + " "+ user.nom}}</div>
         <div class="h5 email hint-text mt-8">{{user.email}}</div>
         <div class="avatar-container" [ngClass]="fuseConfig.layout.navbar.primaryBackground">
-            <img class="avatar" [src]="'assets/images/avatars/'+user.id+'.jpg'">
+            <img class="avatar" [src]="user.avatar">
         </div>
 
     </div>

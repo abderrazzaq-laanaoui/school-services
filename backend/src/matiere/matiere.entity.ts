@@ -13,7 +13,7 @@ export class Matiere  extends BaseEntity {
   @Column()
   nom: string;
 
-  @Column()
+  @Column({type:'decimal', precision:5, scale:3})
   coefficient: number;
 
 

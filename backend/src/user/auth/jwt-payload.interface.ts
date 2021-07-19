@@ -4,4 +4,5 @@ export interface JwtPayload{
   nom:string;
   prenom:string;
   role:string;
+  avatar:string;
 }

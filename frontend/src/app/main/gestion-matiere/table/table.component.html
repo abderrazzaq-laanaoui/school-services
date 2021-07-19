@@ -19,12 +19,12 @@
       <mat-header-cell *matHeaderCellDef class="text-truncate">Pourcentage</mat-header-cell>
       <mat-cell *matCellDef="let module">
           <p class="cin font-weight-600">
-              {{ module.coefficient*100 }}% 
+              {{  Math.floor(module.coefficient*100) }}% 
           </p>
       </mat-cell>
   </ng-container>
-
-  <!-- Email Column -->
+  
+  <!-- Professeur Column -->
   <ng-container matColumnDef="professeur">
       <mat-header-cell
           *matHeaderCellDef
@@ -42,7 +42,9 @@
   </ng-container>
 
 
+
   <!-- action Column -->
+  
   <ng-container matColumnDef="action">
       <mat-header-cell *matHeaderCellDef class="text-truncate"
           >Action
@@ -52,11 +54,11 @@
       >
           <button class="action-btn"
               mat-mini-fab
-             (click)="attachFile(matiere)"
+             (click)="updateMatiere(matiere)"
           >
-              <mat-icon>attachment</mat-icon>
+              <mat-icon>edit</mat-icon>
           </button>
-          <button (click)="confirmDialog()"
+          <button (click)="deleteMatiere(matiere.id)"
            mat-mini-fab class="action-btn delete-btn mat-warn">
               <mat-icon>delete</mat-icon>
           </button>

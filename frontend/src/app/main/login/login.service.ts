@@ -9,7 +9,7 @@ import decode from "jwt-decode";
 })
 export class LoginService {
     private url: string;
-    public user: {id:string; nom: string; prenom: string; email: string , role:string};
+    public user: {id:string; nom: string; prenom: string; email: string , role:string, avatar: string};
 
     constructor(
         private httpClient: HttpClient,
@@ -42,9 +42,9 @@ export class LoginService {
     }
     setUser() {
         try{
-        const  {id, nom, prenom, email, role } = <any>decode(this.getToken());
-        this.user = {id, nom, prenom, email,role };
-        }catch(e){ this.user = {id:"", nom:"",prenom:"",email:"", role:""}}
+        const  {id, nom, prenom, email, role, avatar } = <any>decode(this.getToken());
+        this.user = {id, nom, prenom, email,role, avatar };
+        }catch(e){ this.user = {id:"", nom:"",prenom:"",email:"", role:"", avatar:""}}
     }
 
     setToken(token: string) {

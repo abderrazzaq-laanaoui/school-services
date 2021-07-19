@@ -45,7 +45,7 @@ export class EditPasswordComponent {
      *
      * @returns {FormGroup}
      */
-    createContactForm(): FormGroup {
+    private createContactForm(): FormGroup {
         return this._formBuilder.group({
             id: new FormControl(this.id,Validators.required),
             old: new FormControl("",[Validators.required, Validators.pattern(/((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$/)]),
@@ -57,15 +57,11 @@ export class EditPasswordComponent {
 
     
     /**
-     * changePassword
+     * passwordConfirming
      */
-    public changePassword() {
-        console.log(this.userForm);
-        
-        
-    }
+   
     
-    passwordConfirming(c: AbstractControl): { invalid: boolean } {
+    private passwordConfirming(c: AbstractControl): { invalid: boolean } {
         if (c.get('new').value !== c.get('confirm').value) {
             return {invalid: true};
         }

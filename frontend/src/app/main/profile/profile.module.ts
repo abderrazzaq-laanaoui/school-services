@@ -52,7 +52,7 @@ const routes = [
         ProfileService,
         AuthService
     ],
-    exports:[ReactiveFormsModule]
+    exports: []
 })
 export class ProfileModule
 {
