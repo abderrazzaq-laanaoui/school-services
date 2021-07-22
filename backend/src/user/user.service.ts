@@ -9,67 +9,69 @@ import { UserRepository } from './user.repository';
 
 @Injectable()
 export class UserService {
-  
-  
-  constructor(
-    @InjectRepository(UserRepository)
-    private userRepository: UserRepository,
-    private jwtService: JwtService, 
-  ) {}
+    constructor(
+        @InjectRepository(UserRepository)
+        private userRepository: UserRepository,
+        private jwtService: JwtService,
+    ) {}
 
-  async getUser(id: number, user: Etudiant | Admin | Professeur) {
-    if (user instanceof Admin) {
-      return await this.userRepository.getUser(id);
-    } else { 
-      if (user.id === id) return await this.userRepository.getUser(id);
-      else throw new NotFoundException("L'utilisateur demandé n'existe pas!");
+    async getUser(id: number, user: Etudiant | Admin | Professeur) {
+        if (user instanceof Admin) {
+            return await this.userRepository.getUser(id);
+        } else {
+            if (user.id === id) return await this.userRepository.getUser(id);
+            else throw new NotFoundException("L'utilisateur demandé n'existe pas!");
+        }
     }
-  }
 
-  async updateAvatar(id: number, avatar: string, user: Etudiant | Admin | Professeur) {
-    if(user instanceof Admin || user.id === id)
-      return await this.userRepository.updateAvatar(id, avatar);
-    throw new ForbiddenException("Vous pouvez pas effectuer cette operation!");
-    
-  }
-  
-  async updateUser(id: number, userData: any, user: Etudiant | Admin | Professeur) {
-    if(user instanceof Admin || id === user.id) {
-      return await this.userRepository.updateUser(id, userData)
+    // get avatar
+    async getAvatar(id: number, user: Etudiant | Admin | Professeur) {
+        if (user instanceof Admin) return await this.userRepository.getAvatar(id);
+        if (user.id === id) return await this.userRepository.getAvatar(id);
+        throw new ForbiddenException("Vous n'avez pas accès à cette ressource");
     }
-    throw new ForbiddenException("Vous pouvez pas effectuer cette operation!");
-  }
 
-  async deleteUser(id: number, user: Etudiant | Admin | Professeur) {
-    if(user instanceof Admin) return await this.userRepository.delete(id);
-    throw new ForbiddenException("Vous pouvez pas effectuer cette operation!");
-    
-  }
-  async getUsers(user: Etudiant | Admin | Professeur) {
-    if (user instanceof Admin)  return await this.userRepository.find();
-    // if (user instanceof Professeur) return 'list edtudiant'; //TODO : RETURN LIST OF STUDENTS 
-    throw new ForbiddenException("Vous avez pas les droit d'access à ce resource");
-  }
-
-  async signUpStudent(addStudentDto: AddStudentDto): Promise<Partial<Etudiant>> {
-    return  this.userRepository.addStudent(addStudentDto);
-  }
-
-  async signUpProfesseur(addProfesseurDto: AddUserDto): Promise<Partial<Professeur>> {
-    return this.userRepository.addProfesseur(addProfesseurDto);
-  }
-
-  async signUpAdmin(addAdminDto: AddUserDto): Promise<Partial<Admin>> {
-    return this.userRepository.addAdmin(addAdminDto);
-  }
-
-  async signIn(authCredntialDto: AuthCredentialDto): Promise<{ accessToken: string }> {
-    try {
-      const payload: JwtPayload = await this.userRepository.validateUserPassword(authCredntialDto);
-      const accessToken = await this.jwtService.sign(payload);
-      return { accessToken };
-    } catch (e) {
-      throw new UnauthorizedException('Données invalid!');
+    async updateAvatar(id: number, avatar: string, user: Etudiant | Admin | Professeur) {
+        if (user instanceof Admin || user.id === id) return await this.userRepository.updateAvatar(id, avatar);
+        throw new ForbiddenException('Vous pouvez pas effectuer cette operation!');
     }
-  }
+
+    async updateUser(id: number, userData: any, user: Etudiant | Admin | Professeur) {
+        if (user instanceof Admin || id === user.id) {
+            return await this.userRepository.updateUser(id, userData);
+        }
+        throw new ForbiddenException('Vous pouvez pas effectuer cette operation!');
+    }
+
+    async deleteUser(id: number, user: Etudiant | Admin | Professeur) {
+        if (user instanceof Admin) return await this.userRepository.delete(id);
+        throw new ForbiddenException('Vous pouvez pas effectuer cette operation!');
+    }
+    async getUsers(user: Etudiant | Admin | Professeur) {
+        if (user instanceof Admin) return await this.userRepository.find();
+        // if (user instanceof Professeur) return 'list edtudiant'; //TODO : RETURN LIST OF STUDENTS
+        throw new ForbiddenException("Vous avez pas les droit d'access à ce resource");
+    }
+
+    async signUpStudent(addStudentDto: AddStudentDto): Promise<Partial<Etudiant>> {
+        return this.userRepository.addStudent(addStudentDto);
+    }
+
+    async signUpProfesseur(addProfesseurDto: AddUserDto): Promise<Partial<Professeur>> {
+        return this.userRepository.addProfesseur(addProfesseurDto);
+    }
+
+    async signUpAdmin(addAdminDto: AddUserDto): Promise<Partial<Admin>> {
+        return this.userRepository.addAdmin(addAdminDto);
+    }
+
+    async signIn(authCredntialDto: AuthCredentialDto): Promise<{ accessToken: string }> {
+        try {
+            const payload: JwtPayload = await this.userRepository.validateUserPassword(authCredntialDto);
+            const accessToken = await this.jwtService.sign(payload);
+            return { accessToken };
+        } catch (e) {
+            throw new UnauthorizedException('Données invalid!');
+        }
+    }
 }

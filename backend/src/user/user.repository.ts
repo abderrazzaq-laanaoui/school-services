@@ -94,9 +94,15 @@ export class UserRepository extends Repository<User> {
       .getOne();
 
     if (user && (await user.validatePassword(password))) {
-      return {id:user.id, email: user.email, nom: user.nom, prenom: user.prenom, role: user.type, avatar: user.avatar};
+      return {id:user.id, email: user.email, nom: user.nom, prenom: user.prenom, role: user.type};
     }
     return null;
+  }
+
+  async getAvatar(id: number): Promise<string> {
+    const user = await this.getUser(id);
+    if(!user) throw new NotFoundException("La ressource demandé n'existe pas!");
+    return user.avatar;
   }
 
   private async hashPassword(password: string, salt: string) {

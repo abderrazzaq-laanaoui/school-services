@@ -16,7 +16,13 @@ export class UserController {
   getUsers(@GetUser() user: Etudiant | Admin | Professeur) {
     return this.userService.getUsers(user);
   }
-  
+
+  //get avatar
+  @UseGuards(AuthGuard())
+  @Get('/avatar/:id')
+  getAvatar(@Param('id', ParseIntPipe) id: number,@GetUser() user: Etudiant | Admin | Professeur){
+    return this.userService.getAvatar(id,user);
+  }
   
   @UseGuards(AuthGuard())
   @Get(':id')
