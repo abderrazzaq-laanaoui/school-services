@@ -82,7 +82,7 @@ export class ProfileService implements Resolve<any> {
     resetPassword(id: number) {
          return new Promise((resolve, reject) => {
             this._httpClient
-                .patch(`http://localhost:3000/user/password`,{id})
+                .patch(`http://localhost:3000/user/password/`,{id})
                 .subscribe(
                     () => {
                     this.toastr.info("Le mot de passe est bien réinitialiser");              

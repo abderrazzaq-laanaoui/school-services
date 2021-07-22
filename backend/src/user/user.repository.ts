@@ -1,7 +1,7 @@
 import { EntityRepository, Repository } from 'typeorm';
 import { AddStudentDto, AddUserDto } from './dto/addUser.dto';
 import { Admin, Etudiant, Professeur, User } from './user.entity';
-import { ConflictException, NotFoundException } from '@nestjs/common';
+import { ConflictException, NotFoundException, UnauthorizedException } from '@nestjs/common';
 import * as bcrypt from 'bcrypt';
 import * as _ from 'lodash';
 import { AuthCredentialDto } from './dto/auth-credential.dto';
@@ -80,7 +80,7 @@ export class UserRepository extends Repository<User> {
     try {
       return await user.save();
     } catch (e) {      
-      if (e.errno === 1062) throw new ConflictException("Il exsite deja un utilisateur soit avec même email, cne ou cin       ");// deplicate unique keys
+      if (e.errno === 1062) throw new ConflictException("Il exsite deja un utilisateur soit avec même email, cne ou cin");// deplicate unique keys
       throw new Error(e.sqlMessage);
       
     }
@@ -97,6 +97,39 @@ export class UserRepository extends Repository<User> {
       return {id:user.id, email: user.email, nom: user.nom, prenom: user.prenom, role: user.type};
     }
     return null;
+  }
+  //reset password
+  async resetPassword(id:number): Promise<Etudiant | Professeur | Admin> {
+    const user = await this.createQueryBuilder('user')
+      .addSelect(['user.password', 'user.salt'])
+      .where('user.id = :id', { id })
+      .getOne();  
+    if (user) {
+      let password = this.capitalize(user.nom)+ "@" + (user.cin ? user.cin.toLowerCase() : "")
+      user.password = await this.hashPassword(password, user.salt);
+      return <any>  user.save();
+    }
+    else{
+      return null;
+    }
+  }
+
+  // update password after checking if the old one correct
+  async updatePassword(id: number, oldPassword: string, newPassword: string) {
+    const user = await this.getUser(id);
+    if (await user.validatePassword(oldPassword)) {
+      user.password = await this.hashPassword(newPassword, user.salt);
+      return await user.save();
+    }
+    // return unauthorized error with password invalid message
+    throw new UnauthorizedException('Mot de passe incorrect');
+  }
+
+
+private capitalize(word:string) {
+    if(!word) return word
+    if(word.length === 1) return word.toUpperCase();
+    return word[0].toUpperCase() + word.substring(1).toLowerCase() ;
   }
 
   async getAvatar(id: number): Promise<string> {

@@ -8,7 +8,7 @@ export class AuthCredentialDto {
   @MinLength(8)
   @MaxLength(32)
   @Matches(/((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$/, {
-    message: 'Password should contains UpperCase and LowerCase letters and also numbers or special caracters !',
+    message: 'Le mot de passe doit contenir des lettres majuscules et minuscules ainsi que des chiffres ou des caractères spéciaux. !',
   })
   password: string;
 }

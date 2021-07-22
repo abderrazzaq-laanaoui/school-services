@@ -2,6 +2,8 @@ import { Body, Controller, Delete, Get, Param, ParseIntPipe, Patch, Post, UseGua
 import { AuthGuard } from '@nestjs/passport';
 import { AddStudentDto, AddUserDto } from './dto/addUser.dto';
 import { AuthCredentialDto } from './dto/auth-credential.dto';
+import { ResetPasswordDto } from './dto/reset-password.dto';
+import { UpdatePasswordDto } from './dto/update-password.dto';
 import { GetUser } from './get-user.decorator';
 import { Admin, Etudiant, Professeur, User } from './user.entity';
 import { UserService } from './user.service';
@@ -69,6 +71,19 @@ export class UserController {
   @Delete(':id')
   deleteUser(@Param('id', ParseIntPipe) id: number,@GetUser() user: Etudiant | Admin | Professeur){
     return this.userService.deleteUser(id,user);
-    
+  }
+
+  //endpoint to reset password using patch
+  @UseGuards(AuthGuard())
+  @Patch('/password')
+  resetPassword(@Body() resetPasswordDto: ResetPasswordDto,  @GetUser() user: Etudiant | Admin | Professeur): Promise<{ message: string }> {
+    return this.userService.resetPassword(resetPasswordDto.id,user);
+  }
+
+  //update password end point using path verb
+  @UseGuards(AuthGuard())
+  @Patch('/password/:id')
+  updatePassword(@Param('id', ParseIntPipe) id: number,@Body() updatePasswordDto: UpdatePasswordDto, @GetUser() user: Etudiant | Admin | Professeur){
+    return this.userService.updatePassword(id,updatePasswordDto,user);
   }
 }

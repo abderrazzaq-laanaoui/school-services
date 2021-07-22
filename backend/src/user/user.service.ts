@@ -6,6 +6,7 @@ import { AuthCredentialDto } from './dto/auth-credential.dto';
 import { JwtPayload } from './auth/jwt-payload.interface';
 import { Admin, Etudiant, Professeur, User } from './user.entity';
 import { UserRepository } from './user.repository';
+import { UpdatePasswordDto } from './dto/update-password.dto';
 
 @Injectable()
 export class UserService {
@@ -71,7 +72,28 @@ export class UserService {
             const accessToken = await this.jwtService.sign(payload);
             return { accessToken };
         } catch (e) {
-            throw new UnauthorizedException('Données invalid!');
+            throw new UnauthorizedException('Données non valides!');
         }
     }
+
+    //reset password
+    async resetPassword(id: number, user: Etudiant | Admin | Professeur): Promise<any> {
+        if(!(user instanceof Admin)) throw new ForbiddenException('Vous n\'avez pas accès à cette ressource');
+        let res = await this.userRepository.resetPassword(id);
+        if(!res) throw new NotFoundException('Utilisateur non trouvé!');
+        // return 204 with update seccuss message
+        return "le mot de passe a été changé avec succès!";
+    }
+
+    // update password
+    async updatePassword(id: number, updatePasswordDto: UpdatePasswordDto, user: Etudiant | Admin | Professeur): Promise<any> {
+        if(user instanceof Admin) {
+            const {old_password, new_password} = updatePasswordDto;
+            let res = await this.userRepository.updatePassword(id, old_password, new_password);
+            if(res) return "Votre mot de passe a été changé avec succès!";
+            throw new NotFoundException('Utilisateur non trouvé!');
+        }
+        throw new ForbiddenException('Vous n\'avez pas accès à cette ressource');
+    }
+
 }

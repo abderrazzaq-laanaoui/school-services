@@ -106,7 +106,7 @@ export class NavbarVerticalStyle1Component implements OnInit, OnDestroy {
                 }
             });
             this.user = this._loginService.user;
-
+            
         // Subscribe to the config changes
         this._fuseConfigService.config
             .pipe(takeUntil(this._unsubscribeAll))
@@ -124,6 +124,12 @@ export class NavbarVerticalStyle1Component implements OnInit, OnDestroy {
                 this.navigation =
                     this._fuseNavigationService.getCurrentNavigation();
             });
+            this._loginService.getAvatar(this.user.id).subscribe(
+                (data) => {
+                    this.user.avatar = data;
+                }
+                
+            )
     }
 
     /**
