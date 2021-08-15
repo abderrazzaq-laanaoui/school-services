@@ -73,7 +73,9 @@ export const adminNavigation: FuseNavigation[] = [
                 title: "Gestion Etudes",
                 type: "item",
                 icon: "info",
-                url: "/gestion-etudes/1",
+                url: "/gestion-etudes/",
+                exactMatch: false
+                
             },
         ],
     },

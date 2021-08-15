@@ -1,14 +1,24 @@
 <div id="about" class="p-24" fxLayout="row">
 
-    <div class="about-content" fxLayout="column" fxFlex="100" >
+    <div class="about-content" fxLayout="column" fxFlex="100">
 
-        <div class="profile-box info-box general" fxLayout="column" >
+        <div class="profile-box info-box general" fxLayout="column">
 
             <header class="accent">
                 <div class="title">Informations Generalles</div>
             </header>
 
             <div class="content">
+                <!-- NOM -->
+                <div class="info-line" >
+                    <div class="title" >Nom</div>
+                    <div class="info" >{{ user.nom }}</div>
+                </div>
+                <!-- PRENOM -->
+                <div class="info-line">
+                    <div class="title" >Prenom</div>
+                    <div class="info" >{{ user.prenom }}</div>
+                </div>
                 <div class="info-line" *ngIf="user.cne">
                     <div class="title">CNE</div>
                     <div class="info">{{user.cne || ""}}</div>
@@ -18,37 +28,11 @@
                     <div class="info">{{user.cin}}</div>
                 </div>
                 <div class="info-line">
-                    <div class="title">Sexe</div>
-                    <div class="info">{{"Male"}}</div>
-                </div>
-
-                <div class="info-line">
                     <div class="title">Date de naissance</div>
-                    <div class="info">{{"20/09/2000"}}</div>
+                    <div class="info">{{user.birthday | date:'dd/MM/yyyy'}}</div>
                 </div>
             </div>
 
-        </div>
-
-        <div class="profile-box info-box work" fxLayout="column">
-
-            <header class="accent">
-                <div class="title">Work</div>
-            </header>
-
-            <div class="content">
-                <div class="info-line">
-                    <div class="title">Semestre current</div>
-                    <div class="info">{{"Semestre 4"}}</div>
-                </div>
-
-                <div class="info-line">
-                    <div class="title">Classe</div>
-                    <div class="info">{{"S3/S4-2021"}}</div>
-                </div>
-
-              
-            </div>
         </div>
 
         <div class="profile-box info-box contact" fxLayout="column">
@@ -59,15 +43,15 @@
 
             <div class="content">
                 <div class="info-line">
-                    <div class="title">Address</div>
-                    <div class="info">{{user.address || ""}}</div>
+                    <div class="title">Adresse</div>
+                    <div class="info">{{user.adresse || ""}}</div>
                 </div>
                 <div class="info-line">
                     <div class="title">N° Telephone</div>
                     <div class="info">{{user.tel || ""}}</div>
                 </div>
                 <div class="info-line">
-                    <div class="title">Emails</div>
+                    <div class="title">Email</div>
                     <div class="info">{{user.email}}</div>
                 </div>
             </div>
@@ -76,6 +60,6 @@
 
     </div>
 
-   
+
 
 </div>

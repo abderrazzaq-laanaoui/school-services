@@ -12,7 +12,7 @@ export class ModuleController {
   constructor(private moduleService: ModuleService){}
   @Post()
   addModule(@Body(ValidationPipe) addModuleDto: AddModuleDto, @GetUser() user: Admin | Etudiant | Professeur)
-  {
+  {    
     return this.moduleService.addModule(addModuleDto,user);
   }
 }

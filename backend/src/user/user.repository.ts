@@ -1,7 +1,7 @@
 import { EntityRepository, Repository } from 'typeorm';
 import { AddStudentDto, AddUserDto } from './dto/addUser.dto';
 import { Admin, Etudiant, Professeur, User } from './user.entity';
-import { ConflictException, NotFoundException, UnauthorizedException } from '@nestjs/common';
+import { ConflictException, ForbiddenException, NotFoundException, UnauthorizedException } from '@nestjs/common';
 import * as bcrypt from 'bcrypt';
 import * as _ from 'lodash';
 import { AuthCredentialDto } from './dto/auth-credential.dto';
@@ -34,13 +34,16 @@ export class UserRepository extends Repository<User> {
   }
 
   async addStudent(addStudentDto: AddStudentDto): Promise<Partial<Etudiant>> {
-    const { cin, cne, nom, prenom, email, password, avatar } = addStudentDto;
+    const { cin, cne, nom, prenom, email, password, avatar,birthday, tel,adresse } = addStudentDto;
 
     const etudiant = new Etudiant();
     etudiant.cin = cin;
     etudiant.cne = cne;
     etudiant.nom = nom;
     etudiant.prenom = prenom;
+    etudiant.birthday = birthday;
+    etudiant.tel = tel;
+    etudiant.adresse = adresse;
     etudiant.avatar = avatar;
     etudiant.email = email;
     etudiant.salt = await bcrypt.genSalt();
@@ -49,12 +52,15 @@ export class UserRepository extends Repository<User> {
   }
 
   async addProfesseur(addProfesseurDto: AddUserDto): Promise<Partial<Professeur>> {
-    const { cin, nom, prenom, email, password, avatar } = addProfesseurDto;
+    const { cin, nom, prenom, email, password, avatar,tel, birthday, adresse } = addProfesseurDto;
 
     const professeur = new Professeur();
     professeur.cin = cin;
     professeur.nom = nom;
     professeur.prenom = prenom;
+    professeur.birthday = birthday;
+    professeur.tel = tel;
+    professeur.adresse = adresse;
     professeur.avatar = avatar;
     professeur.email = email;
     professeur.salt = await bcrypt.genSalt();
@@ -63,13 +69,16 @@ export class UserRepository extends Repository<User> {
   }
 
   async addAdmin(addUserDto: AddUserDto): Promise<Partial<Admin>> {
-    const { cin, nom, prenom, email, password, avatar } = addUserDto;
+    const { cin, nom, prenom, email, password, avatar, tel, birthday,adresse } = addUserDto;
 
     const admin = new Admin();
     admin.cin = cin;
     admin.nom = nom;
     admin.prenom = prenom;
     admin.email = email;
+    admin.birthday = birthday;
+    admin.tel = tel;
+    admin.adresse = adresse;
     admin.avatar = avatar;
     admin.salt = await bcrypt.genSalt();
     admin.password = await this.hashPassword(password, admin.salt);
@@ -78,13 +87,18 @@ export class UserRepository extends Repository<User> {
 
   private async saveUser<T extends User>(user: T): Promise<Partial<T>> {
     try {
-      return await user.save();
+      return await _.omit(user.save(),"password","salt");
     } catch (e) {      
       if (e.errno === 1062) throw new ConflictException("Il exsite deja un utilisateur soit avec même email, cne ou cin");// deplicate unique keys
       throw new Error(e.sqlMessage);
       
     }
   }
+
+  // find professeurs function that return all professeurs
+  async findProfesseurs(): Promise<Professeur[]> {
+    return <Professeur[]>( await this.find({type: 'Professeur'}));
+}
 
   async validateUserPassword(authCredntialDto: AuthCredentialDto): Promise<JwtPayload> {
     const { email, password } = authCredntialDto;
@@ -114,15 +128,17 @@ export class UserRepository extends Repository<User> {
     }
   }
 
-  // update password after checking if the old one correct
+  // update password after checking if the old one is correct
   async updatePassword(id: number, oldPassword: string, newPassword: string) {
-    const user = await this.getUser(id);
+    const user = await this.createQueryBuilder('user')
+      .addSelect(['user.password', 'user.salt'])
+      .where('user.id = :id', { id })
+      .getOne();
     if (await user.validatePassword(oldPassword)) {
       user.password = await this.hashPassword(newPassword, user.salt);
       return await user.save();
     }
-    // return unauthorized error with password invalid message
-    throw new UnauthorizedException('Mot de passe incorrect');
+    throw new ForbiddenException('Mot de passe incorrect');
   }
 
 

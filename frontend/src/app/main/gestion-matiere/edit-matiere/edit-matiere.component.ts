@@ -34,10 +34,7 @@ export class EditMatiereComponent implements OnInit {
     }
 
     ngOnInit(): void {
-        console.log("data", this._data);
-        
         this.matiere = {...this._data};   
-        console.log("matiere", this.matiere);
         this.dialogTitle = "Modifier la matiére";
         this.matiereForm = this.createMatiereForm();
         

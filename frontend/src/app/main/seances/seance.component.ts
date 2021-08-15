@@ -25,9 +25,12 @@ export interface studentElement {
 export class SeanceComponent implements OnInit {
     absence: boolean = false;
     seanceData: Seance;
+    matieres: string[] = [];
 
     firstFormGroup: FormGroup;
     secondFormGroup: FormGroup;
+
+    // clock theme
     costumTheme: NgxMaterialTimepickerTheme = {
         container: {
             buttonColor: "#000",
@@ -55,6 +58,8 @@ export class SeanceComponent implements OnInit {
     ) {}
 
     ngOnInit() {
+        
+
         this.secondFormGroup = this._formBuilder.group({
             secondCtrl: ["", Validators.required],
         });
@@ -65,27 +70,15 @@ export class SeanceComponent implements OnInit {
             date: ["", Validators.required],
             class: ["", Validators.required],
         });
+
+        this.matieres = this._seanceService.matieres;
     }
 
-    async selectClass(classe) {
-        this.studentsList = await this._seanceService.getStudentList(classe);
-        this.dataSource = new MatTableDataSource<studentElement>(
-            this.studentsList
-        );
+    async onClassSelected(classe) {
+       this.studentsList = await this._seanceService.getStudentList(classe);
+        this.dataSource = new MatTableDataSource<studentElement>( this.studentsList);
     }
     submitFirstForm(e) {
         console.log(JSON.stringify(this.firstFormGroup.getRawValue()));
-    }
-    isAllSelected() {
-        const numSelected = this.selection.selected.length;
-        const numRows = this.dataSource.data.length;
-        return numSelected == numRows;
-    }
-
-    /** Selects all rows if they are not all selected; otherwise clear selection. */
-    masterToggle() {
-        this.isAllSelected()
-            ? this.selection.clear()
-            : this.dataSource.data.forEach((row) => this.selection.select(row));
-    }
+    } 
 }

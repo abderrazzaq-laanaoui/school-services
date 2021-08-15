@@ -13,6 +13,7 @@ export class User
     tel: string;
     password?: string;
     birthday: string;
+    adresse: string;
 
     /**
      * Constructor
@@ -30,6 +31,8 @@ export class User
             this.email = user.email || '';
             this.type = user.type || '';
             this.password = user.password || '';
+            this.tel = user.tel || '';
+            this.adresse = user.adresse || '';
             this.birthday = user.birthday || '';
         }
     } 

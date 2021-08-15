@@ -1,5 +1,5 @@
 import { Absence } from 'src/absence/absence.entity';
-import { LigneClasseSemstre } from 'src/ligne-classe-semestre/ligne-classe-semestre.entity';
+import { LigneClasseSemestre } from 'src/ligne-classe-semestre/ligne-classe-semestre.entity';
 import { Matiere } from 'src/matiere/matiere.entity';
 import { Professeur } from 'src/user/user.entity';
 import { BaseEntity, Column, Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
@@ -24,8 +24,8 @@ export class Seance  extends BaseEntity {
   @OneToMany(() => Absence, (absence) => absence.seance)
   absences: Absence[];
 
-  @ManyToOne(() => LigneClasseSemstre, (lcs) => lcs.seances)
-  ligneClasseSemstre: LigneClasseSemstre;
+  @ManyToOne(() => LigneClasseSemestre, (lcs) => lcs.seances)
+  ligneClasseSemstre: LigneClasseSemestre;
 
 
 }

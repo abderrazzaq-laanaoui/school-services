@@ -96,8 +96,6 @@
             </div>
 
             <!-- Password -->
-            <!-- <div fxLayout="row" fxLayoutAlign="start start"> -->
-                <!-- <mat-form-field appearance="outline" fxFlex> -->
                     <input
                         name="password"
                         formControlName="password"
@@ -109,8 +107,6 @@
                         [required]="action !== 'edit'"
 
                     />
-                <!-- </mat-form-field> -->
-            <!-- </div> -->
             <!-- PRENOM -->
             <div fxLayout="row" fxLayoutAlign="start start">
                 <mat-form-field appearance="outline" fxFlex>
@@ -144,6 +140,7 @@
                     <mat-datepicker #birthdayDatePicker></mat-datepicker>
                 </mat-form-field>
             </div>
+      
             <!-- EMAIL -->
             <div fxLayout="row" fxLayoutAlign="start start">
                 <mat-form-field appearance="outline" fxFlex>
@@ -168,6 +165,20 @@
                         formControlName="tel"
                         matInput
                         type="tel"
+                    />
+                </mat-form-field>
+            </div>
+
+            <!-- adresse -->
+            <div fxLayout="row" fxLayoutAlign="start start">
+                <mat-form-field appearance="outline" fxFlex>
+                    <mat-label>Adresse</mat-label>
+                    <mat-icon matSuffix class="secondary-text">home</mat-icon>
+                    <input
+                        name="adresse"
+                        formControlName="adresse"
+                        matInput
+                        type="text"
                     />
                 </mat-form-field>
             </div>

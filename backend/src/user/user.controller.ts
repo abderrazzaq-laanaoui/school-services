@@ -18,7 +18,13 @@ export class UserController {
   getUsers(@GetUser() user: Etudiant | Admin | Professeur) {
     return this.userService.getUsers(user);
   }
-
+  
+  @UseGuards(AuthGuard())
+  @Get('/professeurs')
+  getProfesseurs( @GetUser() user: Etudiant | Admin | Professeur): Promise<any[]> {
+    return this.userService.getProfesseurs(user);
+  }
+  
   //get avatar
   @UseGuards(AuthGuard())
   @Get('/avatar/:id')
@@ -32,27 +38,12 @@ export class UserController {
     return this.userService.getUser(id, user);
   }
 
+  
+  //update password end point using path verb
   @UseGuards(AuthGuard())
-  @Post('/etudiant')
-  addEtudiant(@Body(ValidationPipe) addStudentDto: AddStudentDto): Promise<Partial<Etudiant>> {
-    return this.userService.signUpStudent(addStudentDto);
-  }
-
-  @UseGuards(AuthGuard())
-  @Post('/professeur')
-  addProfesseur(@Body(ValidationPipe) addProfesseurDto: AddUserDto): Promise<Partial<Professeur>> {
-    return this.userService.signUpProfesseur(addProfesseurDto);
-  }
-
-  @UseGuards(AuthGuard())
-  @Post('/admin')
-  addAdmin(@Body(ValidationPipe) addAdminDto: AddUserDto): Promise<Partial<Admin>> {
-    return this.userService.signUpAdmin(addAdminDto);
-  }
-
-  @Post('/login')
-  signIn(@Body(ValidationPipe) authCredentialDto: AuthCredentialDto): Promise<{ accessToken: string }> {
-    return this.userService.signIn(authCredentialDto);
+  @Patch('/password/:id')
+  updatePassword(@Param('id', ParseIntPipe) id: number,@Body() updatePasswordDto: UpdatePasswordDto, @GetUser() user: Etudiant | Admin | Professeur){
+    return this.userService.updatePassword(id,updatePasswordDto,user);
   }
 
   @UseGuards(AuthGuard())
@@ -72,18 +63,39 @@ export class UserController {
   deleteUser(@Param('id', ParseIntPipe) id: number,@GetUser() user: Etudiant | Admin | Professeur){
     return this.userService.deleteUser(id,user);
   }
-
+  
   //endpoint to reset password using patch
   @UseGuards(AuthGuard())
   @Patch('/password')
-  resetPassword(@Body() resetPasswordDto: ResetPasswordDto,  @GetUser() user: Etudiant | Admin | Professeur): Promise<{ message: string }> {
+  resetPassword(@Body(ValidationPipe) resetPasswordDto: ResetPasswordDto,  @GetUser() user: Etudiant | Admin | Professeur): Promise<{ message: string }> {
     return this.userService.resetPassword(resetPasswordDto.id,user);
   }
 
-  //update password end point using path verb
   @UseGuards(AuthGuard())
-  @Patch('/password/:id')
-  updatePassword(@Param('id', ParseIntPipe) id: number,@Body() updatePasswordDto: UpdatePasswordDto, @GetUser() user: Etudiant | Admin | Professeur){
-    return this.userService.updatePassword(id,updatePasswordDto,user);
+  @Post('/etudiant')
+  addEtudiant(@Body(ValidationPipe) addStudentDto: AddStudentDto, @GetUser() user: Etudiant | Admin | Professeur): Promise<Partial<Etudiant>> {
+    return this.userService.signUpStudent(addStudentDto,user);
   }
+
+  @UseGuards(AuthGuard())
+  @Post('/professeur')
+  addProfesseur(@Body(ValidationPipe) addProfesseurDto: AddUserDto, @GetUser() user: Etudiant | Admin | Professeur): Promise<Partial<Professeur>> {
+    return this.userService.signUpProfesseur(addProfesseurDto,user);
+  }
+  
+
+  // @UseGuards(AuthGuard())
+  @Post('/admin')
+  addAdmin(@Body(ValidationPipe) addAdminDto: AddUserDto): Promise<Partial<Admin>> {
+    return this.userService.signUpAdmin(addAdminDto);
+  }
+
+  @Post('/login')
+  signIn(@Body(ValidationPipe) authCredentialDto: AuthCredentialDto): Promise<{ accessToken: string }> {
+    return this.userService.signIn(authCredentialDto);
+  }
+
+
+
+ 
 }

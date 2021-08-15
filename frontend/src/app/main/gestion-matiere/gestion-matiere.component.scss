@@ -1,3 +1,5 @@
+@import "src/@fuse/scss/fuse";
+
 mat-tab-group{
   width: 100%;
 }
@@ -8,4 +10,17 @@ mat-list-item{
 .active-tab{
   background-color: rgb(0 0 0 / 22%);
   font-weight: bolder;
+}
+
+#add-element-button {
+  position: sticky;
+  top: calc(100vh - 130px);;
+  right: 15px;
+  padding: 0;
+  z-index: 99;
+
+  @include media-breakpoint('xs') {
+      position: absolute;
+      bottom: auto;
+  }
 }

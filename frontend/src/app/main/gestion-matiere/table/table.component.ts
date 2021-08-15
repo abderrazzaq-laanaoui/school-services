@@ -75,7 +75,6 @@ updateMatiere(matiere) {
 
       this.confirmDialogRef.afterClosed().subscribe((result) => {
           if (result) {
-              console.log(response);
               //send patch request to update matiere using the service and update the view if seccuss
               this._gestionMatiereService.updateMatiere(response).subscribe(
                   response => {
@@ -83,7 +82,7 @@ updateMatiere(matiere) {
                   },
                   err => {
                       this.toastr.error(err.message, 'ERREUR');
-                  }
+                 }
               );
           }
           this.confirmDialogRef = null;

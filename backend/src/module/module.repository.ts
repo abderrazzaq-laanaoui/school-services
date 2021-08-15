@@ -16,7 +16,8 @@ export class ModuleRepository extends Repository<Module>{
 
     let module = new Module();
     module.nom = nom;
-    module.semestre = semestre;    
+    module.semestre = semestre;
+    module.matieres = [];
     return _.omit(await module.save(),'semestre');
     
     

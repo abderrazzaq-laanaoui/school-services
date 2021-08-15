@@ -24,6 +24,8 @@ export class UserService {
             else throw new NotFoundException("L'utilisateur demandé n'existe pas!");
         }
     }
+    
+
 
     // get avatar
     async getAvatar(id: number, user: Etudiant | Admin | Professeur) {
@@ -53,13 +55,20 @@ export class UserService {
         // if (user instanceof Professeur) return 'list edtudiant'; //TODO : RETURN LIST OF STUDENTS
         throw new ForbiddenException("Vous avez pas les droit d'access à ce resource");
     }
-
-    async signUpStudent(addStudentDto: AddStudentDto): Promise<Partial<Etudiant>> {
-        return this.userRepository.addStudent(addStudentDto);
+    async getProfesseurs( user: Etudiant | Admin | Professeur){ 
+        if (user instanceof Admin) return await this.userRepository.findProfesseurs();
+        throw new ForbiddenException("Vous n'avez pas l'accès à cette ressource");
+        
     }
 
-    async signUpProfesseur(addProfesseurDto: AddUserDto): Promise<Partial<Professeur>> {
-        return this.userRepository.addProfesseur(addProfesseurDto);
+    async signUpStudent(addStudentDto: AddStudentDto, user: Etudiant | Admin | Professeur): Promise<Partial<Etudiant>> {
+        if (user instanceof Admin) return this.userRepository.addStudent(addStudentDto);
+        throw new ForbiddenException("Vous pouvez pas effectuer cette opération");
+    }
+
+    async signUpProfesseur( addProfesseurDto: AddUserDto, user: Etudiant | Admin | Professeur,): Promise<Partial<Professeur>> {
+        if (user instanceof Admin) return this.userRepository.addProfesseur(addProfesseurDto);
+        throw new ForbiddenException("Vous pouvez pas effectuer cette opération");
     }
 
     async signUpAdmin(addAdminDto: AddUserDto): Promise<Partial<Admin>> {
@@ -78,22 +87,25 @@ export class UserService {
 
     //reset password
     async resetPassword(id: number, user: Etudiant | Admin | Professeur): Promise<any> {
-        if(!(user instanceof Admin)) throw new ForbiddenException('Vous n\'avez pas accès à cette ressource');
+        if (!(user instanceof Admin)) throw new ForbiddenException("Vous n'avez pas accès à cette ressource");
         let res = await this.userRepository.resetPassword(id);
-        if(!res) throw new NotFoundException('Utilisateur non trouvé!');
+        if (!res) throw new NotFoundException('Utilisateur non trouvé!');
         // return 204 with update seccuss message
-        return "le mot de passe a été changé avec succès!";
+        return 'le mot de passe a été changé avec succès!';
     }
 
     // update password
-    async updatePassword(id: number, updatePasswordDto: UpdatePasswordDto, user: Etudiant | Admin | Professeur): Promise<any> {
-        if(user instanceof Admin) {
-            const {old_password, new_password} = updatePasswordDto;
+    async updatePassword(
+        id: number,
+        updatePasswordDto: UpdatePasswordDto,
+        user: Etudiant | Admin | Professeur,
+    ): Promise<any> {
+        if (user instanceof Admin) {
+            const { old_password, new_password } = updatePasswordDto;
             let res = await this.userRepository.updatePassword(id, old_password, new_password);
-            if(res) return "Votre mot de passe a été changé avec succès!";
+            if (res) return 'Votre mot de passe a été changé avec succès!';
             throw new NotFoundException('Utilisateur non trouvé!');
         }
-        throw new ForbiddenException('Vous n\'avez pas accès à cette ressource');
+        throw new ForbiddenException("Vous n'avez pas accès à cette ressource");
     }
-
 }

@@ -1,4 +1,4 @@
-import { LigneClasseSemstre } from 'src/ligne-classe-semestre/ligne-classe-semestre.entity';
+import { LigneClasseSemestre } from 'src/ligne-classe-semestre/ligne-classe-semestre.entity';
 import { Matiere } from 'src/matiere/matiere.entity';
 import { Note } from 'src/note/note.entity';
 import { BaseEntity, Column, Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
@@ -23,8 +23,8 @@ export class Epreuve extends BaseEntity {
   @OneToMany(() => Note, (note) => note.epreuve, { eager: true })
   notes: Note[];
 
-  @ManyToOne(() => LigneClasseSemstre, (lcs) => lcs.epreuves)
-  lcs: LigneClasseSemstre;
+  @ManyToOne(() => LigneClasseSemestre, (lcs) => lcs.epreuves)
+  lcs: LigneClasseSemestre;
 
 }
 

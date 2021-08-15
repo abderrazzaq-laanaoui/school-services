@@ -6,6 +6,8 @@ import { ToastrService } from "ngx-toastr";
 import { MatDialog, MatDialogRef } from "@angular/material/dialog";
 import { EditPasswordComponent } from "./edit-password/edit-password.component";
 import { FuseConfirmDialogComponent } from "@fuse/components/confirm-dialog/confirm-dialog.component";
+import { takeUntil } from "rxjs/operators";
+import { Subject } from "rxjs";
 @Component({
     selector: "profile",
     templateUrl: "./profile.component.html",
@@ -18,20 +20,40 @@ export class ProfileComponent implements OnInit {
     dialogRef: any;
     confirmDialogRef: MatDialogRef<FuseConfirmDialogComponent>;
     isCurrentUser: boolean;
+    // Private
+    private _unsubscribeAll: Subject<any>;
 
     /**
      * Constructor
      */
     constructor(
-        private _profileSerive: ProfileService,
+        private _profileService: ProfileService,
         public _matDialog: MatDialog,
         private toastr: ToastrService
-    ) {}
+    ) {
+        this._unsubscribeAll = new Subject();
+    }
 
     ngOnInit(): void {
-        this.user = this._profileSerive.user;
-        this.isCurrentUser = this.user.id === this.getCurrentUser();
+        this._profileService.aboutOnChanged
+            .pipe(takeUntil(this._unsubscribeAll))
+            .subscribe(data => {
+                this.user = data;
+                this.isCurrentUser = this.user.id === this.getCurrentUser();
+            });
+        // this.user = this._profileService.user;
+        
     }
+
+     /**
+     * On destroy
+     */
+      ngOnDestroy(): void
+      {
+          // Unsubscribe from all subscriptions
+          this._unsubscribeAll.next();
+          this._unsubscribeAll.complete();
+      }
 
     editPassword(userId) {
         this.dialogRef = this._matDialog.open(EditPasswordComponent, {
@@ -55,8 +77,7 @@ export class ProfileComponent implements OnInit {
 
             this.confirmDialogRef.afterClosed().subscribe((result) => {
                 if (result) {
-                    console.log(response);
-                    this._profileSerive.updatePassword(response.id, {
+                    this._profileService.updatePassword(response.id, {
                         old_password: response.old,
                         new_password: response.new,
                     });
@@ -79,14 +100,13 @@ export class ProfileComponent implements OnInit {
 
         this.confirmDialogRef.afterClosed().subscribe((result) => {
             if (result) {
-                this._profileSerive.resetPassword(userId);
+                this._profileService.resetPassword(userId);
             }
             this.confirmDialogRef = null;
         });
     }
 
     getCurrentUser(): number {
-        console.log("call");
 
         return +(<any>decode(localStorage.getItem("data"))).id;
     }
@@ -109,9 +129,9 @@ export class ProfileComponent implements OnInit {
         const reader = new FileReader();
         reader.readAsDataURL(file);
         reader.onload = () => {
-            this._profileSerive
+            this._profileService
                 .updateAvatar(this.user.id, reader.result)
-                .then((this.user = this._profileSerive.user));
+                .then((this.user = this._profileService.user));
         };
     }
 }

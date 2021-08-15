@@ -1,4 +1,4 @@
-import { LigneClasseSemstre } from "src/ligne-classe-semestre/ligne-classe-semestre.entity";
+import { LigneClasseSemestre } from "src/ligne-classe-semestre/ligne-classe-semestre.entity";
 import { BaseEntity, Column, Entity, JoinTable, ManyToMany, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity()
@@ -15,8 +15,8 @@ export class Info extends BaseEntity{
   @Column()
   type: string;
 
-  @ManyToMany(() => LigneClasseSemstre)
+  @ManyToMany(() => LigneClasseSemestre)
   @JoinTable()
-  lignesClasseSemstre: LigneClasseSemstre[];
+  lignesClasseSemstre: LigneClasseSemestre[];
   //TODO : add relation to lcs
 }

@@ -33,9 +33,11 @@ import { FileAttacherComponent } from "./dialog/file-attacher/file-attacher.comp
 import { SeanceModule } from "./main/seances/seance.module";
 import {  NotesModule } from './main/notes/notes.module'
 const appRoutes: Routes = [
+    {path: 'gestion-etudes', redirectTo: 'gestion-etudes/1', pathMatch: 'full'},
+
     {
         path: "**",
-        redirectTo: "home",
+        redirectTo: "home"
        
     },
 ];

@@ -6,12 +6,13 @@ import { BehaviorSubject, Observable } from 'rxjs';
 @Injectable()
 export class SeanceService implements Resolve<any>
 {
+    private readonly API = "http://localhost:3000";
    
-    timeline: any;
+    matieres: any;
     about: any;
     photosVideos: any;
 
-    timelineOnChanged: BehaviorSubject<any>;
+    matieresOnChanged: BehaviorSubject<any>;
     aboutOnChanged: BehaviorSubject<any>;
     photosVideosOnChanged: BehaviorSubject<any>;
 
@@ -25,7 +26,7 @@ export class SeanceService implements Resolve<any>
     )
     {
         // Set the defaults
-        this.timelineOnChanged = new BehaviorSubject({});
+        this.matieresOnChanged = new BehaviorSubject({});
         this.aboutOnChanged = new BehaviorSubject({});
         this.photosVideosOnChanged = new BehaviorSubject({});
     }
@@ -41,7 +42,7 @@ export class SeanceService implements Resolve<any>
     {
         return new Promise((resolve, reject) => {
             Promise.all([
-                this.getTimeline(),
+                this.getMatieres(),
                 this.getAbout(),
             ]).then(
                 () => {
@@ -55,16 +56,15 @@ export class SeanceService implements Resolve<any>
     /**
      * Get timeline
      */
-    getTimeline(): Promise<any[]>
+    getMatieres(): Promise<any[]>
     {
-        return null;
-        new Promise((resolve, reject) => {
+        return new Promise((resolve, reject) => {
 
-            this._httpClient.get('api/profile-timeline')
+            this._httpClient.get(`${this.API}/matiere`)
                 .subscribe((timeline: any) => {
-                    this.timeline = timeline;
-                    this.timelineOnChanged.next(this.timeline);
-                    resolve(this.timeline);
+                    this.matieres = timeline;
+                    this.matieresOnChanged.next(this.matieres);
+                    resolve(this.matieres);
                 }, reject);
         });
     }
@@ -77,7 +77,7 @@ export class SeanceService implements Resolve<any>
         return null;
         new Promise((resolve, reject) => {
 
-            this._httpClient.get('api/profile-about')
+            this._httpClient.get(`api/profile-about`)
                 .subscribe((about: any) => {
                     this.about = about;
                     this.aboutOnChanged.next(this.about);
@@ -86,11 +86,9 @@ export class SeanceService implements Resolve<any>
         });
     }
 
-  
-
     getStudentList(lcs: any): any {
         return new Promise((resolve, reject) => {
-            this._httpClient.get('http://localhost:3000/ligne-classe-semestre/liste-etudiants/'+lcs)
+            this._httpClient.get(`${this.API}/ligne-classe-semestre/liste-etudiants/${lcs}`)
                 .subscribe((about: any) => {
                     this.about = about; 
                     this.aboutOnChanged.next(this.about);

@@ -93,7 +93,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
         this.loginService.logOut();
     }
     public gotoProfile(id:string)
-    {        
-        this.router.navigate(['profile',id])
+    { 
+        this.router.navigateByUrl("/profile/"+id);
     }
 }

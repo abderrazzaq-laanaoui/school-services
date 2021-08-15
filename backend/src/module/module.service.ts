@@ -9,8 +9,10 @@ export class ModuleService {
   constructor(private _moduleRepository:ModuleRepository) {
     
   }
+  
   addModule(addModuleDto: AddModuleDto, user: Admin | Etudiant | Professeur) {
     if(!(user instanceof Admin)) throw new ForbiddenException("Vous avez pas les droits de faire cette opération!");
     return this._moduleRepository.addModule(addModuleDto);
   }
 }
+ 

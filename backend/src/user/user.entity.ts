@@ -1,7 +1,7 @@
 import { Absence } from 'src/absence/absence.entity';
 import * as bcrypt from 'bcrypt';
 import { Demande } from 'src/demande/demande.entity';
-import { LigneClasseSemstre } from 'src/ligne-classe-semestre/ligne-classe-semestre.entity';
+import { LigneClasseSemestre } from 'src/ligne-classe-semestre/ligne-classe-semestre.entity';
 import { Matiere } from 'src/matiere/matiere.entity';
 import { Note } from 'src/note/note.entity';
 import { Seance } from 'src/seance/seance.entity';
@@ -31,8 +31,20 @@ export abstract class User extends BaseEntity {
   @Column()
   prenom: string;
 
+  // birthday column 
+  @Column({ nullable: true, default: null })
+  birthday: Date; 
+
   @Column({ unique: true })
   email: string;
+
+  // adress column
+  @Column({ type: 'varchar', length: 255 })
+  adresse: string;
+
+  //phone column
+  @Column({ nullable: true, default: null })
+  tel: string;
 
   @Column({ select: false })
   password: string;
@@ -42,6 +54,7 @@ export abstract class User extends BaseEntity {
 
   @Column()
   type: string;
+  
   @Column({ type: 'longtext'})
   avatar: string;
 
@@ -71,8 +84,8 @@ export class Etudiant extends User {
   @Column({ unique: true })
   cne: string;
 
-  @ManyToOne(() => LigneClasseSemstre, (lcs) => lcs.etudiants)
-  ligneClasseSemestre: LigneClasseSemstre;
+  @ManyToOne(() => LigneClasseSemestre, (lcs) => lcs.etudiants)
+  ligneClasseSemestre: LigneClasseSemestre;
 
   @OneToMany(() => Note, (note) => note.etudiant, { eager: false })
   notes: Note[];

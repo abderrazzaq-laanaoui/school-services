@@ -87,7 +87,7 @@ export class UsersService implements Resolve<any>
     {
         return new Promise((resolve, reject) => {
                 this._httpClient.get('http://localhost:3000/user/list')
-                    .subscribe((response: any) => {
+                    .subscribe((response: any) => {                      
 
                         this.users = response;
 
@@ -142,9 +142,9 @@ export class UsersService implements Resolve<any>
             const type = res.type.toLowerCase()
             let data;
             if(type === 'etudiant')
-               data =  _.pick(res,'cne','cin','nom', 'prenom', 'email','password', 'avatar');
+               data =  res;
             else
-                data =  _.pick(res,'cin','nom', 'prenom', 'email','password', 'avatar');
+                data =  _.omit(res,'cne');
 
                     this._httpClient.post('http://localhost:3000/user/'+type , {...data})
                 .subscribe(response => {

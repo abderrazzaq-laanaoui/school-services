@@ -39,6 +39,5 @@ export class EvenementController {
   }
   @Post('/:action')
   addEvent(@Body() x:any){
-    console.log(x)
   }
 }

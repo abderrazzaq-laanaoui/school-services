@@ -50,7 +50,7 @@ export class FuseCopierService
         // Move element to the same position vertically
         const yPosition = window.pageYOffset || document.documentElement.scrollTop;
         this.textarea.style.top = yPosition + 'px';
-
+        
         this.textarea.setAttribute('readonly', '');
         this.textarea.value = text;
 

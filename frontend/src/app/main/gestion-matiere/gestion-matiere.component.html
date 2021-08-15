@@ -76,7 +76,15 @@
         </div>
         <!-- / CONTENT CARD -->
 
-    </div>
     <!-- / CENTER -->
-
 </div>
+<button
+    mat-fab
+    class="accent"
+    id="add-element-button"
+    (click)="newElement()"
+    aria-label="add info"
+    [@animate]="{ value: '*', params: { delay: '300ms', scale: '.2' } }"
+>
+    <mat-icon>playlist_add</mat-icon>
+</button>

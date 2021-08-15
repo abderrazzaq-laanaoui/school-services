@@ -9,9 +9,6 @@ import { FuseSharedModule } from '@fuse/shared.module';
 import {NgxMaterialTimepickerModule} from 'ngx-material-timepicker';
 import { SeanceService } from './seance.service';
 import { SeanceComponent } from './seance.component';
-import {AbsenceComponent} from './tabs/absence/absence.component';
-import {InfoComponent} from './tabs/info/info.component';
-import{RapportComponent} from './tabs/rapport/rapport.component';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
@@ -31,9 +28,6 @@ const routes = [
 @NgModule({
     declarations: [
         SeanceComponent,
-        AbsenceComponent,
-        InfoComponent,
-        RapportComponent,
     ],
     imports     : [
         RouterModule.forChild(routes),

@@ -1,4 +1,4 @@
-import { LigneClasseSemstre } from "src/ligne-classe-semestre/ligne-classe-semestre.entity";
+import { LigneClasseSemestre } from "src/ligne-classe-semestre/ligne-classe-semestre.entity";
 import { BaseEntity, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity()
@@ -6,6 +6,6 @@ export class Classe extends BaseEntity{
   @PrimaryGeneratedColumn()
   id: number;
 
-  @OneToMany(()=>LigneClasseSemstre, (lcs)=>lcs.classe)
-  lignesClesseSemestre: LigneClasseSemstre[];
+  @OneToMany(()=>LigneClasseSemestre, (lcs)=>lcs.classe)
+  lignesClesseSemestre: LigneClasseSemestre[];
 }

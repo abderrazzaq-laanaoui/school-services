@@ -1,4 +1,5 @@
-import { IsString, IsNotEmpty, IsEmail, MinLength, MaxLength, Matches, IsOptional } from 'class-validator';
+import { Type } from 'class-transformer';
+import { IsString, IsNotEmpty, IsEmail, MinLength, MaxLength, Matches, IsOptional, IsPhoneNumber, IsDate, IsDateString } from 'class-validator';
 
 export class AddUserDto {
   @IsString()
@@ -23,9 +24,26 @@ export class AddUserDto {
   @IsNotEmpty()
   avatar: string;
 
+  // adresse
+  @IsString()
+  @MinLength(3)
+  @MaxLength(255)
+  adresse: string;
+
   @IsString()
   @IsEmail()
   email: string;
+  // birthday
+  @IsNotEmpty()
+  @IsDate()
+  @Type(() => Date)
+  birthday: Date;
+
+  //tel
+  @IsOptional()
+  @IsString()
+  @Matches(/^[0-9]{10,11}$/)
+  tel: string;
 
   @IsString()
   @MinLength(8)
