@@ -5,14 +5,14 @@ import { AuthCredentialDto } from './dto/auth-credential.dto';
 import { ResetPasswordDto } from './dto/reset-password.dto';
 import { UpdatePasswordDto } from './dto/update-password.dto';
 import { GetUser } from './get-user.decorator';
-import { Admin, Etudiant, Professeur, User } from './user.entity';
+import { Admin, Etudiant, Professeur } from './user.entity';
 import { UserService } from './user.service';
 
 @Controller('user')
 export class UserController {
   constructor(private userService: UserService) {}
 
- 
+
   @UseGuards(AuthGuard())
   @Get('/list')
   getUsers(@GetUser() user: Etudiant | Admin | Professeur) {
@@ -37,12 +37,21 @@ export class UserController {
   getUser(@Param('id', ParseIntPipe) id: number, @GetUser() user: Etudiant | Admin | Professeur) {
     return this.userService.getUser(id, user);
   }
+  //endpoint to reset password using patch
+  @UseGuards(AuthGuard())
+  @Patch('/password')
+  resetPassword(@Body(ValidationPipe) resetPasswordDto: ResetPasswordDto,  @GetUser() user: Etudiant | Admin | Professeur): Promise<{ message: string }> {
+    return this.userService.resetPassword(resetPasswordDto.id,user);
+  } 
+
 
   
   //update password end point using path verb
   @UseGuards(AuthGuard())
   @Patch('/password/:id')
-  updatePassword(@Param('id', ParseIntPipe) id: number,@Body() updatePasswordDto: UpdatePasswordDto, @GetUser() user: Etudiant | Admin | Professeur){
+  updatePassword(@Param('id', ParseIntPipe) id: number,@Body(ValidationPipe) updatePasswordDto: UpdatePasswordDto, @GetUser() user: Etudiant | Admin | Professeur){
+    console.log("data => ",updatePasswordDto);
+    
     return this.userService.updatePassword(id,updatePasswordDto,user);
   }
 
@@ -64,12 +73,7 @@ export class UserController {
     return this.userService.deleteUser(id,user);
   }
   
-  //endpoint to reset password using patch
-  @UseGuards(AuthGuard())
-  @Patch('/password')
-  resetPassword(@Body(ValidationPipe) resetPasswordDto: ResetPasswordDto,  @GetUser() user: Etudiant | Admin | Professeur): Promise<{ message: string }> {
-    return this.userService.resetPassword(resetPasswordDto.id,user);
-  }
+
 
   @UseGuards(AuthGuard())
   @Post('/etudiant')
@@ -84,18 +88,15 @@ export class UserController {
   }
   
 
-  // @UseGuards(AuthGuard())
+  @UseGuards(AuthGuard())
   @Post('/admin')
   addAdmin(@Body(ValidationPipe) addAdminDto: AddUserDto): Promise<Partial<Admin>> {
     return this.userService.signUpAdmin(addAdminDto);
   }
 
+  
   @Post('/login')
   signIn(@Body(ValidationPipe) authCredentialDto: AuthCredentialDto): Promise<{ accessToken: string }> {
     return this.userService.signIn(authCredentialDto);
   }
-
-
-
- 
 }

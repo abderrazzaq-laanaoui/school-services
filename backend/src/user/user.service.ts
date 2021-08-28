@@ -106,6 +106,6 @@ export class UserService {
             if (res) return 'Votre mot de passe a été changé avec succès!';
             throw new NotFoundException('Utilisateur non trouvé!');
         }
-        throw new ForbiddenException("Vous n'avez pas accès à cette ressource");
+        throw new ForbiddenException("Vous n'avez pas accès à ces ressources");
     }
 }

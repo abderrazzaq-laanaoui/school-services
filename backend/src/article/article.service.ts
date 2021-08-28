@@ -8,7 +8,7 @@ export class ArticleService {
   constructor(private _articleRepository: ArticleRepository){}
 
   async getArticles(user: Admin | Etudiant | Professeur) {
-    // TODO : Check the rules
+    if( user instanceof Etudiant) return await user.classe.articles;
     return await this._articleRepository.find();
   }
 

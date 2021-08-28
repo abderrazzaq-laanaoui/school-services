@@ -73,7 +73,7 @@ export class UserRepository extends Repository<User> {
 
     const admin = new Admin();
     admin.cin = cin;
-    admin.nom = nom;
+    admin.nom = nom; 
     admin.prenom = prenom;
     admin.email = email;
     admin.birthday = birthday;

@@ -18,7 +18,7 @@ export class MatiereService {
     }
     if(user instanceof Etudiant){
       let matieres:Array<Matiere> = [];
-      user.ligneClasseSemestre.semestre.modules.forEach(module => {
+      user.classe.lcs.semestre.modules.forEach(module => {
         matieres = matieres.concat(module.matieres)
       });
       return matieres;

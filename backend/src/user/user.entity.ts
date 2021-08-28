@@ -3,18 +3,22 @@ import * as bcrypt from 'bcrypt';
 import { Demande } from 'src/demande/demande.entity';
 import { LigneClasseSemestre } from 'src/ligne-classe-semestre/ligne-classe-semestre.entity';
 import { Matiere } from 'src/matiere/matiere.entity';
-import { Note } from 'src/note/note.entity';
 import { Seance } from 'src/seance/seance.entity';
 import {
   BaseEntity,
   ChildEntity,
   Column,
   Entity,
+  JoinTable,
+  ManyToMany,
   ManyToOne,
   OneToMany,
   PrimaryGeneratedColumn,
   TableInheritance,
 } from 'typeorm';
+import { NoteMatiere } from 'src/notes/note-matiere/note-matiere.entity';
+import { NoteModule } from 'src/notes/note-module/note-module.entity';
+import { Classe } from 'src/classe/classe.entity';
 
 @Entity()
 @TableInheritance({ column: { type: 'varchar', name: 'type' } })
@@ -84,15 +88,25 @@ export class Etudiant extends User {
   @Column({ unique: true })
   cne: string;
 
-  @ManyToOne(() => LigneClasseSemestre, (lcs) => lcs.etudiants)
-  ligneClasseSemestre: LigneClasseSemestre;
+  @ManyToOne(type => Classe, classe => classe.etudiants)
+  classe: Classe;
+  
+  @ManyToMany(()=>LigneClasseSemestre, (lcs)=>lcs.etudiants)
+  @JoinTable()
+  lignesClesseSemestre: LigneClasseSemestre[];
 
-  @OneToMany(() => Note, (note) => note.etudiant, { eager: false })
-  notes: Note[];
+  @OneToMany( type => NoteMatiere , (noteMatiere) => noteMatiere.etudiant)
+  notes: NoteMatiere[];
+
+  @OneToMany(type=> NoteModule, (noteModule) => noteModule.etudiant)
+  notesModule: NoteModule[];
 
   @OneToMany(() => Absence, (absence) => absence.etudiant, { eager: false })
   absences: Absence[];
 
   @OneToMany(() => Demande, (demande) => demande.etudiant, { eager: false })
   demandes: Demande[];
+
+  @OneToMany(() => NoteMatiere, nm => nm.etudiant, { eager: false })
+  notesMatiere: any;
 }

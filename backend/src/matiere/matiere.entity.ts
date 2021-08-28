@@ -1,6 +1,6 @@
 import { Article } from 'src/article/article.entity';
-import { Epreuve } from 'src/epreuve/epreuve.entity';
 import { Module } from 'src/module/module.entity';
+import { NoteMatiere } from 'src/notes/note-matiere/note-matiere.entity';
 import { Seance } from 'src/seance/seance.entity';
 import { Professeur } from 'src/user/user.entity';
 import { BaseEntity, Column, Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
@@ -23,11 +23,9 @@ export class Matiere  extends BaseEntity {
   @ManyToOne(type=>Module, module=>module.matieres,{eager:false})
   module:Module;
 
-  // @OneToMany(() => Seance, (seance) => seance.matiere)
-  // seances: Seance[];
+  @OneToMany(type=>Article, article=>article.matiere)
+  articles: Article[];
 
-  // @OneToMany(() => Epreuve, (epreuve) => epreuve.matiere)
-  // epreuves: Epreuve[];
-  // @OneToMany(type=> Article, a => a.content)
-  // articles: Article[];
+  @OneToMany( type => NoteMatiere, noteMatiere => noteMatiere.matiere)
+  notesMatiere: NoteMatiere[];
 }

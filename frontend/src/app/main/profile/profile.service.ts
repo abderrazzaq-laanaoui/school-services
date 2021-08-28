@@ -92,7 +92,7 @@ export class ProfileService implements Resolve<any> {
                 );
         });
     }
-
+    // reset password
     resetPassword(id: number) {
         return new Promise((resolve, reject) => {
             this._httpClient

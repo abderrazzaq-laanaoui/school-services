@@ -25,6 +25,7 @@ export class AddUserDto {
   avatar: string;
 
   // adresse
+  @IsOptional()
   @IsString()
   @MinLength(3)
   @MaxLength(255)
