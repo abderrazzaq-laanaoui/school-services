@@ -54,15 +54,15 @@ export class SeanceService implements Resolve<any>
     }
 
     /**
-     * Get timeline
+     * Get result
      */
     getMatieres(): Promise<any[]>
     {
         return new Promise((resolve, reject) => {
 
             this._httpClient.get(`${this.API}/matiere`)
-                .subscribe((timeline: any) => {
-                    this.matieres = timeline;
+                .subscribe((result: any) => {
+                    this.matieres = result;
                     this.matieresOnChanged.next(this.matieres);
                     resolve(this.matieres);
                 }, reject);

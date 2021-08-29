@@ -12,9 +12,7 @@ export class MatiereController {
   constructor(private matiereService: MatiereService){};
   
   @Post()
-  addModule(@Body(ValidationPipe) addMatierelDto: AddMatiereDto, @GetUser() user: Admin | Etudiant | Professeur) {
-    console.log("matiere",addMatierelDto);
-    
+  addModule(@Body(ValidationPipe) addMatierelDto: AddMatiereDto, @GetUser() user: Admin | Etudiant | Professeur) {    
     return this.matiereService.addMatiere(addMatierelDto, user);
   }
 

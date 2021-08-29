@@ -24,10 +24,15 @@ export class MatiereRepository extends Repository<Matiere>{
     matiere.module = module;
 
     return _.omit(await matiere.save(),'professeur','module');
+  }
 
-    
-    
-    
+  // get all matieres with id, nom , coefficient and professeur 
+  async getAllMatieres() {
+    // create query builder to get all matieres with professeur name and id
+    return this.createQueryBuilder('matiere')
+                        .innerJoinAndSelect('matiere.professeur', 'professeur')
+                        .select(['matiere.id', 'matiere.nom', 'matiere.coefficient', 'professeur.id', 'professeur.nom', 'professeur.prenom'])
+                        .getMany();
 
   }
 

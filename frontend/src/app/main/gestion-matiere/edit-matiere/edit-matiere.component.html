@@ -33,14 +33,13 @@
                 </mat-form-field>
             </div>
             <!-- PROFESSEUR INPUT -->
-            <div fxLayout="row" fxLayoutAlign="start start">
+            <div fxLayout="row" fxLayoutAlign="start start" >
                 <mat-form-field appearance="outline" fxFlex>
                     <mat-label>Professeur</mat-label>
-                    <mat-icon matSuffix class="secondary-text"
-                        >vpn_key</mat-icon
-                    >
-                    <input name="professeur" formControlName="professeur" matInput
-                           required />
+                    <mat-select name="professeur" formControlName="professeur" [(ngModel)]="matiere.professeur.id" required>
+                        <mat-option *ngFor="let prof of professeurs" [value]="prof.id" >{{ prof.prenom + " " + prof.nom
+                            }}</mat-option>
+                    </mat-select>
                 </mat-form-field>
             </div>
             <!-- POURCENTAGE INPUT  -->

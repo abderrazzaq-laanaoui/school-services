@@ -65,9 +65,7 @@ export class AddElementComponent {
         });
     }
 
-    onTypeChange(event) {
-        console.log("type changed to ", event.value);
-        
+    onTypeChange(event) {        
         if (event.value === "Matiere") {
             if(!this.isExtraRequired){            
                 this.isExtraRequired = true;
@@ -77,7 +75,6 @@ export class AddElementComponent {
             }
             return;
         }
-        console.log("module!");
         this.isExtraRequired = false;
         this.elementForm.removeControl('module');
         this.elementForm.removeControl('coefficient');
@@ -85,7 +82,6 @@ export class AddElementComponent {
     }
 
     test(event) {
-        console.log(this.isExtraRequired," => ",event.valid);
         console.log(event);
     }
     

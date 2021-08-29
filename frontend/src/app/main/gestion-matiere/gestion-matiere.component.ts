@@ -18,7 +18,7 @@ export class GestionMatiereComponent implements OnInit {
     semestre: any;
     semstresList: Array<string>;
     currentSemestre: number;
-    professeurs: [];
+    professeurs: Array<any>;
 
     dialogRef: any;
     confirmDialogRef: MatDialogRef<FuseConfirmDialogComponent>;
@@ -92,19 +92,14 @@ export class GestionMatiereComponent implements OnInit {
                         this.toastr.success("Ce module est bien ajouté");  
                         this.semestre.modules.push(res);
                     },
-                    (err)=>{
-                        console.log("err",err);
-                        
+                    (err)=>{                        
                         //show a toaster with the error message
                         this.toastr.error(err.message, "Erreur");
                     });;
             }
-            else if (response.type === "Matiere") {
-                console.log("adding matiere",response);
-                
+            else if (response.type === "Matiere") {                
                 this._gestionMatiereService.addMatiere({nom:response.titre, professeurId:response.professeur,coefficient:response.coefficient, moduleId: response.module}).subscribe(
                     (res)=>{
-                        console.log(this.semestre.modules.find(m => m.id === response.module).matieres);
                         this.semestre.modules.find(m => m.id === response.module).matieres.push(res);
                     }
                     ,(err)=>{

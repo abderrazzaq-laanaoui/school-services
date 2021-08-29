@@ -29,12 +29,12 @@ export class ContactsComponent implements OnInit, OnDestroy
     /**
      * Constructor
      *
-     * @param {UsersService} _contactsService
+     * @param {UsersService} _usersService
      * @param {FuseSidebarService} _fuseSidebarService
      * @param {MatDialog} _matDialog
      */
     constructor(
-        private _contactsService: UsersService,
+        private _usersService: UsersService,
         private _fuseSidebarService: FuseSidebarService,
         private _matDialog: MatDialog
     )
@@ -68,7 +68,7 @@ export class ContactsComponent implements OnInit, OnDestroy
                 distinctUntilChanged()
             )
             .subscribe(searchText => {
-                this._contactsService.onSearchTextChanged.next(searchText);
+                this._usersService.onSearchTextChanged.next(searchText);
             });
     }
 
@@ -78,7 +78,7 @@ export class ContactsComponent implements OnInit, OnDestroy
     ngOnDestroy(): void
     {
         // Reset the search
-        this._contactsService.onSearchTextChanged.next('');
+        this._usersService.onSearchTextChanged.next('');
 
         // Unsubscribe from all subscriptions
         this._unsubscribeAll.next();
@@ -92,7 +92,7 @@ export class ContactsComponent implements OnInit, OnDestroy
     /**
      * New contact
      */
-    newContact(): void
+    newUser(): void
     {
         this.dialogRef = this._matDialog.open(ContactsContactFormDialogComponent, {
             panelClass: 'user-form-dialog',
@@ -109,9 +109,9 @@ export class ContactsComponent implements OnInit, OnDestroy
                 }
                 const res = response.getRawValue();
                 if(res.action === "new")
-                    this._contactsService.addUser(res)
+                    this._usersService.addUser(res)
                 else
-                    this._contactsService.updateUser(response.getRawValue());
+                    this._usersService.updateUser(response.getRawValue());
             });
     }
 

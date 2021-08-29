@@ -49,12 +49,8 @@
                             class="pl-4"
                         >
                             <mat-label>Matiere</mat-label>
-                            <mat-select formControlName="matiere" required>
-                                <mat-option value="1">Matiere1</mat-option>
-                                <mat-option value="2">Matiere2</mat-option>
-                                <mat-option value="3">Matiere3</mat-option>
-                                <mat-option value="4">Matiere4</mat-option>
-                                <mat-option value="5">Matiere5</mat-option>
+                            <mat-select formControlName="matiere" required >
+                                <mat-option *ngFor="let matiere of matieres" value="matiere.id">{{matiere.nom}}</mat-option>
                             </mat-select>
                             <!-- <input matInput formControlSubject="subject" required> -->
                             <mat-error>La matiere est requise!</mat-error>

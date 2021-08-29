@@ -140,13 +140,15 @@ export class UsersService implements Resolve<any>
     addUser(res: User) {
         return new Promise((resolve, reject) => {
             const type = res.type.toLowerCase()
-            let data;
-            if(type === 'etudiant')
-               data =  res;
-            else
-                data =  _.omit(res,'cne');
-
-                    this._httpClient.post('http://localhost:3000/user/'+type , {...data})
+            let data = {};
+            if(res.tel === "")
+                data =  _.omit(res,'tel');
+            if(res.adresse === "")
+                data =  _.omit(data,'adresse');
+            if(type !== 'etudiant')
+                data =  _.omit(data,'cne');
+            
+            this._httpClient.post('http://localhost:3000/user/'+type , {...data})
                 .subscribe(response => {
                     this.toastr.success("L'utilisateur a été bien ajouté");
                       this.getUsers();

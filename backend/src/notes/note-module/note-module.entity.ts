@@ -22,7 +22,7 @@ export class NoteModule extends BaseEntity {
     @ManyToOne(type => Etudiant, etudiant => etudiant.notesModule)
     etudiant: Etudiant;
 
-    @ManyToOne(type => Module, module => module.notesModule)
+    @ManyToOne(type => Module, module => module.notesModule,{eager:true})
     module: Module;
 
 }

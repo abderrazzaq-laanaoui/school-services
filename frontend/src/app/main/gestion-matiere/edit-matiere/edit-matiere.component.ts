@@ -13,7 +13,8 @@ export class EditMatiereComponent implements OnInit {
     action: string;
     matiereForm: FormGroup;
     dialogTitle: string;
-    matiere : { id: number, nom: string, coefficient: number, professeur: string } ;
+    matiere : { id: number, nom: string, coefficient: number, professeur: any } ;
+    professeurs: Array<any>;
  
 
     /**
@@ -33,8 +34,9 @@ export class EditMatiereComponent implements OnInit {
 
     }
 
-    ngOnInit(): void {
-        this.matiere = {...this._data};   
+    ngOnInit(): void {        
+        this.matiere = {...this._data};         
+        this.professeurs = this._data.professeurs  
         this.dialogTitle = "Modifier la matiére";
         this.matiereForm = this.createMatiereForm();
         

@@ -17,7 +17,7 @@ export class Matiere  extends BaseEntity {
   coefficient: number;
 
 
-  @ManyToOne(()=>Professeur,(professeur)=>professeur.matieres)
+  @ManyToOne(()=>Professeur,(professeur)=>professeur.matieres,{eager:true} )
   professeur:Professeur;
 
   @ManyToOne(type=>Module, module=>module.matieres,{eager:false})
@@ -26,6 +26,6 @@ export class Matiere  extends BaseEntity {
   @OneToMany(type=>Article, article=>article.matiere)
   articles: Article[];
 
-  @OneToMany( type => NoteMatiere, noteMatiere => noteMatiere.matiere)
+  @OneToMany( type => NoteMatiere, noteMatiere => noteMatiere.matiere, {eager:false})
   notesMatiere: NoteMatiere[];
 }

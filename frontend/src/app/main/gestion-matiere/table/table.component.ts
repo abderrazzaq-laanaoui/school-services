@@ -57,7 +57,7 @@ export class MatiereTableComponent implements OnInit {
 updateMatiere(matiere) {
   this.dialogRef = this._matDialog.open(EditMatiereComponent, {
       panelClass: "edit-matiere-dialog",
-      data: {...matiere},
+      data: {...matiere,professeurs: this._gestionMatiereService.professeurs},
     
   });
 
@@ -88,8 +88,16 @@ updateMatiere(matiere) {
           this.confirmDialogRef = null;
       });
   });
-
-  
 }
+// function that return the professeur data based on matiere id 
+  getProfesseurName(Matiereid:number){
+     this._gestionMatiereService.professeurs.forEach(professeur => {
+      professeur.matieres.forEach(matiere => {
+        if(matiere.id === Matiereid)
+        return professeur.nom + ' ' + professeur.prenom;
+
+      })});
+    return "-";
+  }
 
 }

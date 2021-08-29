@@ -14,7 +14,7 @@ export class Module  extends BaseEntity {
   @ManyToOne(type=> Semestre, semestre=> semestre.modules,{eager:false})
   semestre: Semestre;
 
-  @OneToMany(type=> NoteModule, noteModule=> noteModule.module,{eager:true})
+  @OneToMany(type=> NoteModule, noteModule=> noteModule.module,{eager:false})
   notesModule: NoteModule[];
   
   @OneToMany(type=>Matiere, matiere=>matiere.module,{eager:true})

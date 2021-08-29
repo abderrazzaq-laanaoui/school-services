@@ -49,9 +49,7 @@ export class UserController {
   //update password end point using path verb
   @UseGuards(AuthGuard())
   @Patch('/password/:id')
-  updatePassword(@Param('id', ParseIntPipe) id: number,@Body(ValidationPipe) updatePasswordDto: UpdatePasswordDto, @GetUser() user: Etudiant | Admin | Professeur){
-    console.log("data => ",updatePasswordDto);
-    
+  updatePassword(@Param('id', ParseIntPipe) id: number,@Body(ValidationPipe) updatePasswordDto: UpdatePasswordDto, @GetUser() user: Etudiant | Admin | Professeur){    
     return this.userService.updatePassword(id,updatePasswordDto,user);
   }
 

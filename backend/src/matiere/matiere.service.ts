@@ -14,7 +14,7 @@ export class MatiereService {
       return user.matieres;
     }
     if(user instanceof Admin){
-      return this.matiereRepository.find()
+      return this.matiereRepository.getAllMatieres();
     }
     if(user instanceof Etudiant){
       let matieres:Array<Matiere> = [];

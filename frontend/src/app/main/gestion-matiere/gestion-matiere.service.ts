@@ -15,7 +15,7 @@ export class GestionMatiereService implements Resolve<any> {
     onSemestreChanged: any;
     onProfesseursChanged: any;
     semestre: any;
-    professeurs: [];
+    professeurs: Array<any>;
     /**
      * Constructor
      *
@@ -51,7 +51,7 @@ export class GestionMatiereService implements Resolve<any> {
         });
     }
 
-    getSemestre(semestreId: number): Promise<any[]> {
+    getSemestre(semestreId: number): Promise<any[]> {        
         return new Promise((resolve, reject) => {
             this._httpClient
                 .get("http://localhost:3000/semestre/" + semestreId)

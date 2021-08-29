@@ -6,20 +6,21 @@ import { Admin, Etudiant, Professeur } from 'src/user/user.entity';
 
 @Injectable()
 export class SemestreService {
-  getSemestres(user: Etudiant | Admin | Professeur) {
-    if(!(user instanceof Admin)) throw new ForbiddenException("Vous avez pas les droits de faire cette opération!");
-    return this.semestreRepository.find({});
-  }
-  getSemestre(id: number, user: any) {
-    if(!(user instanceof Admin)) throw new ForbiddenException("Vous avez pas les droits de faire cette opération!");    
-    return this.semestreRepository.findOne({id});
-  }
+ 
   constructor(
     @InjectRepository(SemestreRepository)
     private semestreRepository: SemestreRepository,
   ) {}
 
-
+ getSemestres(user: Etudiant | Admin | Professeur) {
+    if(!(user instanceof Admin)) throw new ForbiddenException("Vous avez pas les droits de faire cette opération!");
+    return this.semestreRepository.find({});
+  }
+  
+  getSemestre(id: number, user: any) {
+    if(!(user instanceof Admin)) throw new ForbiddenException("Vous avez pas les droits de faire cette opération!");    
+    return this.semestreRepository.findOne({id});
+  }
   async addSemestre(nom:string):Promise<Semestre>{
     try{
     return await this.semestreRepository.addSemestre(nom);

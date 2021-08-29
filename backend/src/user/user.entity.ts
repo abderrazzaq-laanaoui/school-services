@@ -43,7 +43,7 @@ export abstract class User extends BaseEntity {
   email: string;
 
   // adress column
-  @Column({ type: 'varchar', length: 255 })
+  @Column({ type: 'varchar', length: 255, nullable: true, default: null })
   adresse: string;
 
   //phone column
@@ -76,7 +76,7 @@ export class Admin extends User {
 
 @ChildEntity()
 export class Professeur extends User {
-  @OneToMany(() => Matiere, (matiere) => matiere.professeur)
+  @OneToMany(() => Matiere, (matiere) => matiere.professeur, {eager:false})
   matieres: Matiere[];
 
   @OneToMany(() => Seance, (seance) => seance.professeur)
