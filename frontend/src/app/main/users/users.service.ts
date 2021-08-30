@@ -135,8 +135,6 @@ export class UsersService implements Resolve<any>
         );
     }
 
-   
-
     addUser(res: User) {
         return new Promise((resolve, reject) => {
             const type = res.type.toLowerCase()

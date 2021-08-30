@@ -63,7 +63,7 @@
                             <div class="tab-content p-24" fusePerfectScrollbar>
                                 <!-- PUT YOUR TAB CONTENT HERE -->
                                 <h2><li>{{module.nom}}</li></h2>
-                                <matiere-table [module]="getModule(i)"></matiere-table>
+                                <matiere-table [module]="semestre.modules[i]" [events]="eventsSubject.asObservable()"></matiere-table>
                                 <!-- / PUT YOUR TAB CONTENT HERE -->
                             </div>
                         </mat-tab>

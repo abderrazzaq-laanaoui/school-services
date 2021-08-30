@@ -88,7 +88,9 @@ export class GestionMatiereService implements Resolve<any> {
     }
 
     // add module
-    addModule( module: { nom: string, semestreId }) {
+    addModule( module: { nom: string, semestreId:number }) {
+        console.log("adding => ", module);
+
         return this._httpClient.post(
             `http://localhost:3000/module`,
             module
@@ -99,9 +101,6 @@ export class GestionMatiereService implements Resolve<any> {
     addMatiere(
         matiere: { nom: string; professeurId: number; coefficient: number; moduleId: number }
     ) {
-        return this._httpClient.post(
-            `http://localhost:3000/matiere`,
-            matiere
-        );
+        return this._httpClient.post(`http://localhost:3000/matiere`,matiere);
     }
 }

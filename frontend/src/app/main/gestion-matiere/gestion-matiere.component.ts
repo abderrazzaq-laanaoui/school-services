@@ -7,6 +7,7 @@ import { fuseAnimations } from "@fuse/animations";
 import { FuseConfirmDialogComponent } from "@fuse/components/confirm-dialog/confirm-dialog.component";
 import { MatDialog, MatDialogRef } from "@angular/material/dialog";
 import { ToastrService } from "ngx-toastr";
+import { Subject } from "rxjs";
 
 @Component({
     selector: "gestion-matiere",
@@ -19,6 +20,7 @@ export class GestionMatiereComponent implements OnInit {
     semstresList: Array<string>;
     currentSemestre: number;
     professeurs: Array<any>;
+    eventsSubject: Subject<any> = new Subject<any>();
 
     dialogRef: any;
     confirmDialogRef: MatDialogRef<FuseConfirmDialogComponent>;
@@ -83,32 +85,22 @@ export class GestionMatiereComponent implements OnInit {
             },
         });
 
-        this.dialogRef.afterClosed().subscribe((response: { type: string; titre: string; semestreId: number; professeur: any; coefficient: number; module: number; }) => {
+        this.dialogRef.afterClosed().subscribe((response: { type: string; nom: string; semestreId: number; professeurId: any; coefficient: number; moduleId: number; }) => {
            
             if (!response) return;
             if (response.type === "Module") {
-                this._gestionMatiereService.addModule( {nom:response.titre, semestreId: response.semestreId}).subscribe(
+                this._gestionMatiereService.addModule(response).subscribe(
                     (res)=>{
                         this.toastr.success("Ce module est bien ajouté");  
                         this.semestre.modules.push(res);
                     },
                     (err)=>{                        
                         //show a toaster with the error message
-                        this.toastr.error(err.message, "Erreur");
+                        this.toastr.error(err.error.message, "Erreur");
                     });;
             }
-            else if (response.type === "Matiere") {                
-                this._gestionMatiereService.addMatiere({nom:response.titre, professeurId:response.professeur,coefficient:response.coefficient, moduleId: response.module}).subscribe(
-                    (res)=>{
-                        this.semestre.modules.find(m => m.id === response.module).matieres.push(res);
-                    }
-                    ,(err)=>{
-                        console.error(err);
-                        //show a toaster with the error message
-                        this.toastr.error(err.message, "Erreur");
-      
-                    }
-                );
+            else if (response.type === "Matiere") {   
+                this.eventsSubject.next(response);             
             }
         });
     }

@@ -23,7 +23,7 @@ export class MatiereRepository extends Repository<Matiere>{
     matiere.professeur = professeur;
     matiere.module = module;
 
-    return _.omit(await matiere.save(),'professeur','module');
+    return _.omit(await matiere.save(),'module');
   }
 
   // get all matieres with id, nom , coefficient and professeur 

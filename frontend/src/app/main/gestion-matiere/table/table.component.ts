@@ -1,16 +1,20 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { FuseConfirmDialogComponent } from '@fuse/components/confirm-dialog/confirm-dialog.component';
 import { ToastrService } from 'ngx-toastr';
 import {GestionMatiereService} from '../gestion-matiere.service';
 import { EditMatiereComponent } from '../edit-matiere/edit-matiere.component';
+import { Observable, Subscription } from 'rxjs';
 @Component({
   selector: 'matiere-table',
   templateUrl: './table.component.html',
   styleUrls: [ './table.component.scss']
 })
-export class MatiereTableComponent implements OnInit {
+export class MatiereTableComponent implements OnInit, OnDestroy {
   @Input('module') module : any;
+
+  private eventsSubscription: Subscription;
+  @Input() events: Observable<any>;
   confirmDialogRef: MatDialogRef<FuseConfirmDialogComponent>;
   dialogRef: any;
 
@@ -22,11 +26,42 @@ export class MatiereTableComponent implements OnInit {
     public _matDialog: MatDialog,
     private _gestionMatiereService: GestionMatiereService,
     private toastr: ToastrService) {}
+  
 
   async ngOnInit(): Promise<void> {
-     this.datasource =  this.module.matieres;
+    this.eventsSubscription = this.events.subscribe((data) => this.updateDataSource(data));
+    this.datasource = this.module.matieres;
+     
   }
 
+  ngOnDestroy(): void {
+    this.eventsSubscription.unsubscribe();
+  }
+
+  updateDataSource(data:any){
+console.log("adding matiere...",data);
+console.log("module => ",this.module);
+
+
+
+    if(this.module.id !== data.moduleId) return;
+    console.log("matiere.data => ",data);
+    
+    this._gestionMatiereService.addMatiere(data).subscribe(
+      (res)=>{
+          this.toastr.success("Cette matiere est bien ajoutée"); 
+          this.module.matieres.push(res);          
+          this.datasource = [...this.module.matieres];    
+      }
+      ,(err)=>{
+          console.error(err);
+          //show a toaster with the error message
+          this.toastr.error(err.error.message, "Erreur");
+
+      }
+  );
+    
+  }
   deleteMatiere(id:number){
     this.confirmDialogRef = this._matDialog.open(
       FuseConfirmDialogComponent,
@@ -89,15 +124,6 @@ updateMatiere(matiere) {
       });
   });
 }
-// function that return the professeur data based on matiere id 
-  getProfesseurName(Matiereid:number){
-     this._gestionMatiereService.professeurs.forEach(professeur => {
-      professeur.matieres.forEach(matiere => {
-        if(matiere.id === Matiereid)
-        return professeur.nom + ' ' + professeur.prenom;
 
-      })});
-    return "-";
-  }
 
 }

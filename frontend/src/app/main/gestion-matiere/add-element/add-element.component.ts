@@ -58,9 +58,9 @@ export class AddElementComponent {
         return this._formBuilder.group({
             semestreId: new FormControl(this.semestreId, Validators.required),
             type: new FormControl("", Validators.required),
-            titre: new FormControl("", Validators.required),
-            module: new FormControl("", Validators.required),
-            professeur: new FormControl("", Validators.required),
+            nom: new FormControl("", Validators.required),
+            moduleId: new FormControl("", Validators.required),
+            professeurId: new FormControl("", Validators.required),
             coefficient: new FormControl("", Validators.required),
         });
     }
@@ -69,16 +69,16 @@ export class AddElementComponent {
         if (event.value === "Matiere") {
             if(!this.isExtraRequired){            
                 this.isExtraRequired = true;
-                this.elementForm.addControl('module', new FormControl("", Validators.required));
-                this.elementForm.addControl('professeur', new FormControl("", Validators.required));
+                this.elementForm.addControl('moduleId', new FormControl("", Validators.required));
+                this.elementForm.addControl('professeurId', new FormControl("", Validators.required));
                 this.elementForm.addControl('coefficient', new FormControl("", Validators.required));
             }
             return;
         }
         this.isExtraRequired = false;
-        this.elementForm.removeControl('module');
+        this.elementForm.removeControl('moduleId');
         this.elementForm.removeControl('coefficient');
-        this.elementForm.removeControl('professeur');
+        this.elementForm.removeControl('professeurId');
     }
 
     test(event) {
